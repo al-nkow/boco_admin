@@ -11,6 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 const UsersTable = ({ users, deleteUser }) => {
+  const userId = localStorage.getItem('id');
   return (
     <Table aria-label="users table" size="small">
       <TableHead>
@@ -30,9 +31,14 @@ const UsersTable = ({ users, deleteUser }) => {
             <TableCell align="right">{user.name}</TableCell>
             <TableCell align="right">{user.email}</TableCell>
             <TableCell align="right" style={{ paddingRight: 0 }}>
-              <IconButton aria-label="delete" onClick={() => deleteUser(user.email, user._id)}>
-                <DeleteIcon fontSize="small" />
-              </IconButton>
+              {userId !== user._id && (
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => deleteUser(user.email, user._id)}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              )}
               <IconButton aria-label="edit">
                 <EditIcon fontSize="small" />
               </IconButton>

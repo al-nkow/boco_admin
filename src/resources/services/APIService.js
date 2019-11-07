@@ -54,8 +54,8 @@ export const saveToken = data => {
   if (!data.token) return;
   localStorage.setItem(AUTH_TOKEN.NAME, data.token);
   localStorage.setItem(AUTH_TOKEN.REFRESH, data.refreshToken);
-  localStorage.setItem(AUTH_TOKEN.EXPIRES, data.expires_in);
-  // localStorage.setItem('id', data.id);   //  x-auth-token
+  localStorage.setItem(AUTH_TOKEN.EXPIRES, data.expiresIn);
+  localStorage.setItem('id', data.id);
   // APIService.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
   APIService.defaults.headers.common['x-auth-token'] = `${data.token}`;
 };
