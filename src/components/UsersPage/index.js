@@ -1,15 +1,21 @@
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import UsersTable from '../UsersTable';
 import WithConfirmAction from '../WithConfirmAction';
 import { LOAD_STATES } from '../../config/constants';
+import AddEditUserDialog from '../AddEditUserDialog';
 
 const UsersPage = ({
   confirm,
   enqueueSnackbar,
   UsersStore: { getUsers, users, deleteUser, deleteUserState },
 }) => {
+  const [open, setOpen] = React.useState(false);
+  const toggleOpen = isOpen => setOpen(isOpen);
+
   useEffect(() => {
     getUsers();
   }, [getUsers]);
@@ -41,6 +47,17 @@ const UsersPage = ({
 
   return (
     <div>
+      <AddEditUserDialog open={open} toggle={toggleOpen} />
+      <Button
+        style={{ float: 'right', marginBottom: '20px' }}
+        variant="contained"
+        color="primary"
+        size="small"
+        startIcon={<AddIcon />}
+        onClick={() => toggleOpen(true)}
+      >
+        Добавить
+      </Button>
       <UsersTable users={users} deleteUser={askDeleteUser} />
     </div>
   );
