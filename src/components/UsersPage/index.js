@@ -45,6 +45,11 @@ const UsersPage = ({
       });
   };
 
+  const editUser = user => {
+    console.log('EDIT >>>>>>', user);
+    // toggleOpen(true);
+  };
+
   return (
     <div>
       <AddEditUserDialog open={open} toggle={toggleOpen} />
@@ -58,7 +63,11 @@ const UsersPage = ({
       >
         Добавить
       </Button>
-      <UsersTable users={users} deleteUser={askDeleteUser} />
+      <UsersTable
+        users={users}
+        deleteUser={askDeleteUser}
+        editUser={editUser}
+      />
     </div>
   );
 };

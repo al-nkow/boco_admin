@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
-const UsersTable = ({ users, deleteUser }) => {
+const UsersTable = ({ users, deleteUser, editUser }) => {
   const userId = localStorage.getItem('id');
   return (
     <Table aria-label="users table" size="small">
@@ -39,7 +39,10 @@ const UsersTable = ({ users, deleteUser }) => {
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               )}
-              <IconButton aria-label="edit">
+              <IconButton
+                aria-label="edit"
+                onClick={() => editUser(user)}
+              >
                 <EditIcon fontSize="small" />
               </IconButton>
             </TableCell>
@@ -52,6 +55,7 @@ const UsersTable = ({ users, deleteUser }) => {
 
 UsersTable.propTypes = {
   deleteUser: PropTypes.func.isRequired,
+  editUser: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
 };
 
