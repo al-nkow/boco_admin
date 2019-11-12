@@ -2,11 +2,20 @@ import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import AddIcon from '@material-ui/icons/Add';
+import styled from 'styled-components';
 import UsersTable from '../UsersTable';
+import Header from '../Header';
 import WithConfirmAction from '../WithConfirmAction';
 import { LOAD_STATES } from '../../config/constants';
 import AddEditUserDialog from '../AddEditUserDialog';
+
+const StyledPaper = styled(Paper)`
+  max-width: 1000px;
+  margin: 0 auto;
+`;
 
 const UsersPage = ({
   confirm,
@@ -52,22 +61,29 @@ const UsersPage = ({
 
   return (
     <div>
-      <AddEditUserDialog open={open} toggle={toggleOpen} />
-      <Button
-        style={{ float: 'right', marginBottom: '20px' }}
-        variant="contained"
-        color="primary"
-        size="small"
-        startIcon={<AddIcon />}
-        onClick={() => toggleOpen(true)}
-      >
-        Добавить
-      </Button>
-      <UsersTable
-        users={users}
-        deleteUser={askDeleteUser}
-        editUser={editUser}
-      />
+      <Header title="Пользователи" />
+      <Box p={3}>
+        <StyledPaper>
+          <Box p={2}>
+            <AddEditUserDialog open={open} toggle={toggleOpen} />
+            <Button
+              style={{ float: 'right', marginBottom: '20px' }}
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<AddIcon />}
+              onClick={() => toggleOpen(true)}
+            >
+              Добавить
+            </Button>
+            <UsersTable
+              users={users}
+              deleteUser={askDeleteUser}
+              editUser={editUser}
+            />
+          </Box>
+        </StyledPaper>
+      </Box>
     </div>
   );
 };

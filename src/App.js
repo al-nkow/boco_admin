@@ -1,12 +1,20 @@
 import React from 'react';
-import 'typeface-roboto';
+import 'typeface-roboto-cyrillic';
 import { SnackbarProvider } from 'notistack';
 import { red, green, orange, slateblue } from './config/colors';
 import history from './history';
 
 import { Router, Switch, Route } from 'react-router-dom';
+
+
+
 import LoginPage from './components/LoginPage';
 import UsersPage from './components/UsersPage';
+import ShopsPage from './components/ShopsPage';
+
+
+
+
 import PrivateRoute from './components/PrivateRoute';
 import AppContainer from './components/AppContainer';
 // custom theme
@@ -71,6 +79,9 @@ function App() {
                   </Route>
                   <Route exact path="/users">
                     <UsersPage />
+                  </Route>
+                  <Route exact path="/shops">
+                    <ShopsPage />
                   </Route>
                 </Switch>
               </PrivateRoute>
