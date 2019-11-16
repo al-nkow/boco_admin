@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 
 const Wrap = styled.div`
   padding: 10px 20px;
@@ -8,8 +9,16 @@ const Wrap = styled.div`
   font-size: 20px;
 `;
 
-const Header = ({ title }) => {
-  return <Wrap>{title}</Wrap>;
+const pageNames = {
+  '/': 'Главная',
+  '/shops': 'Магазины',
+  '/users': 'Пользователи',
+  '/products': 'Товары',
+  '/categories': 'Категории товаров',
 };
 
-export default Header;
+const Header = ({ location: { pathname } }) => {
+  return <Wrap>{pageNames[pathname] || 'Нет имени'}</Wrap>;
+};
+
+export default withRouter(Header);

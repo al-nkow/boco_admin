@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import AddIcon from '@material-ui/icons/Add';
 import styled from 'styled-components';
 import UsersTable from '../UsersTable';
-import Header from '../Header';
 import WithConfirmAction from '../WithConfirmAction';
 import { LOAD_STATES } from '../../config/constants';
 import AddEditUserDialog from '../AddEditUserDialog';
@@ -60,31 +59,26 @@ const UsersPage = ({
   };
 
   return (
-    <div>
-      <Header title="Пользователи" />
-      <Box p={3}>
-        <StyledPaper>
-          <Box p={2}>
-            <AddEditUserDialog open={open} toggle={toggleOpen} />
-            <Button
-              style={{ float: 'right', marginBottom: '20px' }}
-              variant="contained"
-              color="primary"
-              size="small"
-              startIcon={<AddIcon />}
-              onClick={() => toggleOpen(true)}
-            >
-              Добавить
-            </Button>
-            <UsersTable
-              users={users}
-              deleteUser={askDeleteUser}
-              editUser={editUser}
-            />
-          </Box>
-        </StyledPaper>
+    <StyledPaper>
+      <Box p={2}>
+        <AddEditUserDialog open={open} toggle={toggleOpen} />
+        <Button
+          style={{ float: 'right', marginBottom: '20px' }}
+          variant="contained"
+          color="primary"
+          size="small"
+          startIcon={<AddIcon />}
+          onClick={() => toggleOpen(true)}
+        >
+          Добавить
+        </Button>
+        <UsersTable
+          users={users}
+          deleteUser={askDeleteUser}
+          editUser={editUser}
+        />
       </Box>
-    </div>
+    </StyledPaper>
   );
 };
 

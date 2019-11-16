@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import Box from '@material-ui/core/Box';
 import Navigation from '../Navigation';
+import Header from '../Header';
 
 const Wrap = styled.div`
   height: 100%;
@@ -8,16 +10,12 @@ const Wrap = styled.div`
   padding-left: 250px;
 `;
 
-const Content = styled.div`
-  margin: 0 auto 20px auto;
-  overflow: hidden;
-`;
-
 const AppContainer = ({ children }) => {
   return (
     <Wrap>
       <Navigation />
-      <Content>{children}</Content>
+      <Header />
+      <Box p={3}>{children}</Box>
     </Wrap>
   );
 };

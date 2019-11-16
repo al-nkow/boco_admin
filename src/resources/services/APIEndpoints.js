@@ -14,4 +14,5 @@ export const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
 // export const TOOLS_CURRENCY_EXCHANGE = `${API_VERSION_1_1}tools/currency_exchange`;
 
 export const LOGIN = `${API_DOMAIN}/api/auth/`;
+export const LOGOUT = `${API_DOMAIN}/api/auth/logout`;
 export const USERS = `${API_DOMAIN}/api/users/`;

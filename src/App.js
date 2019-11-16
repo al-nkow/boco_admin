@@ -11,6 +11,7 @@ import { Router, Switch, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import UsersPage from './components/UsersPage';
 import ShopsPage from './components/ShopsPage';
+import CategoriesPage from './components/CategoriesPage';
 
 
 
@@ -82,6 +83,9 @@ function App() {
                   </Route>
                   <Route exact path="/shops">
                     <ShopsPage />
+                  </Route>
+                  <Route exact path="/categories">
+                    <CategoriesPage />
                   </Route>
                 </Switch>
               </PrivateRoute>
