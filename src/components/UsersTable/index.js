@@ -11,7 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 const UsersTable = ({ users, deleteUser, editUser }) => {
-  const userId = localStorage.getItem('id');
+  const userId = localStorage.getItem('userId');
   return (
     <Table aria-label="users table" size="small">
       <TableHead>

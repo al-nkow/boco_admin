@@ -4,7 +4,6 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
-import UploadImage from '../UploadImage';
 import Dropzone from '../Dropzone';
 
 const StyledPaper = styled(Paper)`
@@ -13,14 +12,21 @@ const StyledPaper = styled(Paper)`
 `;
 
 const ShopsPage = () => {
+  const filesAdded = files => {
+    console.log('>>>>>>', files);
+  };
+
   return (
     <StyledPaper>
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Box pt={2}>
-              <Dropzone />
-              {/*<UploadImage />*/}
+              <Dropzone
+                onChange={filesAdded}
+                multiple
+                accept="image/x-png,image/jpeg"
+              />
             </Box>
           </Grid>
           <Grid item xs={6}>
