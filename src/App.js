@@ -28,10 +28,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'mobx-react';
 import LoginStore from './components/LoginPage/store';
 import UsersStore from './components/UsersPage/store';
+import ShopsStore from './components/ShopsPage/store';
 
 const store = {
   LoginStore: LoginStore.create({}),
   UsersStore: UsersStore.create({}),
+  ShopsStore: ShopsStore.create({}),
 };
 // =====================================
 

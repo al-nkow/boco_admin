@@ -1,67 +1,25 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
+import React, { useEffect } from 'react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import Dropzone from '../Dropzone';
+import ShopCreate from '../ShopCreate';
+import ShopsList from '../ShopsList';
 
-const StyledPaper = styled(Paper)`
+const Wrap = styled.div`
   max-width: 1000px;
   margin: 0 auto;
 `;
 
-const ShopsPage = () => {
-  const filesAdded = files => {
-    console.log('>>>>>>', files);
-  };
+const ShopsPage = ({ ShopsStore: { getShops, shops } }) => {
+  useEffect(() => {
+    getShops();
+  }, [getShops]);
 
   return (
-    <StyledPaper>
-      <Box p={2}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Box pt={2}>
-              <Dropzone
-                onChange={filesAdded}
-                multiple
-                accept="image/x-png,image/jpeg"
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            {/*<TextField*/}
-            {/*  name="email"*/}
-            {/*  label="Email"*/}
-            {/*  value={email}*/}
-            {/*  helperText={*/}
-            {/*    errors.email && touched.email ? errors.email : ''*/}
-            {/*  }*/}
-            {/*  error={errors.email && touched.email}*/}
-            {/*  onChange={handleChange}*/}
-            {/*  onBlur={handleBlur}*/}
-            {/*  fullWidth*/}
-            {/*  type="email"*/}
-            {/*/>*/}
-            <TextField
-              autoComplete="off"
-              name="text"
-              label="Название"
-              fullWidth
-              type="text"
-            />
-            <TextField
-              autoComplete="off"
-              name="text"
-              label="Комментарии"
-              fullWidth
-              type="text"
-            />
-          </Grid>
-        </Grid>
-      </Box>
-    </StyledPaper>
+    <Wrap>
+      <ShopCreate />
+      <ShopsList shops={shops} />
+    </Wrap>
   );
 };
 
-export default ShopsPage;
+export default inject('ShopsStore')(observer(ShopsPage));
