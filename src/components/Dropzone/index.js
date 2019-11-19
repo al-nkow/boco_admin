@@ -1,12 +1,8 @@
-/**
- * TODO добавить валидацию по размеру файла - информация в file.size!
- * TODO Props validation
- */
-
 import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PreviewItem from './components/PreviewItem';
 import NoFilesTemplate from './components/NoFilesTemplate';
+import { red } from '../../config/colors';
 
 const Wrap = styled.div`
   width: 100%;
@@ -22,14 +18,21 @@ const Wrap = styled.div`
   }
 `;
 
+const ErrorBlock = styled.div`
+  padding: 10px 0;
+  color: ${red};
+`;
+
 const Dropzone = ({
   disabled,
   multiple,
+  maxFileSize,
   accept,
   onChange,
   value,
 }) => {
   const fileInputRef = useRef();
+  const [error, setError] = useState('');
   const [highlight, setHighlight] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
 
@@ -58,15 +61,20 @@ const Dropzone = ({
   };
 
   const acceptFiles = files => {
-    const filesArray = [...files];
+    const filesArray = [...files].filter(
+      item => item.size / 1000 < maxFileSize,
+    );
 
-    // TODO file size validation
+    if (files.length > filesArray.length) {
+      setError('Один из файлов превышает допустимый размер 2 Мб!');
+      setTimeout(() => setError(''), 3000);
+    }
 
     filesArray.forEach(async (item, index) => {
       try {
         filesArray[index].preview = await addFilePreview(item);
-      } catch (error) {
-        console.error('Error: ', error);
+      } catch (err) {
+        console.error('Error: ', err);
       }
       setSelectedFiles([...filesArray]);
       onChange(filesArray);
@@ -116,7 +124,8 @@ const Dropzone = ({
       onClick={openFileDialog}
       style={{ cursor: cursorStyle }}
     >
-      {!selectedFiles.length ? (
+      {error && <ErrorBlock>{error}</ErrorBlock>}
+      {!error && !selectedFiles.length ? (
         <NoFilesTemplate
           fileInputRef={fileInputRef}
           onFilesAdded={onFilesAdded}

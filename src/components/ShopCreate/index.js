@@ -75,6 +75,7 @@ const ShopCreate = ({
                 <Box pt={2}>
                   <Dropzone
                     onChange={filesAdded}
+                    maxFileSize={2}
                     value={files}
                     accept="image/x-png,image/jpeg"
                   />
