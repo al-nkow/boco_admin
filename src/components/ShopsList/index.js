@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { inject, observer } from 'mobx-react';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -20,6 +20,7 @@ const baseUrl = 'http://localhost:5000';
 
 const StyledImage = styled.img`
   width: 100px;
+  border-radius: 4px;
 `;
 
 const ShopsList = ({
@@ -28,24 +29,27 @@ const ShopsList = ({
   enqueueSnackbar,
   ShopsStore: { deleteShop, deleteShopState },
 }) => {
-  const askDeleteShop = (name, id) => {
-    confirm({
-      message: `Вы уверены что хотите удалить магазин ${name}? 
-      Это действие невозможно будет отменить.`,
-    }).then(() => deleteShop(id));
-  };
-
-  useEffect(() => {
-    if (deleteShopState === LOAD_STATES.ERROR) {
+  const performDeleteShop = async id => {
+    const state = await deleteShop(id);
+    if (state === LOAD_STATES.ERROR) {
       enqueueSnackbar('Ошибка при попытке удалить магазин', {
         variant: 'error',
       });
-    } else if (deleteShopState === LOAD_STATES.DONE) {
+    } else if (state === LOAD_STATES.DONE) {
       enqueueSnackbar('Магазин успешно удален', {
         variant: 'success',
       });
     }
-  }, [deleteShopState, enqueueSnackbar]);
+  };
+
+  const askDeleteShop = (name, id) => {
+    confirm({
+      message: `Вы уверены что хотите удалить магазин ${name}? 
+      Это действие невозможно будет отменить.`,
+    })
+      .then(performDeleteShop.bind(null, id))
+      .catch(() => {});
+  };
 
   return (
     <Paper>

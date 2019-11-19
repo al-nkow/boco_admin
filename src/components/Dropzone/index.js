@@ -3,7 +3,7 @@
  * TODO Props validation
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PreviewItem from './components/PreviewItem';
 import NoFilesTemplate from './components/NoFilesTemplate';
@@ -22,10 +22,20 @@ const Wrap = styled.div`
   }
 `;
 
-const Dropzone = ({ disabled, multiple, accept, onChange }) => {
+const Dropzone = ({
+  disabled,
+  multiple,
+  accept,
+  onChange,
+  value,
+}) => {
   const fileInputRef = useRef();
   const [highlight, setHighlight] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
+
+  useEffect(() => {
+    if (value && !value.length) setSelectedFiles([]);
+  }, [value]);
 
   const addFilePreview = file => {
     const reader = new FileReader();

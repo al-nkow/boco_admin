@@ -22,7 +22,7 @@ export default types
         LOAD_STATES.DONE,
         LOAD_STATES.ERROR,
       ]),
-      LOAD_STATES.PENDING,
+      LOAD_STATES.DONE,
     ),
     deleteShopState: types.optional(
       types.enumeration('State', [
@@ -30,7 +30,7 @@ export default types
         LOAD_STATES.DONE,
         LOAD_STATES.ERROR,
       ]),
-      LOAD_STATES.PENDING,
+      LOAD_STATES.DONE,
     ),
     addShopState: types.optional(
       types.enumeration('State', [
@@ -38,7 +38,7 @@ export default types
         LOAD_STATES.DONE,
         LOAD_STATES.ERROR,
       ]),
-      LOAD_STATES.PENDING,
+      LOAD_STATES.DONE,
     ),
     // saveUserError: types.optional(types.string, ''),
   })
@@ -54,6 +54,7 @@ export default types
         console.error('CREATE SHOP ERROR: ', error);
         self.addShopState = LOAD_STATES.ERROR;
       }
+      return self.addShopState;
     }),
     getShops: flow(function* getShops() {
       try {
@@ -83,6 +84,7 @@ export default types
         console.error('DELETE SHOP ERROR: ', error);
         self.deleteShopState = LOAD_STATES.ERROR;
       }
+      return self.deleteShopState;
     }),
     // addUser: flow(function* addUser(params) {
     //   self.saveUserError = '';
