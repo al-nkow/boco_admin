@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
-import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
@@ -49,7 +46,11 @@ const ShopsTableRowEdit = ({
 }) => {
   const [hasImage, setOldImage] = useState(image);
   const clearOldImage = () => setOldImage('');
+  const [files, setFiles] = useState([]);
 
+  const filesAdded = value => {
+    setFiles(value);
+  };
 
   return (
     <TableRow>
@@ -75,7 +76,7 @@ const ShopsTableRowEdit = ({
             <StyledImage src={`${BASE_URL}${image}`} alt="" />
           </ImageWrap>
         ) : (
-          <Dropzone size="cell" />
+          <Dropzone onChange={filesAdded} size="cell" />
         )}
       </TableCell>
       <TableCell align="left">

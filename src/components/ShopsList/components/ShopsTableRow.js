@@ -38,13 +38,10 @@ const ShopsTableRow = ({
   };
 
   return edit ? (
-    <ShopsTableRowEdit
-      setEditMode={setEditMode}
-      shop={shop}
-    />
+    <ShopsTableRowEdit setEditMode={setEditMode} shop={shop} />
   ) : (
     <ShopsTableRowView
-      setEditMode={() => setEditMode(true)}
+      setEditMode={setEditMode}
       shop={shop}
       askDeleteShop={askDeleteShop}
     />

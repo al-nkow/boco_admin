@@ -1,5 +1,5 @@
 import React from 'react';
-import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import styled from 'styled-components';
 
@@ -12,32 +12,41 @@ const PreviewWrap = styled.div`
   position: relative;
   display: inline-block;
   margin: 10px 10px 0 10px;
+  &&.cell {
+    width: 100px;
+  }
 `;
 
 const CloseBtnWrap = styled.span`
   position: absolute;
-  right: -5px;
-  top: -5px;
+  top: -10px;
+  right: -32px;
 `;
 
-const PreviewItem = ({ file, index, removeItem }) => {
+const PreviewItem = ({
+  file: { preview, name },
+  index,
+  removeItem,
+  size,
+}) => {
+  const remove = event => {
+    event.stopPropagation();
+    removeItem(index);
+  };
+
   return (
-    <PreviewWrap>
-      <Preview src={file.preview} alt="" />
-      <div>{file.name}</div>
+    <PreviewWrap className={size}>
+      <Preview src={preview} alt="" />
+      {size !== 'cell' && <div>{name}</div>}
       <CloseBtnWrap>
-        <Fab
+        <IconButton
           size="small"
-          color="secondary"
+          color="primary"
           aria-label="delete"
-          onClick={event => {
-            event.stopPropagation();
-            console.log('>>>>>>', index);
-            removeItem(index);
-          }}
+          onClick={remove}
         >
           <CloseIcon />
-        </Fab>
+        </IconButton>
       </CloseBtnWrap>
     </PreviewWrap>
   );

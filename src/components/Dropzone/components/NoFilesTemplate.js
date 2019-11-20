@@ -39,7 +39,7 @@ const NoFilesTemplate = ({
         color="primary"
         startIcon={<CloudUploadIcon />}
       >
-        Выбрать файлы
+        Выбрать {size !== 'cell' && 'файлы'}
       </Button>
     </div>
   );

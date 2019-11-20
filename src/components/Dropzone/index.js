@@ -62,11 +62,14 @@ const Dropzone = ({
   };
 
   const acceptFiles = files => {
-    const filesArray = [...files].filter(
-      item => item.size / 1000000 < maxFileSize,
-    );
+    let filesArray = [...files];
+    if (maxFileSize) {
+      filesArray = filesArray.filter(
+        item => item.size / 1000000 < maxFileSize,
+      );
+    }
 
-    if (files.length > filesArray.length) {
+    if (maxFileSize && files.length > filesArray.length) {
       setError('Один из файлов превышает допустимый размер 2 Мб!');
       setTimeout(() => setError(''), 3000);
     }

@@ -39,7 +39,7 @@ const ShopsTableRowView = ({
           placement="top-end"
           enterDelay={500}
         >
-          <IconButton aria-label="edit" onClick={setEditMode}>
+          <IconButton aria-label="edit" onClick={() => setEditMode(true)}>
             <EditIcon fontSize="small" />
           </IconButton>
         </Tooltip>
