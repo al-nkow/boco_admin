@@ -1,3 +1,5 @@
+export const BASE_URL = 'http://localhost:5000';
+
 // Load states
 export const LOAD_STATES = {
   PENDING: 'pending',

@@ -13,6 +13,7 @@ const NoFilesTemplate = ({
   multiple,
   onFilesAdded,
   accept,
+  size,
 }) => {
   return (
     <div>
@@ -25,11 +26,13 @@ const NoFilesTemplate = ({
         onChange={onFilesAdded}
         accept={accept}
       />
-      <Title>
-        Чтобы загрузить изображение
-        <br />
-        перетащите его в эту область или нажмите
-      </Title>
+      {size !== 'cell' && (
+        <Title>
+          Чтобы загрузить изображение
+          <br />
+          перетащите его в эту область или нажмите
+        </Title>
+      )}
       <Button
         variant="outlined"
         size="small"

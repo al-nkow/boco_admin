@@ -30,6 +30,7 @@ const Dropzone = ({
   accept,
   onChange,
   value,
+  size,
 }) => {
   const fileInputRef = useRef();
   const [error, setError] = useState('');
@@ -56,13 +57,13 @@ const Dropzone = ({
   };
 
   const openFileDialog = () => {
-    if (disabled || selectedFiles.length) return;
+    if (disabled || selectedFiles.length || error) return;
     fileInputRef.current.click();
   };
 
   const acceptFiles = files => {
     const filesArray = [...files].filter(
-      item => item.size / 1000 < maxFileSize,
+      item => item.size / 1000000 < maxFileSize,
     );
 
     if (files.length > filesArray.length) {
@@ -131,6 +132,7 @@ const Dropzone = ({
           onFilesAdded={onFilesAdded}
           accept={accept}
           multiple={multiple}
+          size={size}
         />
       ) : (
         ''
@@ -142,6 +144,7 @@ const Dropzone = ({
               file={item}
               index={index}
               removeItem={removeItem}
+              size={size}
             />
           ))
         : ''}

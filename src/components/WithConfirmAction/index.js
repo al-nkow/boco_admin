@@ -55,7 +55,7 @@ const WithConfirmAction = Component => {
 
     const { open, title, message } = options;
     return (
-      <div>
+      <>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -75,7 +75,7 @@ const WithConfirmAction = Component => {
           </DialogActions>
         </Dialog>
         <Component {...props} confirm={perform} />
-      </div>
+      </>
     );
   };
 };
