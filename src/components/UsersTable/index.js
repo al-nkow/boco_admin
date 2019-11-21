@@ -31,20 +31,21 @@ const UsersTable = ({ users, deleteUser, editUser }) => {
             <TableCell align="right">{user.name}</TableCell>
             <TableCell align="right">{user.email}</TableCell>
             <TableCell align="right" style={{ paddingRight: 0 }}>
-              {userId !== user._id && (
+              {userId !== user._id ? (
                 <IconButton
                   aria-label="delete"
                   onClick={() => deleteUser(user.email, user._id)}
                 >
                   <DeleteIcon fontSize="small" />
                 </IconButton>
+              ) : (
+                <IconButton
+                  aria-label="edit"
+                  onClick={() => editUser(user)}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
               )}
-              <IconButton
-                aria-label="edit"
-                onClick={() => editUser(user)}
-              >
-                <EditIcon fontSize="small" />
-              </IconButton>
             </TableCell>
           </TableRow>
         ))}

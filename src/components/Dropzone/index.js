@@ -16,6 +16,15 @@ const Wrap = styled.div`
   &.hovered {
     background: #dddddd;
   }
+  &.active {
+    &.cell {
+      padding: 0;
+      border: none;
+      .cell {
+        margin: 0;
+      }
+    }
+  }
 `;
 
 const ErrorBlock = styled.div`
@@ -118,10 +127,14 @@ const Dropzone = ({
 
   const cursorStyle =
     disabled || selectedFiles.length ? 'default' : 'pointer';
+  const activeClass =
+    selectedFiles && selectedFiles.length ? 'active' : '';
 
   return (
     <Wrap
-      className={highlight ? 'hovered' : ''}
+      className={`${
+        highlight ? 'hovered' : ''
+      } ${size} ${activeClass}`}
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       onDrop={onDrop}

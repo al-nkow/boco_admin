@@ -6,20 +6,22 @@ import styled from 'styled-components';
 const Preview = styled.img`
   width: 100%;
   border-radius: 4px;
+  display: block;
 `;
 const PreviewWrap = styled.div`
   width: 200px;
   position: relative;
   display: inline-block;
   margin: 10px 10px 0 10px;
-  &&.cell {
+  &.cell {
     width: 100px;
+    display: block;
   }
 `;
 
 const CloseBtnWrap = styled.span`
   position: absolute;
-  top: -10px;
+  top: -6px;
   right: -32px;
 `;
 

@@ -11,6 +11,7 @@ import { BASE_URL } from '../../../config/constants';
 const StyledImage = styled.img`
   width: 100px;
   border-radius: 4px;
+  display: block;
 `;
 
 const ShopsTableRowView = ({
