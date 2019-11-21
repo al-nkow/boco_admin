@@ -20,3 +20,10 @@ export const createShop = data =>
   });
 export const getShopsList = () => API.get(SHOPS);
 export const deleteShopById = id => API.delete(`${SHOPS}${id}`);
+export const updateShop = (id, data) =>
+  API({
+    method: 'put',
+    url: `${SHOPS}${id}`,
+    data,
+    config: { headers: { 'Content-Type': 'multipart/form-data' } },
+  });

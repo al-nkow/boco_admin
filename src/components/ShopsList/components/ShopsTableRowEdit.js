@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { inject } from 'mobx-react';
 import { useFormik } from 'formik';
+import { withSnackbar } from 'notistack';
+import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import styled from 'styled-components';
 import validate from '../../ShopCreate/services/validate';
 import Dropzone from '../../Dropzone';
 import ShopsTableRowImage from './ShopsTableRowImage';
+import { LOAD_STATES } from '../../../config/constants';
 
 const StyledTextField = styled(TextField)`
   &.MuiTextField-root {
@@ -25,48 +29,44 @@ const LastTableCell = styled(TableCell)`
 `;
 
 const ShopsTableRowEdit = ({
-  // askDeleteShop,
+  enqueueSnackbar,
   setEditMode,
-  shop: { image, name, comments },
+  shop: { _id, image, name, comments },
+  ShopsStore: { editShop },
 }) => {
-  const [hasImage, setOldImage] = useState(image);
-  const clearOldImage = () => setOldImage('');
-  const cancel = () => setEditMode(false);
+  const [hasImage, setImage] = useState(image);
   const [files, setFiles] = useState([]);
-
-  const filesAdded = value => {
-    setFiles(value);
-  };
-
   const initialValues = { name, comments };
 
+  const clearOldImage = () => setImage('');
+  const cancel = () => setEditMode(false);
+  const filesAdded = value => setFiles(value);
 
+  const formDataToBeSent = values => {
+    const bodyFormData = new FormData();
+    bodyFormData.append('name', values.name);
+    bodyFormData.append('comments', values.comments);
+    bodyFormData.append('image', hasImage);
 
-
-
-
-
-  const onSubmit = values => {
-    console.log('SUBMIT >>>>>>', values, files, hasImage);
+    if (files && files.length) bodyFormData.append('file', files[0]);
+    return bodyFormData;
   };
 
+  const onSubmit = async values => {
+    const bodyFormData = formDataToBeSent(values);
+    const state = await editShop(_id, bodyFormData);
 
-
-
-
-
-
-
-
-
-
-
-
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-    validate,
-  });
+    if (state === LOAD_STATES.ERROR) {
+      enqueueSnackbar('Ошибка при редактировании магазина', {
+        variant: 'error',
+      });
+    } else if (state === LOAD_STATES.DONE) {
+      enqueueSnackbar('Магазин успешно отредактирован', {
+        variant: 'success',
+      });
+      cancel();
+    }
+  };
 
   const {
     values,
@@ -76,7 +76,11 @@ const ShopsTableRowEdit = ({
     handleBlur,
     handleSubmit,
     isValid,
-  } = formik;
+  } = useFormik({
+    initialValues,
+    onSubmit,
+    validate,
+  });
 
   return (
     <TableRow>
@@ -129,4 +133,11 @@ const ShopsTableRowEdit = ({
   );
 };
 
-export default ShopsTableRowEdit;
+ShopsTableRowEdit.propTypes = {
+  enqueueSnackbar: PropTypes.func.isRequired,
+  setEditMode: PropTypes.func.isRequired,
+  shop: PropTypes.object.isRequired,
+  ShopsStore: PropTypes.object.isRequired,
+};
+
+export default inject('ShopsStore')(withSnackbar(ShopsTableRowEdit));

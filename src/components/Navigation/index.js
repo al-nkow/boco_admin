@@ -63,11 +63,11 @@ const Navigation = () => {
       link: '/categories',
       icon: <FolderIcon />,
     },
-    {
-      name: 'Логин',
-      link: '/login',
-      icon: <SettingsApplicationsIcon />,
-    },
+    // {
+    //   name: 'Логин',
+    //   link: '/login',
+    //   icon: <SettingsApplicationsIcon />,
+    // },
   ];
 
   const exit = async () => {

@@ -4,6 +4,7 @@ import {
   createShop,
   getShopsList,
   deleteShopById,
+  updateShop,
 } from '../../../resources/api';
 
 const Shop = types.model('Shop', {
@@ -33,6 +34,14 @@ export default types
       LOAD_STATES.DONE,
     ),
     addShopState: types.optional(
+      types.enumeration('State', [
+        LOAD_STATES.PENDING,
+        LOAD_STATES.DONE,
+        LOAD_STATES.ERROR,
+      ]),
+      LOAD_STATES.DONE,
+    ),
+    editShopState: types.optional(
       types.enumeration('State', [
         LOAD_STATES.PENDING,
         LOAD_STATES.DONE,
@@ -85,6 +94,19 @@ export default types
         self.deleteShopState = LOAD_STATES.ERROR;
       }
       return self.deleteShopState;
+    }),
+    editShop: flow(function* editShop(id, shopData) {
+      self.editShopState = LOAD_STATES.PENDING;
+      try {
+        yield updateShop(id, shopData);
+        const { data } = yield getShopsList();
+        self.shops = data.list;
+        self.editShopState = LOAD_STATES.DONE;
+      } catch (error) {
+        console.error('DELETE SHOP ERROR: ', error);
+        self.editShopState = LOAD_STATES.ERROR;
+      }
+      return self.editShopState;
     }),
     // addUser: flow(function* addUser(params) {
     //   self.saveUserError = '';
