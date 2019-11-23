@@ -49,82 +49,63 @@ export default types
       ]),
       LOAD_STATES.DONE,
     ),
-    // saveUserError: types.optional(types.string, ''),
   })
-  .actions(self => ({
-    addShop: flow(function* addShop(params) {
+  .actions(self => {
+    const getShops = flow(function* getShops() {
+      self.loadState = LOAD_STATES.PENDING;
+      try {
+        const { data } = yield getShopsList();
+        self.shops = data.list;
+        self.loadState = LOAD_STATES.DONE;
+      } catch (error) {
+        console.error('GET SHOPS ERROR: ', error);
+        self.loadState = LOAD_STATES.ERROR;
+      }
+    });
+
+    const addShop = flow(function* addShop(params) {
       self.addShopState = LOAD_STATES.PENDING;
       try {
         yield createShop(params);
-        const { data } = yield getShopsList();
-        self.shops = data.list;
+        yield getShops();
         self.addShopState = LOAD_STATES.DONE;
       } catch (error) {
         console.error('CREATE SHOP ERROR: ', error);
         self.addShopState = LOAD_STATES.ERROR;
       }
       return self.addShopState;
-    }),
-    getShops: flow(function* getShops() {
-      try {
-        const { data } = yield getShopsList();
-        self.shops = data.list;
-        console.log('response shops >>>>>>', data);
-      } catch (error) {
-        console.error('GET SHOPS ERROR: ', error);
-      }
-    }),
-    // getUsers: flow(function* getUsers() {
-    //   try {
-    //     const { data } = yield getUsersList();
-    //     self.users = data.users;
-    //   } catch (error) {
-    //     console.error('GET USERS ERROR: ', error);
-    //   }
-    // }),
-    deleteShop: flow(function* deleteShop(id) {
+    });
+
+    const deleteShop = flow(function* deleteShop(id) {
       self.deleteShopState = LOAD_STATES.PENDING;
       try {
         yield deleteShopById(id);
-        const { data } = yield getShopsList();
-        self.shops = data.list;
+        yield getShops();
         self.deleteShopState = LOAD_STATES.DONE;
       } catch (error) {
         console.error('DELETE SHOP ERROR: ', error);
         self.deleteShopState = LOAD_STATES.ERROR;
       }
       return self.deleteShopState;
-    }),
-    editShop: flow(function* editShop(id, shopData) {
+    });
+
+    const editShop = flow(function* editShop(id, shopData) {
       self.editShopState = LOAD_STATES.PENDING;
       try {
         yield updateShop(id, shopData);
-        const { data } = yield getShopsList();
-        self.shops = data.list;
+        yield getShops();
         self.editShopState = LOAD_STATES.DONE;
       } catch (error) {
-        console.error('DELETE SHOP ERROR: ', error);
+        console.error('EDIT SHOP ERROR: ', error);
         self.editShopState = LOAD_STATES.ERROR;
       }
       return self.editShopState;
-    }),
-    // addUser: flow(function* addUser(params) {
-    //   self.saveUserError = '';
-    //   self.saveUserState = LOAD_STATES.PENDING;
-    //   try {
-    //     yield registerUser(params);
-    //     const { data } = yield getUsersList();
-    //     self.users = data.users;
-    //     self.saveUserState = LOAD_STATES.DONE;
-    //   } catch (error) {
-    //     console.error('SAVE USER ERROR:', error, error.response);
-    //     const {
-    //       response: { status },
-    //     } = error;
-    //     if (status === 409)
-    //       self.saveUserError =
-    //         'Пользователь с таким email уже зарегистрирован';
-    //     self.saveUserState = LOAD_STATES.ERROR;
-    //   }
-    // }),
-  }));
+    });
+
+    return {
+      addShop,
+      getShops,
+      deleteShop,
+      editShop,
+    };
+  });
