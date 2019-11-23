@@ -48,24 +48,22 @@ const AddEditUserDialog = ({
   }, [saveUserError, enqueueSnackbar, saveUserState]);
 
   return (
-    <div>
-      <StyledDialog
-        open={open}
-        onClose={() => toggle(false)}
-        aria-labelledby="form-dialog-title"
+    <StyledDialog
+      open={open}
+      onClose={() => toggle(false)}
+      aria-labelledby="form-dialog-title"
+    >
+      <DialogTitle id="form-dialog-title">
+        Добавить пользователя в систему
+      </DialogTitle>
+      <Formik
+        initialValues={initialValues}
+        validate={validate}
+        onSubmit={onSubmit}
       >
-        <DialogTitle id="form-dialog-title">
-          Добавить пользователя в систему
-        </DialogTitle>
-        <Formik
-          initialValues={initialValues}
-          validate={validate}
-          onSubmit={onSubmit}
-        >
-          {props => <UserForm {...props} toggle={toggle} />}
-        </Formik>
-      </StyledDialog>
-    </div>
+        {props => <UserForm {...props} toggle={toggle} />}
+      </Formik>
+    </StyledDialog>
   );
 };
 

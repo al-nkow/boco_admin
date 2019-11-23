@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import * as PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import { withSnackbar } from 'notistack';
 import ShopsTableRowView from './ShopsTableRowView';
 import ShopsTableRowEdit from './ShopsTableRowEdit';
-import WithConfirmAction from '../../WithConfirmAction';
-import { LOAD_STATES } from '../../../config/constants';
+import WithConfirmAction from '../../../../WithConfirmAction';
+import { LOAD_STATES } from '../../../../../config/constants';
 
 const ShopsTableRow = ({
   shop,
@@ -46,6 +47,13 @@ const ShopsTableRow = ({
       askDeleteShop={askDeleteShop}
     />
   );
+};
+
+ShopsTableRow.propTypes = {
+  confirm: PropTypes.func.isRequired,
+  enqueueSnackbar: PropTypes.func.isRequired,
+  shop: PropTypes.object.isRequired,
+  ShopsStore: PropTypes.object.isRequired,
 };
 
 export default inject('ShopsStore')(

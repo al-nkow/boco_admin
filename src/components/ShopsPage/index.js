@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import ShopCreate from '../ShopCreate';
-import ShopsList from '../ShopsList';
+import ShopsList from './components/ShopsList';
+import ShopCreateDialog from './components/ShopCreateDialog';
 
 const Wrap = styled.div`
   max-width: 1000px;
@@ -16,10 +17,14 @@ const ShopsPage = ({ ShopsStore: { getShops, shops } }) => {
 
   return (
     <Wrap>
-      <ShopCreate />
+      <ShopCreateDialog />
       <ShopsList shops={shops} />
     </Wrap>
   );
+};
+
+ShopsPage.propTypes = {
+  ShopsStore: PropTypes.object.isRequired,
 };
 
 export default inject('ShopsStore')(observer(ShopsPage));

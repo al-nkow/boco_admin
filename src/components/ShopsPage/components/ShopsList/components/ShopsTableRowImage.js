@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
-import { BASE_URL } from '../../../config/constants';
+import { BASE_URL } from '../../../../../config/constants';
 
 const ImageWrap = styled.div`
   width: 100px;

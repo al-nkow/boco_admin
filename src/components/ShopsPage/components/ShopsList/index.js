@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { inject, observer } from 'mobx-react';
+import React from 'react';
+import * as PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
@@ -7,17 +8,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { withSnackbar } from 'notistack';
-import WithConfirmAction from '../WithConfirmAction';
-import { LOAD_STATES } from '../../config/constants';
 import ShopsTableRow from './components/ShopsTableRow';
 
-const ShopsList = ({
-  shops,
-  confirm,
-  enqueueSnackbar,
-  ShopsStore: { deleteShop },
-}) => {
+const ShopsList = ({ shops }) => {
   return (
     <Paper>
       <Box p={2}>
@@ -32,10 +25,7 @@ const ShopsList = ({
           </TableHead>
           <TableBody>
             {shops.map(shop => (
-              <ShopsTableRow
-                key={shop._id}
-                shop={shop}
-              />
+              <ShopsTableRow key={shop._id} shop={shop} />
             ))}
           </TableBody>
         </Table>
@@ -44,6 +34,8 @@ const ShopsList = ({
   );
 };
 
-export default inject('ShopsStore')(
-  WithConfirmAction(withSnackbar(observer(ShopsList))),
-);
+ShopsList.propTypes = {
+  shops: PropTypes.array.isRequired,
+};
+
+export default observer(ShopsList);

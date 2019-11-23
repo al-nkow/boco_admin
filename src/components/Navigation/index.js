@@ -9,7 +9,6 @@ import GroupIcon from '@material-ui/icons/Group';
 import StoreIcon from '@material-ui/icons/Store';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import FolderIcon from '@material-ui/icons/Folder';
 import Button from '@material-ui/core/Button';
 
@@ -63,11 +62,6 @@ const Navigation = () => {
       link: '/categories',
       icon: <FolderIcon />,
     },
-    // {
-    //   name: 'Логин',
-    //   link: '/login',
-    //   icon: <SettingsApplicationsIcon />,
-    // },
   ];
 
   const exit = async () => {

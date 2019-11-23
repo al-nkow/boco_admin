@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import { useFormik } from 'formik';
 import { withSnackbar } from 'notistack';
@@ -8,10 +8,10 @@ import Button from '@material-ui/core/Button';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TextField from '@material-ui/core/TextField';
-import validate from '../../ShopCreate/services/validate';
-import Dropzone from '../../Dropzone';
+import validate from '../../../services/validate';
+import DropZone from '../../../../Dropzone';
 import ShopsTableRowImage from './ShopsTableRowImage';
-import { LOAD_STATES } from '../../../config/constants';
+import { LOAD_STATES } from '../../../../../config/constants';
 
 const StyledTextField = styled(TextField)`
   &.MuiTextField-root {
@@ -88,7 +88,7 @@ const ShopsTableRowEdit = ({
         {hasImage ? (
           <ShopsTableRowImage image={image} clear={clearOldImage} />
         ) : (
-          <Dropzone onChange={filesAdded} size="cell" />
+          <DropZone onChange={filesAdded} size="cell" />
         )}
       </TableCell>
       <TableCell align="left">
