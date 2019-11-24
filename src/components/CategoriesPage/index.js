@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import * as PropTypes from 'prop-types';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import CreateCategory from '../CreateCategory';
-import CategoriesList from '../CategoriesList';
+import CategoriesList from './components/CategoriesList';
+import CategoryCreateDialog from './components/CategoryCreateDialog';
 
 const Wrap = styled.div`
   max-width: 1000px;
   margin: 0 auto;
 `;
 
-const CategoriesPage = () => {
+const CategoriesPage = ({
+  CategoriesStore: { getCategories, categories },
+}) => {
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
+
   return (
     <Wrap>
-      <CreateCategory />
-      <CategoriesList />
+      <CategoryCreateDialog />
+      <CategoriesList categories={categories} />
     </Wrap>
   );
 };
 
-export default CategoriesPage;
+CategoriesPage.propTypes = {
+  CategoriesStore: PropTypes.object.isRequired,
+};
+
+export default inject('CategoriesStore')(observer(CategoriesPage));

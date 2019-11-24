@@ -1,4 +1,10 @@
-import { LOGIN, LOGOUT, USERS, SHOPS } from './services/APIEndpoints';
+import {
+  LOGIN,
+  LOGOUT,
+  USERS,
+  SHOPS,
+  CATEGORIES,
+} from './services/APIEndpoints';
 import API from './services/APIService';
 
 // AUTH
@@ -27,3 +33,11 @@ export const updateShop = (id, data) =>
     data,
     config: { headers: { 'Content-Type': 'multipart/form-data' } },
   });
+
+// CATEGORIES
+export const createCategory = params => API.post(CATEGORIES, params);
+export const getCategoriesList = () => API.get(CATEGORIES);
+export const deleteCategoryById = id =>
+  API.delete(`${CATEGORIES}${id}`);
+export const updateCategory = (id, data) =>
+  API.put(`${CATEGORIES}${id}`, data);
