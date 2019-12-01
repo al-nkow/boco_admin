@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -10,6 +10,7 @@ import StoreIcon from '@material-ui/icons/Store';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import FolderIcon from '@material-ui/icons/Folder';
+import ViewListIcon from '@material-ui/icons/ViewList';
 import Button from '@material-ui/core/Button';
 
 import { logout } from '../../resources/api';
@@ -26,9 +27,14 @@ const Wrap = styled.div`
   color: #ffffff;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: inherit;
+  &.selected {
+    .MuiListItem-root {
+      border-left: 4px solid #ffffff;
+    }
+  }
 `;
 
 const LogoutWrap = styled.div`
@@ -62,6 +68,11 @@ const Navigation = () => {
       link: '/categories',
       icon: <FolderIcon />,
     },
+    {
+      name: 'Ассортимент',
+      link: '/categories',
+      icon: <ViewListIcon />,
+    },
   ];
 
   const exit = async () => {
@@ -78,8 +89,8 @@ const Navigation = () => {
   return (
     <Wrap className="MuiPaper-elevation2">
       <List>
-        {menuItems.map(item => (
-          <StyledLink to={item.link} key={item.name}>
+        {menuItems.map((item, index) => (
+          <StyledLink to={item.link} key={item.name} activeClassName="selected" exact={index === 0}>
             <ListItem button>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />

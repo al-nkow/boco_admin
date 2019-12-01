@@ -4,6 +4,7 @@ import {
   USERS,
   SHOPS,
   CATEGORIES,
+  PRODUCTS,
 } from './services/APIEndpoints';
 import API from './services/APIService';
 
@@ -41,3 +42,11 @@ export const deleteCategoryById = id =>
   API.delete(`${CATEGORIES}${id}`);
 export const updateCategory = (id, data) =>
   API.put(`${CATEGORIES}${id}`, data);
+
+// PRODUCTS
+export const createProduct = params => API.post(PRODUCTS, params);
+export const getProductsList = params => API.get(PRODUCTS, { params });
+export const deleteProductById = id => API.delete(`${PRODUCTS}${id}`);
+export const getProductById = id => API.get(`${PRODUCTS}${id}`);
+export const updateProduct = (id, data) =>
+  API.put(`${PRODUCTS}${id}`, data);

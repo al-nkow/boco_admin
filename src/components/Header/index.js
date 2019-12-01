@@ -14,11 +14,20 @@ const pageNames = {
   '/shops': 'Магазины',
   '/users': 'Пользователи',
   '/products': 'Товары',
+  '/products/new': 'Добавить товар',
   '/categories': 'Категории товаров',
 };
 
 const Header = ({ location: { pathname } }) => {
-  return <Wrap>{pageNames[pathname] || 'Нет имени'}</Wrap>;
+  let name = 'Нет имени';
+
+  if (pageNames[pathname]) {
+    name = pageNames[pathname];
+  } else if (pathname.indexOf('/products/') !== -1) {
+    name = 'Товар';
+  }
+
+  return <Wrap>{name}</Wrap>;
 };
 
 export default withRouter(Header);

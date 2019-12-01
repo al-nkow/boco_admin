@@ -12,7 +12,8 @@ const StyledTextField = styled(TextField)`
   &.MuiTextField-root {
     margin-top: 0;
     .MuiOutlinedInput-input {
-      padding: 10px 20px;
+      padding: 7px 10px;
+      font-size: 14px;
     }
   }
 `;
