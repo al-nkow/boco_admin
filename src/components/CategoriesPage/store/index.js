@@ -50,7 +50,7 @@ export default types
     ),
   })
   .actions(self => {
-    const getCategories = flow(function* getShops() {
+    const getCategories = flow(function* getCategories() {
       self.loadState = LOAD_STATES.PENDING;
       try {
         const { data } = yield getCategoriesList();

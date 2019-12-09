@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
+import * as PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -23,14 +24,17 @@ const ProductsList = ({
   },
 }) => {
   const linkStyles = { textDecoration: 'none' };
+  const initPage = 0;
+  const initLimit = 5;
 
   useEffect(() => {
     getProducts({
-      page: 0,
-      limit: 1,
+      page: initPage,
+      limit: initLimit,
     });
   }, [getProducts]);
 
+  // Add category name to each product
   if (
     categories &&
     products &&
@@ -53,7 +57,7 @@ const ProductsList = ({
         variant: 'error',
       });
     } else if (deleteState === LOAD_STATES.DONE) {
-      enqueueSnackbar('Товар успешно удален', {
+      enqueueSnackbar('Товар успешно удалён', {
         variant: 'success',
       });
     }
@@ -89,9 +93,9 @@ const ProductsList = ({
       {countProducts && (
         <Pagination
           label="Товаров на странице"
-          initPage={0}
-          initLimit={5}
-          pages={countProducts}
+          initPage={initPage}
+          initLimit={initLimit}
+          countItems={countProducts}
           callback={getProducts}
         />
       )}
@@ -107,6 +111,14 @@ const ProductsList = ({
       ))}
     </>
   );
+};
+
+ProductsList.propTypes = {
+  categories: PropTypes.array.isRequired,
+  confirm: PropTypes.func.isRequired,
+  enqueueSnackbar: PropTypes.func.isRequired,
+  ProductsStore: PropTypes.object.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export default inject('ProductsStore')(

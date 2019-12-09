@@ -4,9 +4,11 @@ import {
   createProduct,
   getProductById,
   getProductsList,
-  deleteProductById,
+  deleteProductById, login,
   // updateCategory,
 } from '../../../resources/api';
+
+let lastGetParams = null;
 
 const Product = types.model('Product', {
   _id: types.string,
@@ -65,9 +67,12 @@ export default types
     const getProducts = flow(function* getProducts(params) {
       self.loadState = LOAD_STATES.PENDING;
       try {
-        const { data } = yield getProductsList(params);
-        self.products = data.list;
-        self.countProducts = data.count;
+        const {
+          data: { list, count },
+        } = yield getProductsList(params);
+        lastGetParams = params;
+        self.products = list;
+        self.countProducts = count;
         self.loadState = LOAD_STATES.DONE;
       } catch (error) {
         console.error('GET PRODUCTS LIST ERROR: ', error);
@@ -107,7 +112,7 @@ export default types
       self.deleteProductState = LOAD_STATES.PENDING;
       try {
         yield deleteProductById(id);
-        yield getProducts();
+        yield getProducts(lastGetParams);
         self.deleteProductState = LOAD_STATES.DONE;
       } catch (error) {
         console.error('DELETE PRODUCT ERROR: ', error);

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import TablePagination from '@material-ui/core/TablePagination';
 
 const Pagination = ({
-  pages,
+  countItems,
   label,
   callback,
   initPage,
@@ -25,34 +25,44 @@ const Pagination = ({
   const labelDisplayedRows = ({ from, to, count }) =>
     `${from}-${to === -1 ? count : to} из ${count}`;
 
+  const noItemsOnPage = countItems === rowsPerPage * page;
+
   useEffect(() => {
+    if (noItemsOnPage) {
+      setPage(page - 1);
+      return;
+    }
     callback({
       page,
       limit: rowsPerPage,
     });
-  }, [callback, page, rowsPerPage]);
+  }, [callback, page, rowsPerPage, noItemsOnPage]);
 
   return (
-    <TablePagination
-      labelRowsPerPage={label}
-      labelDisplayedRows={labelDisplayedRows}
-      rowsPerPageOptions={perPageOptions}
-      component="div"
-      count={pages}
-      rowsPerPage={rowsPerPage}
-      page={page}
-      onChangePage={handleChangePage}
-      onChangeRowsPerPage={handleChangeRowsPerPage}
-    />
+    <>
+      {!noItemsOnPage && (
+        <TablePagination
+          labelRowsPerPage={label}
+          labelDisplayedRows={labelDisplayedRows}
+          rowsPerPageOptions={perPageOptions}
+          component="div"
+          count={countItems}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      )}
+    </>
   );
 };
 
 Pagination.propTypes = {
   callback: PropTypes.func.isRequired,
+  countItems: PropTypes.number.isRequired,
   initLimit: PropTypes.number.isRequired,
   initPage: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
-  pages: PropTypes.number.isRequired,
 };
 
 export default Pagination;
