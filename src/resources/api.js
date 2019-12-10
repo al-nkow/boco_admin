@@ -38,6 +38,7 @@ export const updateShop = (id, data) =>
 // CATEGORIES
 export const createCategory = params => API.post(CATEGORIES, params);
 export const getCategoriesList = () => API.get(CATEGORIES);
+export const getCategoryById = id => API.get(`${CATEGORIES}${id}`);
 export const deleteCategoryById = id =>
   API.delete(`${CATEGORIES}${id}`);
 export const updateCategory = (id, data) =>

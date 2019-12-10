@@ -5,24 +5,28 @@ import ProductCard from './ProductCard';
 // products/5de2ef78893ff5712eab9ff3
 
 const ProductItem = ({
-  CategoriesStore: { getCategories, categories },
+  CategoriesStore: { getCategoryItem, currentCategory },
   ProductsStore: { getProductItem, currentProduct },
   id,
 }) => {
   useEffect(() => {
-    if (!categories || !categories.length) getCategories();
-    getProductItem(id);
-  }, [id, categories, getCategories, getProductItem]);
+    (async function getProductAndCategoryName() {
+      const product = await getProductItem(id);
+      if (product) getCategoryItem(product.category);
+    })();
+  }, [id, getProductItem, getCategoryItem]);
+
+  const product = {
+    ...currentProduct,
+    categoryName: currentCategory ? currentCategory.name : '',
+  };
 
   return (
     <>
       {currentProduct ? (
-        <ProductCard
-          product={currentProduct}
-          categories={categories}
-        />
+        <ProductCard product={product} />
       ) : (
-        <div>huy</div>
+        <div>Такого товара не существует</div>
       )}
     </>
   );

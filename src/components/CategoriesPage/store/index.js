@@ -4,6 +4,7 @@ import {
   createCategory,
   getCategoriesList,
   deleteCategoryById,
+  getCategoryById,
   updateCategory,
 } from '../../../resources/api';
 
@@ -16,6 +17,7 @@ const Category = types.model('Category', {
 export default types
   .model('CategoriesStore', {
     categories: types.array(Category),
+    currentCategory: types.optional(types.frozen(), null),
     loadState: types.optional(
       types.enumeration('State', [
         LOAD_STATES.PENDING,
@@ -101,10 +103,25 @@ export default types
       return self.editCategoryState;
     });
 
+    const getCategoryItem = flow(function* getCategoryItem(id) {
+      self.getCategoryState = LOAD_STATES.PENDING;
+      try {
+        const res = yield getCategoryById(id);
+        self.currentCategory =
+          res && res.data ? res.data.category : null;
+        self.getCategoryState = LOAD_STATES.DONE;
+      } catch (error) {
+        console.error('GET PRODUCT BY ID ERROR: ', error);
+        self.getCategoryState = LOAD_STATES.ERROR;
+      }
+      return self.getCategoryState;
+    });
+
     return {
       addCategory,
       getCategories,
       deleteCategory,
       editCategory,
+      getCategoryItem,
     };
   });

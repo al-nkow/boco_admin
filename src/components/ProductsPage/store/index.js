@@ -4,7 +4,7 @@ import {
   createProduct,
   getProductById,
   getProductsList,
-  deleteProductById, login,
+  deleteProductById,
   // updateCategory,
 } from '../../../resources/api';
 
