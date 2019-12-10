@@ -1,12 +1,22 @@
 import React, { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
+import { withSnackbar } from 'notistack';
 import ProductCard from './ProductCard';
+import Loader from '../../Loader';
+import WithConfirmAction from '../../WithConfirmAction';
+import { LOAD_STATES } from '../../../config/constants';
+import history from '../../../history';
 
-// products/5de2ef78893ff5712eab9ff3
+/*
+2. Edit product
+5. Shops block
+ */
 
 const ProductItem = ({
+  enqueueSnackbar,
+  confirm,
   CategoriesStore: { getCategoryItem, currentCategory },
-  ProductsStore: { getProductItem, currentProduct },
+  ProductsStore: { getProductItem, currentProduct, deleteProduct },
   id,
 }) => {
   useEffect(() => {
@@ -21,17 +31,47 @@ const ProductItem = ({
     categoryName: currentCategory ? currentCategory.name : '',
   };
 
+  const performDeleteProduct = async productId => {
+    const deleteState = await deleteProduct(productId);
+    if (deleteState === LOAD_STATES.ERROR) {
+      enqueueSnackbar('Ошибка при попытке удалить товар', {
+        variant: 'error',
+      });
+    } else if (deleteState === LOAD_STATES.DONE) {
+      enqueueSnackbar('Товар успешно удалён', {
+        variant: 'success',
+      });
+      history.push(`/products`);
+    }
+  };
+
+  const confirmDeleteProduct = selectedProduct => {
+    confirm({
+      message: `Вы уверены что хотите удалить товар "${selectedProduct.name}"? 
+      Это действие невозможно будет отменить.`,
+    })
+      .then(() => {
+        performDeleteProduct(selectedProduct._id);
+      })
+      .catch(() => {
+        console.log('Delete action canceled by user');
+      });
+  };
+
   return (
     <>
       {currentProduct ? (
-        <ProductCard product={product} />
+        <ProductCard
+          product={product}
+          deleteProduct={confirmDeleteProduct}
+        />
       ) : (
-        <div>Такого товара не существует</div>
+        <Loader />
       )}
     </>
   );
 };
 
 export default inject('CategoriesStore', 'ProductsStore')(
-  observer(ProductItem),
+  WithConfirmAction(withSnackbar(observer(ProductItem))),
 );
