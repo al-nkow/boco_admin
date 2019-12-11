@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
 import ProductCard from './ProductCard';
@@ -7,16 +8,11 @@ import WithConfirmAction from '../../WithConfirmAction';
 import useProductDelete from '../services/useProductDelete';
 import ProductEdit from './ProductEdit';
 
-/*
-2. Edit product
-5. Shops block
- */
-
 const ProductItem = ({
   id,
   enqueueSnackbar,
   confirm,
-  CategoriesStore: { getCategoryItem, currentCategory, categories },
+  CategoriesStore: { categories },
   ProductsStore: {
     addProductState,
     getProductItem,
@@ -28,15 +24,16 @@ const ProductItem = ({
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    (async function getProductAndCategoryName() {
-      const product = await getProductItem(id);
-      if (product) getCategoryItem(product.category);
-    })();
-  }, [id, getProductItem, getCategoryItem]);
+    getProductItem(id);
+  }, [id, getProductItem]);
+
+  const categoryName = categories.reduce((res, item) => {
+    return item._id === currentProduct.category ? item.name : res;
+  }, null);
 
   const product = {
     ...currentProduct,
-    categoryName: currentCategory ? currentCategory.name : '',
+    categoryName,
   };
 
   const { confirmDeleteProduct } = useProductDelete(
@@ -69,6 +66,14 @@ const ProductItem = ({
       )}
     </>
   );
+};
+
+ProductItem.propTypes = {
+  CategoriesStore: PropTypes.object.isRequired,
+  confirm: PropTypes.func.isRequired,
+  enqueueSnackbar: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  ProductsStore: PropTypes.object.isRequired,
 };
 
 export default inject('CategoriesStore', 'ProductsStore')(

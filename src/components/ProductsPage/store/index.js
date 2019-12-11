@@ -125,6 +125,7 @@ export default types
       self.editProductState = LOAD_STATES.PENDING;
       try {
         yield updateProduct(id, data);
+        yield getProductItem(id);
         self.editProductState = LOAD_STATES.DONE;
       } catch (error) {
         console.error('EDIT PRODUCT ERROR: ', error);

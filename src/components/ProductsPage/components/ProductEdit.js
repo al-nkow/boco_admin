@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Formik } from 'formik';
 import validate from '../services/validate';
@@ -60,6 +61,15 @@ const ProductEdit = ({
       </Formik>
     </div>
   );
+};
+
+ProductEdit.propTypes = {
+  addProductState: PropTypes.string.isRequired,
+  cancelEdit: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired,
+  editProduct: PropTypes.func.isRequired,
+  enqueueSnackbar: PropTypes.func.isRequired,
+  product: PropTypes.object.isRequired,
 };
 
 export default observer(ProductEdit);

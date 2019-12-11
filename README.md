@@ -3,7 +3,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 > TODO:
 ```
 1. Удаляя продукт надо удалять весь ассортимент 
-связанный с эти продуктом!!!
+связанный с этим продуктом!!!
+2. В списке товаров сделать поиск (фильтрацию) по boco_article
+3. 
 ```
 
 ## Available Scripts
