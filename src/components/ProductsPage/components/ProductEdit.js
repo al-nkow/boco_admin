@@ -3,10 +3,16 @@ import { observer } from 'mobx-react';
 import { Formik } from 'formik';
 import validate from '../services/validate';
 import ProductForm from './ProductForm';
+import { LOAD_STATES } from '../../../config/constants';
 
-const ProductEdit = ({ product, categories, addProductState, cancelEdit }) => {
-  console.log('product >>>>>>', product);
-
+const ProductEdit = ({
+  product,
+  categories,
+  addProductState,
+  cancelEdit,
+  editProduct,
+  enqueueSnackbar,
+}) => {
   const initialValues = {
     name: product.name || '',
     brand: product.brand || '',
@@ -21,21 +27,19 @@ const ProductEdit = ({ product, categories, addProductState, cancelEdit }) => {
     color: product.color || '',
   };
 
-  const onSubmit = values => {
-    console.log('>>>>>>', values, product._id);
-    // const id = await addProduct(values);
-    //
-    // if (id) {
-    //   enqueueSnackbar(
-    //     `Товар успешно сохранен теперь Вы можете добавить его в ассортимент Магазинов`,
-    //     { variant: 'success' },
-    //   );
-    //   history.push(`/products/${id}`);
-    // } else {
-    //   enqueueSnackbar('Ошибка при добавлении товара', {
-    //     variant: 'error',
-    //   });
-    // }
+  const onSubmit = async values => {
+    const state = await editProduct(product._id, values);
+
+    if (state === LOAD_STATES.ERROR) {
+      enqueueSnackbar('Ошибка при редактировании товара', {
+        variant: 'error',
+      });
+    } else if (state === LOAD_STATES.DONE) {
+      enqueueSnackbar('Товар успешно отредактирован', {
+        variant: 'success',
+      });
+      cancelEdit();
+    }
   };
 
   return (

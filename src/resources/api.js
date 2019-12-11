@@ -46,8 +46,9 @@ export const updateCategory = (id, data) =>
 
 // PRODUCTS
 export const createProduct = params => API.post(PRODUCTS, params);
-export const getProductsList = params => API.get(PRODUCTS, { params });
-export const deleteProductById = id => API.delete(`${PRODUCTS}${id}`);
+export const getProductsList = params =>
+  API.get(PRODUCTS, { params });
 export const getProductById = id => API.get(`${PRODUCTS}${id}`);
+export const deleteProductById = id => API.delete(`${PRODUCTS}${id}`);
 export const updateProduct = (id, data) =>
   API.put(`${PRODUCTS}${id}`, data);

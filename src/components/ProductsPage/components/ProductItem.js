@@ -22,6 +22,7 @@ const ProductItem = ({
     getProductItem,
     currentProduct,
     deleteProduct,
+    editProduct,
   },
 }) => {
   const [editMode, setEditMode] = useState(false);
@@ -58,7 +59,9 @@ const ProductItem = ({
       )}
       {currentProduct && editMode && (
         <ProductEdit
+          enqueueSnackbar={enqueueSnackbar}
           product={product}
+          editProduct={editProduct}
           categories={categories}
           addProductState={addProductState}
           cancelEdit={() => setEditMode(false)}

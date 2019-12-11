@@ -5,7 +5,7 @@ import {
   getProductById,
   getProductsList,
   deleteProductById,
-  // updateCategory,
+  updateProduct,
 } from '../../../resources/api';
 
 let lastGetParams = null;
@@ -121,25 +121,23 @@ export default types
       return self.deleteProductState;
     });
 
-    // const editCategory = flow(function* editCategory(id, data) {
-    //   self.editCategoryState = LOAD_STATES.PENDING;
-    //   try {
-    //     yield updateCategory(id, data);
-    //     yield getCategories();
-    //     self.editCategoryState = LOAD_STATES.DONE;
-    //   } catch (error) {
-    //     console.error('EDIT CATEGORY ERROR: ', error);
-    //     self.editCategoryState = LOAD_STATES.ERROR;
-    //   }
-    //   return self.editCategoryState;
-    // });
+    const editProduct = flow(function* editProduct(id, data) {
+      self.editProductState = LOAD_STATES.PENDING;
+      try {
+        yield updateProduct(id, data);
+        self.editProductState = LOAD_STATES.DONE;
+      } catch (error) {
+        console.error('EDIT PRODUCT ERROR: ', error);
+        self.editProductState = LOAD_STATES.ERROR;
+      }
+      return self.editProductState;
+    });
 
     return {
       addProduct,
       getProductItem,
       getProducts,
-      // getCategories,
       deleteProduct,
-      // editCategory,
+      editProduct,
     };
   });
