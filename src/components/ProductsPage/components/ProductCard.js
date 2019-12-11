@@ -55,14 +55,15 @@ const Controls = styled.div`
   right: 10px;
 `;
 
-const ProductCard = ({ product, deleteProduct }) => {
+const ProductCard = ({ product, deleteProduct, editProduct }) => {
   const clickDeleteProduct = event => {
     event.preventDefault();
     deleteProduct(product);
   };
 
-  const editProduct = event => {
+  const clickEditProduct = event => {
     event.preventDefault();
+    editProduct(product);
   };
 
   return (
@@ -116,7 +117,7 @@ const ProductCard = ({ product, deleteProduct }) => {
           </IconButton>
         </Tooltip>
         <Tooltip title="Редактировать" placement="top-end" enterDelay={500}>
-          <IconButton aria-label="edit" onClick={editProduct}>
+          <IconButton aria-label="edit" onClick={clickEditProduct}>
             <EditIcon fontSize="small" />
           </IconButton>
         </Tooltip>

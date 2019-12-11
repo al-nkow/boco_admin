@@ -23,6 +23,7 @@ const ProductForm = ({
   handleBlur,
   handleSubmit,
   addProductState,
+  cancel,
 }) => {
   return (
     <>
@@ -233,6 +234,17 @@ const ProductForm = ({
         </Paper>
       </Box>
       <Grid container justify="flex-end">
+        {cancel && (
+          <Box mr={1}>
+            <Button
+              variant="contained"
+              onClick={cancel}
+              color="primary"
+            >
+              Отменить
+            </Button>
+          </Box>
+        )}
         <Button
           variant="contained"
           onClick={handleSubmit}
@@ -250,6 +262,7 @@ const ProductForm = ({
 
 ProductForm.propTypes = {
   addProductState: PropTypes.string.isRequired,
+  cancel: PropTypes.func,
   categories: PropTypes.array.isRequired,
   errors: PropTypes.object.isRequired,
   handleBlur: PropTypes.func.isRequired,
@@ -258,6 +271,10 @@ ProductForm.propTypes = {
   isValid: PropTypes.bool.isRequired,
   touched: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
+};
+
+ProductForm.defaultProps = {
+  cancel: null,
 };
 
 export default observer(ProductForm);

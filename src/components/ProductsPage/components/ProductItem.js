@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
 import ProductCard from './ProductCard';
 import Loader from '../../Loader';
 import WithConfirmAction from '../../WithConfirmAction';
-import { LOAD_STATES } from '../../../config/constants';
-import history from '../../../history';
+import useProductDelete from '../services/useProductDelete';
+import ProductEdit from './ProductEdit';
 
 /*
 2. Edit product
@@ -13,12 +13,19 @@ import history from '../../../history';
  */
 
 const ProductItem = ({
+  id,
   enqueueSnackbar,
   confirm,
-  CategoriesStore: { getCategoryItem, currentCategory },
-  ProductsStore: { getProductItem, currentProduct, deleteProduct },
-  id,
+  CategoriesStore: { getCategoryItem, currentCategory, categories },
+  ProductsStore: {
+    addProductState,
+    getProductItem,
+    currentProduct,
+    deleteProduct,
+  },
 }) => {
+  const [editMode, setEditMode] = useState(false);
+
   useEffect(() => {
     (async function getProductAndCategoryName() {
       const product = await getProductItem(id);
@@ -31,42 +38,31 @@ const ProductItem = ({
     categoryName: currentCategory ? currentCategory.name : '',
   };
 
-  const performDeleteProduct = async productId => {
-    const deleteState = await deleteProduct(productId);
-    if (deleteState === LOAD_STATES.ERROR) {
-      enqueueSnackbar('Ошибка при попытке удалить товар', {
-        variant: 'error',
-      });
-    } else if (deleteState === LOAD_STATES.DONE) {
-      enqueueSnackbar('Товар успешно удалён', {
-        variant: 'success',
-      });
-      history.push(`/products`);
-    }
-  };
-
-  const confirmDeleteProduct = selectedProduct => {
-    confirm({
-      message: `Вы уверены что хотите удалить товар "${selectedProduct.name}"? 
-      Это действие невозможно будет отменить.`,
-    })
-      .then(() => {
-        performDeleteProduct(selectedProduct._id);
-      })
-      .catch(() => {
-        console.log('Delete action canceled by user');
-      });
-  };
+  const { confirmDeleteProduct } = useProductDelete(
+    enqueueSnackbar,
+    confirm,
+    deleteProduct,
+    true,
+  );
 
   return (
     <>
-      {currentProduct ? (
+      {currentProduct && !editMode ? (
         <ProductCard
           product={product}
           deleteProduct={confirmDeleteProduct}
+          editProduct={() => setEditMode(true)}
         />
       ) : (
-        <Loader />
+        !editMode && <Loader />
+      )}
+      {currentProduct && editMode && (
+        <ProductEdit
+          product={product}
+          categories={categories}
+          addProductState={addProductState}
+          cancelEdit={() => setEditMode(false)}
+        />
       )}
     </>
   );

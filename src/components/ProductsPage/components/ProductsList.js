@@ -8,8 +8,8 @@ import AddIcon from '@material-ui/icons/Add';
 import { withSnackbar } from 'notistack';
 import ProductCard from './ProductCard';
 import WithConfirmAction from '../../WithConfirmAction';
-import { LOAD_STATES } from '../../../config/constants';
 import Pagination from '../../Pagination';
+import useProductDelete from '../services/useProductDelete';
 
 const ProductsList = ({
   url,
@@ -50,31 +50,11 @@ const ProductsList = ({
     });
   }
 
-  const performDeleteProduct = async id => {
-    const deleteState = await deleteProduct(id);
-    if (deleteState === LOAD_STATES.ERROR) {
-      enqueueSnackbar('Ошибка при попытке удалить товар', {
-        variant: 'error',
-      });
-    } else if (deleteState === LOAD_STATES.DONE) {
-      enqueueSnackbar('Товар успешно удалён', {
-        variant: 'success',
-      });
-    }
-  };
-
-  const confirmDeleteProduct = product => {
-    confirm({
-      message: `Вы уверены что хотите удалить товар "${product.name}"? 
-      Это действие невозможно будет отменить.`,
-    })
-      .then(() => {
-        performDeleteProduct(product._id);
-      })
-      .catch(() => {
-        console.log('Delete action canceled by user');
-      });
-  };
+  const { confirmDeleteProduct } = useProductDelete(
+    enqueueSnackbar,
+    confirm,
+    deleteProduct,
+  );
 
   return (
     <>
