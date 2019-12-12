@@ -7,6 +7,7 @@ import Loader from '../../Loader';
 import WithConfirmAction from '../../WithConfirmAction';
 import useProductDelete from '../services/useProductDelete';
 import ProductEdit from './ProductEdit';
+import ProductPositions from './ProductPositions';
 
 const ProductItem = ({
   id,
@@ -14,7 +15,7 @@ const ProductItem = ({
   confirm,
   CategoriesStore: { categories },
   ProductsStore: {
-    addProductState,
+    editProductState,
     getProductItem,
     currentProduct,
     deleteProduct,
@@ -27,13 +28,15 @@ const ProductItem = ({
     getProductItem(id);
   }, [id, getProductItem]);
 
-  const categoryName = categories.reduce((res, item) => {
-    return item._id === currentProduct.category ? item.name : res;
-  }, null);
+  const getCategoryName = () => {
+    return categories.reduce((res, item) => {
+      return item._id === currentProduct.category ? item.name : res;
+    }, null);
+  };
 
   const product = {
     ...currentProduct,
-    categoryName,
+    categoryName: currentProduct ? getCategoryName() : '',
   };
 
   const { confirmDeleteProduct } = useProductDelete(
@@ -60,10 +63,11 @@ const ProductItem = ({
           product={product}
           editProduct={editProduct}
           categories={categories}
-          addProductState={addProductState}
+          editProductState={editProductState}
           cancelEdit={() => setEditMode(false)}
         />
       )}
+      <ProductPositions />
     </>
   );
 };

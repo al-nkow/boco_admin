@@ -9,7 +9,7 @@ import { LOAD_STATES } from '../../../config/constants';
 const ProductEdit = ({
   product,
   categories,
-  addProductState,
+  editProductState,
   cancelEdit,
   editProduct,
   enqueueSnackbar,
@@ -54,7 +54,7 @@ const ProductEdit = ({
           <ProductForm
             {...props}
             categories={categories}
-            addProductState={addProductState}
+            addProductState={editProductState}
             cancel={cancelEdit}
           />
         )}
@@ -64,10 +64,10 @@ const ProductEdit = ({
 };
 
 ProductEdit.propTypes = {
-  addProductState: PropTypes.string.isRequired,
   cancelEdit: PropTypes.func.isRequired,
   categories: PropTypes.array.isRequired,
   editProduct: PropTypes.func.isRequired,
+  editProductState: PropTypes.string.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired,
   product: PropTypes.object.isRequired,
 };
