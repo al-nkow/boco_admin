@@ -13,20 +13,37 @@ const StyledImage = styled.img`
   display: block;
 `;
 
-const ProductPositionsTableRow = ({ shop }) => {
+const ProductPositionsTableRow = ({ assortmentItem, productId }) => {
   const [editMode, setEditMode] = useState(false);
   const cancel = () => setEditMode(false);
 
   return (
     <TableRow>
       <TableCell>
-        <StyledImage src={`${BASE_URL}${shop.image}`} alt="" />
+        <StyledImage
+          src={`${BASE_URL}${assortmentItem.shopImage}`}
+          alt=""
+        />
       </TableCell>
       {!editMode && (
         <>
-          <TableCell colSpan={3} align="left">
-            товара нет в наличии
-          </TableCell>
+          {assortmentItem.productId ? (
+            <>
+              <TableCell align="left">
+                {assortmentItem.article}
+              </TableCell>
+              <TableCell align="right">
+                {assortmentItem.price}
+              </TableCell>
+              <TableCell align="right">
+                {assortmentItem.link}
+              </TableCell>
+            </>
+          ) : (
+            <TableCell colSpan={3} align="left">
+              товара нет в наличии
+            </TableCell>
+          )}
           <TableCell align="right">
             <Button
               variant="contained"
@@ -40,7 +57,13 @@ const ProductPositionsTableRow = ({ shop }) => {
           </TableCell>
         </>
       )}
-      {editMode && <ProductPositionsForm cancel={cancel} />}
+      {editMode && (
+        <ProductPositionsForm
+          cancel={cancel}
+          shopId={assortmentItem.shopId}
+          productId={productId}
+        />
+      )}
     </TableRow>
   );
 };

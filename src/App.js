@@ -33,6 +33,7 @@ import UsersStore from './components/UsersPage/store';
 import ShopsStore from './components/ShopsPage/store';
 import CategoriesStore from './components/CategoriesPage/store';
 import ProductsStore from './components/ProductsPage/store';
+import PositionsStore from './components/PositionsPage/store';
 
 const store = {
   LoginStore: LoginStore.create({}),
@@ -40,6 +41,7 @@ const store = {
   ShopsStore: ShopsStore.create({}),
   CategoriesStore: CategoriesStore.create({}),
   ProductsStore: ProductsStore.create({}),
+  PositionsStore: PositionsStore.create({}),
 };
 // =====================================
 

@@ -1,4 +1,7 @@
 import React from 'react';
+import { useFormik } from 'formik';
+import { inject, observer } from 'mobx-react';
+import { withSnackbar } from 'notistack';
 import TableCell from '@material-ui/core/TableCell';
 import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
@@ -6,6 +9,8 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
+import WithConfirmAction from '../../../../WithConfirmAction';
+import validatePositions from '../../../services/validatePositions';
 
 const StyledTextField = styled(TextField)`
   &.MuiTextField-root {
@@ -17,39 +22,102 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-const ProductPositionsForm = ({ cancel }) => {
+const ProductPositionsForm = ({
+  cancel,
+  shopId,
+  productId,
+  PositionsStore: { addPosition },
+  enqueueSnackbar,
+}) => {
+  const initialValues = {
+    article: '',
+    price: '',
+    link: '',
+  };
+
+  const onSubmit = async values => {
+    const data = {
+      ...values,
+      shopId,
+      productId,
+    };
+    const id = await addPosition(data);
+    if (id) {
+      enqueueSnackbar(`Товар успешно добавлен в магазин`, {
+        variant: 'success',
+      });
+      // history.push(`/products/${id}`);
+    } else {
+      enqueueSnackbar('Ошибка при добавлении ассортимента магазина', {
+        variant: 'error',
+      });
+    }
+  };
+
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    isValid,
+  } = useFormik({
+    initialValues,
+    onSubmit,
+    validate: validatePositions,
+  });
+
   return (
     <>
       <TableCell align="left">
         <StyledTextField
           variant="outlined"
           autoComplete="off"
-          name="name"
+          name="article"
           fullWidth
           type="text"
+          value={values.article}
+          error={errors.article && touched.article}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
       </TableCell>
       <TableCell align="right">
         <StyledTextField
           variant="outlined"
           autoComplete="off"
-          name="name"
+          name="price"
           fullWidth
           type="text"
+          value={values.price}
+          error={errors.price && touched.price}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
       </TableCell>
       <TableCell align="right">
         <StyledTextField
           variant="outlined"
           autoComplete="off"
-          name="name"
+          name="link"
           fullWidth
           type="text"
+          value={values.link}
+          error={errors.link && touched.link}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
       </TableCell>
       <TableCell align="right">
         <Box component="span" mr={1}>
-          <Fab size="small" color="primary" aria-label="confirm">
+          <Fab
+            size="small"
+            color="primary"
+            aria-label="confirm"
+            onClick={handleSubmit}
+            disabled={!isValid}
+          >
             <DoneIcon />
           </Fab>
         </Box>
@@ -66,4 +134,6 @@ const ProductPositionsForm = ({ cancel }) => {
   );
 };
 
-export default ProductPositionsForm;
+export default inject('PositionsStore')(
+  WithConfirmAction(withSnackbar(observer(ProductPositionsForm))),
+);

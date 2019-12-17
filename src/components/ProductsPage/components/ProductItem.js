@@ -67,7 +67,7 @@ const ProductItem = ({
           cancelEdit={() => setEditMode(false)}
         />
       )}
-      <ProductPositions />
+      <ProductPositions productId={id} />
     </>
   );
 };

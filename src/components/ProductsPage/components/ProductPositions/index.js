@@ -10,10 +10,36 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ProductPositionsTableRow from './components/ProductPositionsTableRow';
 
-const Index = ({ ShopsStore: { getShops, shops } }) => {
+const Index = ({
+  ShopsStore: { getShops, shops },
+  PositionsStore: { getPositions, positions },
+  productId,
+}) => {
   useEffect(() => {
     getShops();
-  }, [getShops]);
+    getPositions({
+      page: 0,
+      limit: 100,
+      productId,
+    });
+  }, [productId, getShops, getPositions]);
+
+  const assortment = [];
+
+  if (shops.length) {
+    shops.forEach(shopItem => {
+      const shopId = shopItem._id;
+      const position = positions.find(
+        posItem => posItem.shopId === shopId,
+      );
+      const shop = {
+        shopImage: shopItem.image,
+        shopId,
+        ...position,
+      };
+      assortment.push(shop);
+    });
+  }
 
   return (
     <Box mt={2}>
@@ -30,10 +56,11 @@ const Index = ({ ShopsStore: { getShops, shops } }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {shops.map(shop => (
+              {assortment.map(item => (
                 <ProductPositionsTableRow
-                  key={shop._id}
-                  shop={shop}
+                  productId={productId}
+                  key={item.shopId}
+                  assortmentItem={item}
                 />
               ))}
             </TableBody>
@@ -45,7 +72,11 @@ const Index = ({ ShopsStore: { getShops, shops } }) => {
 };
 
 Index.propTypes = {
+  PositionsStore: PropTypes.object.isRequired,
+  productId: PropTypes.string.isRequired,
   ShopsStore: PropTypes.object.isRequired,
 };
 
-export default inject('ShopsStore')(observer(Index));
+export default inject('ShopsStore', 'PositionsStore')(
+  observer(Index),
+);

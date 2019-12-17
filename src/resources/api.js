@@ -5,6 +5,7 @@ import {
   SHOPS,
   CATEGORIES,
   PRODUCTS,
+  POSITIONS,
 } from './services/APIEndpoints';
 import API from './services/APIService';
 
@@ -52,3 +53,8 @@ export const getProductById = id => API.get(`${PRODUCTS}${id}`);
 export const deleteProductById = id => API.delete(`${PRODUCTS}${id}`);
 export const updateProduct = (id, data) =>
   API.put(`${PRODUCTS}${id}`, data);
+
+// POSITIONS
+export const createPosition = params => API.post(POSITIONS, params);
+export const getPositionsList = params =>
+  API.get(POSITIONS, { params });

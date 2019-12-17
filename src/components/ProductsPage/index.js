@@ -18,7 +18,11 @@ const Wrap = styled.div`
 
 const ProductRoutes = () => {
   const { productId } = useParams();
-  return productId === 'new' ? <ProductNew /> : <ProductItem id={productId} />;
+  return productId === 'new' ? (
+    <ProductNew />
+  ) : (
+    <ProductItem id={productId} />
+  );
 };
 
 const SomeName = ({
