@@ -60,3 +60,5 @@ export const getPositionsList = params =>
   API.get(POSITIONS, { params });
 export const deletePositionById = id =>
   API.delete(`${POSITIONS}${id}`);
+export const updatePosition = (id, data) =>
+  API.put(`${POSITIONS}${id}`, data);

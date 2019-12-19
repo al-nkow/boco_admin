@@ -35,7 +35,7 @@ const ProductPositionsTableRow = ({ assortmentItem, productId }) => {
       {editMode && (
         <ProductPositionsForm
           cancel={cancel}
-          shopId={assortmentItem.shopId}
+          assortmentItem={assortmentItem}
           productId={productId}
         />
       )}

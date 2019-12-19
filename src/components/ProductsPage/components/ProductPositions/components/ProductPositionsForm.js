@@ -12,7 +12,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 import WithConfirmAction from '../../../../WithConfirmAction';
 import validatePositions from '../../../services/validatePositions';
-import ProductPositionsTableRow from "./ProductPositionsTableRow";
+import usePositionFormSubmit from '../services/usePositionFormSubmit';
 
 const StyledTextField = styled(TextField)`
   &.MuiTextField-root {
@@ -26,35 +26,27 @@ const StyledTextField = styled(TextField)`
 
 const ProductPositionsForm = ({
   cancel,
-  shopId,
   productId,
-  PositionsStore: { addPosition },
+  assortmentItem,
+  PositionsStore: { addPosition, editPosition },
   enqueueSnackbar,
 }) => {
+  const { _id, article, price, link, shopId } = assortmentItem;
   const initialValues = {
-    article: '',
-    price: '',
-    link: '',
+    article: article || '',
+    price: price || '',
+    link: link || '',
   };
 
-  const onSubmit = async values => {
-    const data = {
-      ...values,
-      shopId,
-      productId,
-    };
-    const id = await addPosition(data);
-    if (id) {
-      enqueueSnackbar(`Товар успешно добавлен в магазин`, {
-        variant: 'success',
-      });
-      cancel();
-    } else {
-      enqueueSnackbar('Ошибка при добавлении ассортимента магазина', {
-        variant: 'error',
-      });
-    }
-  };
+  const { onSubmit } = usePositionFormSubmit(
+    _id,
+    shopId,
+    productId,
+    addPosition,
+    editPosition,
+    enqueueSnackbar,
+    cancel,
+  );
 
   const {
     values,
@@ -139,11 +131,11 @@ const ProductPositionsForm = ({
 };
 
 ProductPositionsForm.propTypes = {
+  assortmentItem: PropTypes.object.isRequired,
   cancel: PropTypes.func.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired,
   PositionsStore: PropTypes.object.isRequired,
   productId: PropTypes.string.isRequired,
-  shopId: PropTypes.string.isRequired,
 };
 
 export default inject('PositionsStore')(
