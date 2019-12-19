@@ -1,4 +1,4 @@
-const validatePositions = values => {
+const validate = values => {
   const errors = {};
   const priceRegex = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
 
@@ -17,4 +17,4 @@ const validatePositions = values => {
   return errors;
 };
 
-export default validatePositions;
+export default validate;
