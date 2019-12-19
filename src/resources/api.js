@@ -58,3 +58,5 @@ export const updateProduct = (id, data) =>
 export const createPosition = params => API.post(POSITIONS, params);
 export const getPositionsList = params =>
   API.get(POSITIONS, { params });
+export const deletePositionById = id =>
+  API.delete(`${POSITIONS}${id}`);

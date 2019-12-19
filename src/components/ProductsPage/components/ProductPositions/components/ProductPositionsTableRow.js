@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import * as PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 import TableRow from '@material-ui/core/TableRow';
 import ProductPositionsForm from './ProductPositionsForm';
 import { BASE_URL } from '../../../../../config/constants';
+import ProductPositionsTableRowView from './ProductPositionsTableRowView';
 
 const StyledImage = styled.img`
   max-width: 120px;
@@ -26,36 +27,10 @@ const ProductPositionsTableRow = ({ assortmentItem, productId }) => {
         />
       </TableCell>
       {!editMode && (
-        <>
-          {assortmentItem.productId ? (
-            <>
-              <TableCell align="left">
-                {assortmentItem.article}
-              </TableCell>
-              <TableCell align="right">
-                {assortmentItem.price}
-              </TableCell>
-              <TableCell align="right">
-                {assortmentItem.link}
-              </TableCell>
-            </>
-          ) : (
-            <TableCell colSpan={3} align="left">
-              товара нет в наличии
-            </TableCell>
-          )}
-          <TableCell align="right">
-            <Button
-              variant="contained"
-              size="small"
-              color="primary"
-              onClick={() => setEditMode(true)}
-              fullWidth
-            >
-              Добавить
-            </Button>
-          </TableCell>
-        </>
+        <ProductPositionsTableRowView
+          assortmentItem={assortmentItem}
+          setEditMode={setEditMode}
+        />
       )}
       {editMode && (
         <ProductPositionsForm
@@ -66,6 +41,11 @@ const ProductPositionsTableRow = ({ assortmentItem, productId }) => {
       )}
     </TableRow>
   );
+};
+
+ProductPositionsTableRow.propTypes = {
+  assortmentItem: PropTypes.object.isRequired,
+  productId: PropTypes.string.isRequired,
 };
 
 export default ProductPositionsTableRow;

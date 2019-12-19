@@ -10,7 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ProductPositionsTableRow from './components/ProductPositionsTableRow';
 
-const Index = ({
+const ProductPositions = ({
   ShopsStore: { getShops, shops },
   PositionsStore: { getPositions, positions },
   productId,
@@ -71,12 +71,12 @@ const Index = ({
   );
 };
 
-Index.propTypes = {
+ProductPositions.propTypes = {
   PositionsStore: PropTypes.object.isRequired,
   productId: PropTypes.string.isRequired,
   ShopsStore: PropTypes.object.isRequired,
 };
 
 export default inject('ShopsStore', 'PositionsStore')(
-  observer(Index),
+  observer(ProductPositions),
 );

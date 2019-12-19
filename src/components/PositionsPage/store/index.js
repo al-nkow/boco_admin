@@ -4,9 +4,11 @@ import {
   createPosition,
   // getProductById,
   getPositionsList,
-  // deleteProductById,
+  deletePositionById,
   // updateProduct,
 } from '../../../resources/api';
+
+let lastGetParams = null;
 
 const Position = types.model('Position', {
   _id: types.string,
@@ -41,14 +43,14 @@ export default types
       ]),
       LOAD_STATES.DONE,
     ),
-    // deleteProductState: types.optional(
-    //   types.enumeration('State', [
-    //     LOAD_STATES.PENDING,
-    //     LOAD_STATES.DONE,
-    //     LOAD_STATES.ERROR,
-    //   ]),
-    //   LOAD_STATES.DONE,
-    // ),
+    deletePositionState: types.optional(
+      types.enumeration('State', [
+        LOAD_STATES.PENDING,
+        LOAD_STATES.DONE,
+        LOAD_STATES.ERROR,
+      ]),
+      LOAD_STATES.DONE,
+    ),
     addPositionState: types.optional(
       types.enumeration('State', [
         LOAD_STATES.PENDING,
@@ -73,7 +75,7 @@ export default types
         const {
           data: { list, count },
         } = yield getPositionsList(params);
-        // lastGetParams = params;
+        lastGetParams = params;
         self.positions = list;
         self.countPositions = count;
         self.loadState = LOAD_STATES.DONE;
@@ -103,6 +105,7 @@ export default types
       try {
         const res = yield createPosition(params);
         self.addPositionState = LOAD_STATES.DONE;
+        yield getPositions(lastGetParams);
         return res && res.data ? res.data.id : false;
       } catch (error) {
         console.error('CREATE POSITION ERROR: ', error);
@@ -111,19 +114,19 @@ export default types
       }
     });
 
-    // const deleteProduct = flow(function* deleteProduct(id) {
-    //   self.deleteProductState = LOAD_STATES.PENDING;
-    //   try {
-    //     yield deleteProductById(id);
-    //     yield getProducts(lastGetParams);
-    //     self.deleteProductState = LOAD_STATES.DONE;
-    //   } catch (error) {
-    //     console.error('DELETE PRODUCT ERROR: ', error);
-    //     self.deleteProductState = LOAD_STATES.ERROR;
-    //   }
-    //   return self.deleteProductState;
-    // });
-    //
+    const deletePosition = flow(function* deletePosition(id) {
+      self.deletePositionState = LOAD_STATES.PENDING;
+      try {
+        yield deletePositionById(id);
+        yield getPositions(lastGetParams);
+        self.deletePositionState = LOAD_STATES.DONE;
+      } catch (error) {
+        console.error('DELETE POSITION ERROR: ', error);
+        self.deletePositionState = LOAD_STATES.ERROR;
+      }
+      return self.deletePositionState;
+    });
+
     // const editProduct = flow(function* editProduct(id, data) {
     //   self.editProductState = LOAD_STATES.PENDING;
     //   try {
@@ -141,7 +144,7 @@ export default types
       addPosition,
       // getProductItem,
       getPositions,
-      // deleteProduct,
+      deletePosition,
       // editProduct,
     };
   });
