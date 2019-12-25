@@ -40,7 +40,7 @@ const Pagination = ({
 
   return (
     <>
-      {!noItemsOnPage && (
+      {!noItemsOnPage && countItems && (
         <TablePagination
           labelRowsPerPage={label}
           labelDisplayedRows={labelDisplayedRows}
@@ -59,10 +59,14 @@ const Pagination = ({
 
 Pagination.propTypes = {
   callback: PropTypes.func.isRequired,
-  countItems: PropTypes.number.isRequired,
+  countItems: PropTypes.number,
   initLimit: PropTypes.number.isRequired,
   initPage: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
+};
+
+Pagination.defaultProps = {
+  countItems: 0,
 };
 
 export default Pagination;

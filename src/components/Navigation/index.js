@@ -70,7 +70,7 @@ const Navigation = () => {
     },
     {
       name: 'Ассортимент',
-      link: '/categories',
+      link: '/positions',
       icon: <ViewListIcon />,
     },
   ];

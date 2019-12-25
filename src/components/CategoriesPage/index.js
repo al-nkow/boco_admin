@@ -1,14 +1,9 @@
 import React, { useEffect } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import styled from 'styled-components';
 import CategoriesList from './components/CategoriesList';
 import CategoryCreateDialog from './components/CategoryCreateDialog';
-
-const Wrap = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-`;
+import { Wrap } from '../SharedComponents';
 
 const CategoriesPage = ({
   CategoriesStore: { getCategories, categories },

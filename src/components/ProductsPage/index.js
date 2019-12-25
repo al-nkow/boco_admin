@@ -6,15 +6,10 @@ import {
   useParams,
   useRouteMatch,
 } from 'react-router-dom';
-import styled from 'styled-components';
 import ProductNew from './components/ProductNew';
 import ProductItem from './components/ProductItem';
 import ProductsList from './components/ProductsList';
-
-const Wrap = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-`;
+import { Wrap } from '../SharedComponents';
 
 const ProductRoutes = () => {
   const { productId } = useParams();

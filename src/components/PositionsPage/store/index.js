@@ -5,6 +5,7 @@ import {
   getPositionsList,
   deletePositionById,
   updatePosition,
+  getProductsList,
 } from '../../../resources/api';
 
 let lastGetParams = null;
@@ -16,6 +17,7 @@ const Position = types.model('Position', {
   link: types.string,
   productId: types.string,
   shopId: types.string,
+  product: types.optional(types.frozen(), null),
 });
 
 export default types
@@ -59,6 +61,12 @@ export default types
     ),
   })
   .actions(self => {
+
+
+
+
+
+
     const getPositions = flow(function* getPositions(params) {
       self.loadState = LOAD_STATES.PENDING;
       try {
@@ -66,6 +74,33 @@ export default types
           data: { list, count },
         } = yield getPositionsList(params);
         lastGetParams = params;
+
+        console.log('[getPositions] >>>>>>', list);
+
+
+        // getProductsList
+        const productIds = list.reduce((res, item) => {
+          const { productId } = item;
+          if (res.indexOf(productId) === -1) res.push(productId);
+          return res;
+        }, []);
+        // console.log('IDS >>>>>>', productIds);
+        if (productIds && productIds.length) {
+          const products = yield getProductsList({ id: productIds });
+          console.log('POS PRODUCTS >>>>>>', products);
+
+          if (products && products.data && products.data.list) {
+            list.forEach(position => {
+              position.product = products.data.list.find(
+                product => product._id === position.productId,
+              );
+            });
+          }
+        }
+        // =================
+
+
+
         self.positions = list;
         self.countPositions = count;
         self.loadState = LOAD_STATES.DONE;
@@ -74,6 +109,16 @@ export default types
         self.loadState = LOAD_STATES.ERROR;
       }
     });
+
+
+
+
+
+
+
+
+
+
 
     const addPosition = flow(function* addPosition(params) {
       self.addProductState = LOAD_STATES.PENDING;

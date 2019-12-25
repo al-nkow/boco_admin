@@ -56,6 +56,14 @@ APIService.interceptors.request.use(
       body: JSON.stringify({ token: refreshToken }),
     });
 
+    // если рефреш токен тоже протух
+    if (result && result.status === 401) {
+      localStorage.clear();
+      history.push('/login');
+      const error = new Error('Unauthorized');
+      return Promise.reject(error);
+    }
+
     const newAuthData = await result.json();
 
     saveToken(newAuthData);

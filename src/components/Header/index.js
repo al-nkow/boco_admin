@@ -16,6 +16,7 @@ const pageNames = {
   '/products': 'Товары',
   '/products/new': 'Добавить товар',
   '/categories': 'Категории товаров',
+  '/positions': 'Ассортимент',
 };
 
 const Header = ({ location: { pathname } }) => {

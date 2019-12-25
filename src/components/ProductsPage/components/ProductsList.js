@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { inject, observer } from 'mobx-react';
 import * as PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -26,13 +26,6 @@ const ProductsList = ({
   const linkStyles = { textDecoration: 'none' };
   const initPage = 0;
   const initLimit = 5;
-
-  useEffect(() => {
-    getProducts({
-      page: initPage,
-      limit: initLimit,
-    });
-  }, [getProducts]);
 
   // Add category name to each product
   if (
@@ -70,15 +63,13 @@ const ProductsList = ({
           </Button>
         </Link>
       </Box>
-      {countProducts && (
-        <Pagination
-          label="Товаров на странице"
-          initPage={initPage}
-          initLimit={initLimit}
-          countItems={countProducts}
-          callback={getProducts}
-        />
-      )}
+      <Pagination
+        label="Товаров на странице"
+        initPage={initPage}
+        initLimit={initLimit}
+        countItems={countProducts}
+        callback={getProducts}
+      />
       {products.map(item => (
         <Box key={item._id} mb={2}>
           <Link to={`${url}/${item._id}`} style={linkStyles}>

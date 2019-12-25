@@ -14,6 +14,7 @@ import UsersPage from './components/UsersPage';
 import ShopsPage from './components/ShopsPage';
 import CategoriesPage from './components/CategoriesPage';
 import ProductsPage from './components/ProductsPage';
+import PositionsPage from './components/PositionsPage';
 
 
 
@@ -99,6 +100,9 @@ function App() {
                   </Route>
                   <Route path="/products">
                     <ProductsPage />
+                  </Route>
+                  <Route path="/positions">
+                    <PositionsPage />
                   </Route>
                 </Switch>
               </PrivateRoute>
