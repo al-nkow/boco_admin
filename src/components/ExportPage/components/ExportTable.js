@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -25,7 +26,7 @@ const ExportTable = ({ data }) => {
   return (
     <>
       <Info>
-        Внимание! Значиния ширины, высоты и толщины указываются только
+        Внимание! Значения ширины, высоты и толщины указываются только
         в миллиметрах! Система автоматически убирает все буквы и
         пробелы. Таким образом 11 см - будет сохранено как 11, то есть
         значение в миллиметрах! Так же и в остальных характеристиках
@@ -102,6 +103,10 @@ const ExportTable = ({ data }) => {
       </Wrap>
     </>
   );
+};
+
+ExportTable.propTypes = {
+  data: PropTypes.array.isRequired,
 };
 
 export default ExportTable;

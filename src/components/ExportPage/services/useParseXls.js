@@ -1,6 +1,59 @@
 import XLSX from 'xlsx';
 
 function useParseXls() {
+  const sizeKeys = [
+    'weight',
+    'volumeL',
+    'area',
+    'volumeM',
+    'width',
+    'height',
+    'thickness',
+    'leruaPrice',
+    'obiPrice',
+    'maxidomPrice',
+    'petrovichPrice',
+  ];
+
+  const articleKeys = [
+    'bocoArticle',
+    'leruaArt',
+    'obiArt',
+    'maxidomArt',
+    'petrovichArt',
+  ];
+
+  /**
+   * Remove everything except letters, commas and dots and convert to a number
+   */
+  const makeNumber = val => {
+    if (typeof val === 'number' && Number.isFinite(val)) return val;
+    return +val.replace(/[^,.0-9]/g, '').replace(/,/g, '.');
+  };
+
+  /**
+   * Remove spaces
+   */
+  const clearSpaces = val => {
+    if (typeof val === 'number' && Number.isFinite(val)) return val;
+    return val.replace(/\s/g, '');
+  };
+
+  const formatData = parsedData => {
+    // Первые два элемента массива - это шапка таблицы => удалим их
+    parsedData.splice(0, 2);
+
+    parsedData.forEach(item => {
+      sizeKeys.forEach(key => {
+        if (item[key]) item[key] = makeNumber(item[key]);
+      });
+
+      articleKeys.forEach(key => {
+        if (item[key]) item[key] = clearSpaces(item[key]);
+      });
+    });
+  };
+
   return (selectedFile, setData, setLoading) => {
     const reader = new FileReader();
 
@@ -14,30 +67,7 @@ function useParseXls() {
         workbook.Sheets[firstSheetName],
       );
 
-      // Первые два элемента массива - это шапка таблицы => удалим их
-      parsedData.splice(0, 2);
-
-
-      console.log('>>>>>>', parsedData);
-
-      /*
-        1. Удалить пробелы в полях Артикул и подобных
-        2. В рахмерах и весах - удалить все буквы и пробелы
-       */
-
-      parsedData.forEach(item => {
-        console.log('>>>>>>', item.width);
-      });
-
-
-
-
-
-
-
-
-
-
+      formatData(parsedData);
 
       setData(parsedData);
       setLoading(false);
