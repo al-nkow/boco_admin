@@ -17,6 +17,28 @@ function useParseXls() {
       // Первые два элемента массива - это шапка таблицы => удалим их
       parsedData.splice(0, 2);
 
+
+      console.log('>>>>>>', parsedData);
+
+      /*
+        1. Удалить пробелы в полях Артикул и подобных
+        2. В рахмерах и весах - удалить все буквы и пробелы
+       */
+
+      parsedData.forEach(item => {
+        console.log('>>>>>>', item.width);
+      });
+
+
+
+
+
+
+
+
+
+
+
       setData(parsedData);
       setLoading(false);
     };
