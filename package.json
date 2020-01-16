@@ -27,7 +27,8 @@
     "styled-components": "^4.4.0",
     "typeface-roboto": "0.0.75",
     "typeface-roboto-cyrillic": "0.0.2",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "xlsx": "^0.15.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -73,6 +73,11 @@ const Navigation = () => {
       link: '/positions',
       icon: <ViewListIcon />,
     },
+    {
+      name: 'Экспорт',
+      link: '/export',
+      icon: <ViewListIcon />,
+    },
   ];
 
   const exit = async () => {

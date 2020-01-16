@@ -17,6 +17,7 @@ const pageNames = {
   '/products/new': 'Добавить товар',
   '/categories': 'Категории товаров',
   '/positions': 'Ассортимент',
+  '/export': 'Экспорт файла с товарами',
 };
 
 const Header = ({ location: { pathname } }) => {

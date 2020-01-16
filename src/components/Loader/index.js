@@ -7,10 +7,10 @@ const SpinnerWrap = styled.div`
   text-align: center;
 `;
 
-const Loader = () => {
+const Loader = props => {
   return (
     <SpinnerWrap>
-      <CircularProgress size={50} />
+      <CircularProgress size={50} {...props} />
     </SpinnerWrap>
   );
 };

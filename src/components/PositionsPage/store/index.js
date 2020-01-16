@@ -6,6 +6,7 @@ import {
   deletePositionById,
   updatePosition,
   getProductsList,
+  getShopsList,
 } from '../../../resources/api';
 
 let lastGetParams = null;
@@ -18,6 +19,7 @@ const Position = types.model('Position', {
   productId: types.string,
   shopId: types.string,
   product: types.optional(types.frozen(), null),
+  shop: types.optional(types.frozen(), null),
 });
 
 export default types
@@ -75,19 +77,39 @@ export default types
         } = yield getPositionsList(params);
         lastGetParams = params;
 
-        console.log('[getPositions] >>>>>>', list);
 
 
-        // getProductsList
+
         const productIds = list.reduce((res, item) => {
           const { productId } = item;
           if (res.indexOf(productId) === -1) res.push(productId);
           return res;
         }, []);
+
+        const shopIds = list.reduce((res, item) => {
+          const { shopId } = item;
+          if (res.indexOf(shopId) === -1) res.push(shopId);
+          return res;
+        }, []);
+
+        if (shopIds && shopIds.length) {
+          console.log('shopIds >>>>>>', shopIds);
+          const shops = yield getShopsList({ id: shopIds });
+
+          if (shops && shops.data && shops.data.list) {
+            list.forEach(position => {
+              position.shop = shops.data.list.find(
+                shop => shop._id === position.shopId,
+              );
+            });
+            console.log('POS SHOPS >>>>>>', shops.data.list);
+          }
+        }
+
         // console.log('IDS >>>>>>', productIds);
         if (productIds && productIds.length) {
           const products = yield getProductsList({ id: productIds });
-          console.log('POS PRODUCTS >>>>>>', products);
+          console.log('POS PRODUCTS >>>>>>', products.data.list);
 
           if (products && products.data && products.data.list) {
             list.forEach(position => {
@@ -102,6 +124,9 @@ export default types
 
 
         self.positions = list;
+
+        console.log('RESULT >>>>>>', self.positions.toJSON());
+
         self.countPositions = count;
         self.loadState = LOAD_STATES.DONE;
       } catch (error) {

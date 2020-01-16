@@ -26,7 +26,7 @@ export const createShop = data =>
     data,
     config: { headers: { 'Content-Type': 'multipart/form-data' } },
   });
-export const getShopsList = () => API.get(SHOPS);
+export const getShopsList = params => API.get(SHOPS, { params });
 export const deleteShopById = id => API.delete(`${SHOPS}${id}`);
 export const updateShop = (id, data) =>
   API({

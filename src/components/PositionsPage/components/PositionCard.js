@@ -4,16 +4,35 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import styled from 'styled-components';
+import { BASE_URL } from '../../../config/constants';
+import history from '../../../history';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+const StyledImage = styled.img`
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+`;
+
+const Price = styled.span`
+  font-size: 18px;
+`;
 
 const PositionCard = ({ position }) => {
   const defaultImage =
     'https://i.pinimg.com/originals/2c/a6/20/2ca62076d91319fd3fb1062bdb20ab13.jpg';
 
+  const goToProduct = () => {
+    history.push(`/products/${position.product._id}`);
+  };
+
   return (
     <Card>
-      <CardActionArea>
+      <CardActionArea onClick={goToProduct}>
         <CardMedia
           style={{ height: '140px' }}
           image={position.product.link || defaultImage}
@@ -23,20 +42,26 @@ const PositionCard = ({ position }) => {
           <Typography gutterBottom variant="h5" component="h2">
             { position.product.name }
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid item xs={6}>
+              <StyledImage src={`${BASE_URL}${position.shop.image}`} alt="" />
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              container
+              direction="row"
+              justify="flex-end"
+              alignItems="flex-end"
+            >
+              <Price>{ position.price } &#8381;</Price>
+            </Grid>
+          </Grid>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
     </Card>
   );
 };

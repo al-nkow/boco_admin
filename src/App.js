@@ -15,6 +15,7 @@ import ShopsPage from './components/ShopsPage';
 import CategoriesPage from './components/CategoriesPage';
 import ProductsPage from './components/ProductsPage';
 import PositionsPage from './components/PositionsPage';
+import ExportPage from './components/ExportPage';
 
 
 
@@ -103,6 +104,9 @@ function App() {
                   </Route>
                   <Route path="/positions">
                     <PositionsPage />
+                  </Route>
+                  <Route path="/export">
+                    <ExportPage />
                   </Route>
                 </Switch>
               </PrivateRoute>
