@@ -19,7 +19,13 @@ const StyledImage = styled.img`
 `;
 
 const Price = styled.span`
-  font-size: 18px;
+  font-size: 16px;
+`;
+
+const Name = styled.div`
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 500;
 `;
 
 const PositionCard = ({ position }) => {
@@ -39,9 +45,9 @@ const PositionCard = ({ position }) => {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Name>
             { position.product.name }
-          </Typography>
+          </Name>
           <Grid
             container
             spacing={3}

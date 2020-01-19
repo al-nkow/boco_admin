@@ -11,6 +11,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import FolderIcon from '@material-ui/icons/Folder';
 import ViewListIcon from '@material-ui/icons/ViewList';
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 import Button from '@material-ui/core/Button';
 
 import { logout } from '../../resources/api';
@@ -76,7 +77,7 @@ const Navigation = () => {
     {
       name: 'Экспорт',
       link: '/export',
-      icon: <ViewListIcon />,
+      icon: <ImportExportIcon />,
     },
   ];
 

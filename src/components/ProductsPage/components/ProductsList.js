@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { inject, observer } from 'mobx-react';
 import * as PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import { withSnackbar } from 'notistack';
 import ProductCard from './ProductCard';
@@ -23,6 +25,7 @@ const ProductsList = ({
     countProducts,
   },
 }) => {
+  const [filter, setFilter] = useState({ bocoArticle: '' });
   const linkStyles = { textDecoration: 'none' };
   const initPage = 0;
   const initLimit = 5;
@@ -49,6 +52,10 @@ const ProductsList = ({
     deleteProduct,
   );
 
+  const searchByArticleBoco = event => {
+    setFilter({ bocoArticle: event.target.value });
+  };
+
   return (
     <>
       <Box mb={2}>
@@ -63,13 +70,34 @@ const ProductsList = ({
           </Button>
         </Link>
       </Box>
-      <Pagination
-        label="Товаров на странице"
-        initPage={initPage}
-        initLimit={initLimit}
-        countItems={countProducts}
-        callback={getProducts}
-      />
+      <Box mb={2}>
+        <Grid container>
+          <Grid item xs={4}>
+            <TextField
+              label="Артикул БОКО"
+              fullWidth
+              onChange={searchByArticleBoco}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={8}
+            container
+            justify="flex-end"
+            alignItems="flex-end"
+            style={{ marginBottom: '-9px' }}
+          >
+            <Pagination
+              label="Товаров на странице"
+              initPage={initPage}
+              initLimit={initLimit}
+              countItems={countProducts}
+              callback={getProducts}
+              filter={filter}
+            />
+          </Grid>
+        </Grid>
+      </Box>
       {products.map(item => (
         <Box key={item._id} mb={2}>
           <Link to={`${url}/${item._id}`} style={linkStyles}>

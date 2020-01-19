@@ -64,6 +64,14 @@ export default types
     ),
   })
   .actions(self => {
+
+
+
+
+
+
+
+
     const getProducts = flow(function* getProducts(params) {
       self.loadState = LOAD_STATES.PENDING;
       try {
@@ -80,6 +88,17 @@ export default types
       }
     });
 
+
+
+
+
+
+
+
+
+
+
+    
     const getProductItem = flow(function* getProductItem(id) {
       self.getProductState = LOAD_STATES.PENDING;
       try {

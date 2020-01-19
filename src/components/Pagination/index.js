@@ -8,10 +8,14 @@ const Pagination = ({
   callback,
   initPage,
   initLimit,
+  filter,
 }) => {
   const perPageOptions = [5, 10, 25, 50];
   const [page, setPage] = useState(initPage);
   const [rowsPerPage, setRowsPerPage] = useState(initLimit);
+
+  const lastPage = Math.ceil(countItems / rowsPerPage);
+  const lastPageNumber = lastPage ? lastPage - 1 : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -25,22 +29,20 @@ const Pagination = ({
   const labelDisplayedRows = ({ from, to, count }) =>
     `${from}-${to === -1 ? count : to} из ${count}`;
 
-  const noItemsOnPage = countItems === rowsPerPage * page;
-
   useEffect(() => {
-    if (noItemsOnPage) {
-      setPage(page - 1);
-      return;
-    }
-    callback({
+    if (page > lastPageNumber) setPage(lastPageNumber);
+
+    const params = {
       page,
       limit: rowsPerPage,
-    });
-  }, [callback, page, rowsPerPage, noItemsOnPage]);
+      ...filter,
+    };
+    callback(params);
+  }, [callback, page, rowsPerPage, filter, countItems]);
 
   return (
     <>
-      {!noItemsOnPage && countItems && (
+      {page <= lastPageNumber && countItems && (
         <TablePagination
           labelRowsPerPage={label}
           labelDisplayedRows={labelDisplayedRows}
@@ -60,6 +62,7 @@ const Pagination = ({
 Pagination.propTypes = {
   callback: PropTypes.func.isRequired,
   countItems: PropTypes.number,
+  filter: PropTypes.object,
   initLimit: PropTypes.number.isRequired,
   initPage: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
@@ -67,6 +70,7 @@ Pagination.propTypes = {
 
 Pagination.defaultProps = {
   countItems: 0,
+  filter: {},
 };
 
 export default Pagination;

@@ -106,21 +106,33 @@ const ProductCard = ({ product, deleteProduct, editProduct }) => {
               {product.color && (
                 <Grid item>Цвет: {product.color}</Grid>
               )}
+              {product.bocoArticle && (
+                <Grid item>Арт: <b>{product.bocoArticle}</b></Grid>
+              )}
             </Grid>
           </Grid>
         </Grid>
       </Box>
       <Controls>
         <Tooltip title="Удалить" placement="top-end" enterDelay={500}>
-          <IconButton aria-label="delete" onClick={clickDeleteProduct}>
+          <IconButton
+            aria-label="delete"
+            onClick={clickDeleteProduct}
+          >
             <DeleteIcon fontSize="small" />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Редактировать" placement="top-end" enterDelay={500}>
-          <IconButton aria-label="edit" onClick={clickEditProduct}>
-            <EditIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        {editProduct && (
+          <Tooltip
+            title="Редактировать"
+            placement="top-end"
+            enterDelay={500}
+          >
+            <IconButton aria-label="edit" onClick={clickEditProduct}>
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        )}
       </Controls>
     </StyledPaper>
   );
