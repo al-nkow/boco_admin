@@ -42,7 +42,7 @@ const Pagination = ({
 
   return (
     <>
-      {page <= lastPageNumber && countItems && (
+      {page <= lastPageNumber && countItems ? (
         <TablePagination
           labelRowsPerPage={label}
           labelDisplayedRows={labelDisplayedRows}
@@ -54,6 +54,8 @@ const Pagination = ({
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
+      ) : (
+        ''
       )}
     </>
   );

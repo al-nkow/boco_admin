@@ -15,7 +15,7 @@ import ShopsPage from './components/ShopsPage';
 import CategoriesPage from './components/CategoriesPage';
 import ProductsPage from './components/ProductsPage';
 import PositionsPage from './components/PositionsPage';
-import ExportPage from './components/ExportPage';
+import ImportPage from './components/ImportPage';
 
 
 
@@ -36,6 +36,7 @@ import ShopsStore from './components/ShopsPage/store';
 import CategoriesStore from './components/CategoriesPage/store';
 import ProductsStore from './components/ProductsPage/store';
 import PositionsStore from './components/PositionsPage/store';
+import ImportStore from './components/ImportPage/store';
 
 const store = {
   LoginStore: LoginStore.create({}),
@@ -44,6 +45,7 @@ const store = {
   CategoriesStore: CategoriesStore.create({}),
   ProductsStore: ProductsStore.create({}),
   PositionsStore: PositionsStore.create({}),
+  ImportStore: ImportStore.create({}),
 };
 // =====================================
 
@@ -88,7 +90,7 @@ function App() {
               <PrivateRoute component={AppContainer}>
                 <Switch>
                   <Route exact path="/">
-                    <Home />
+                    <PositionsPage />
                   </Route>
                   <Route exact path="/users">
                     <UsersPage />
@@ -105,8 +107,8 @@ function App() {
                   <Route path="/positions">
                     <PositionsPage />
                   </Route>
-                  <Route path="/export">
-                    <ExportPage />
+                  <Route path="/import">
+                    <ImportPage />
                   </Route>
                 </Switch>
               </PrivateRoute>

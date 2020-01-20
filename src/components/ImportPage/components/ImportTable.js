@@ -22,7 +22,7 @@ const Info = styled.div`
   font-size: 14px;
 `;
 
-const ExportTable = ({ data }) => {
+const ImportTable = ({ data }) => {
   return (
     <>
       <Info>
@@ -105,8 +105,8 @@ const ExportTable = ({ data }) => {
   );
 };
 
-ExportTable.propTypes = {
+ImportTable.propTypes = {
   data: PropTypes.array.isRequired,
 };
 
-export default ExportTable;
+export default ImportTable;

@@ -10,14 +10,14 @@ const Wrap = styled.div`
 `;
 
 const pageNames = {
-  '/': 'Главная',
+  '/': 'Ассортимент товаров',
   '/shops': 'Магазины',
   '/users': 'Пользователи',
   '/products': 'Товары',
   '/products/new': 'Добавить товар',
   '/categories': 'Категории товаров',
   '/positions': 'Ассортимент',
-  '/export': 'Экспорт файла с товарами',
+  '/import': 'Импорт файла с товарами',
 };
 
 const Header = ({ location: { pathname } }) => {

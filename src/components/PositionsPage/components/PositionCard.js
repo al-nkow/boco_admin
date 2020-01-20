@@ -53,7 +53,10 @@ const PositionCard = ({ position }) => {
             spacing={3}
           >
             <Grid item xs={6}>
-              <StyledImage src={`${BASE_URL}${position.shop.image}`} alt="" />
+              <StyledImage
+                src={`${BASE_URL}${position.shop.image}`}
+                alt=""
+              />
             </Grid>
             <Grid
               item

@@ -10,7 +10,6 @@ import StoreIcon from '@material-ui/icons/Store';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import FolderIcon from '@material-ui/icons/Folder';
-import ViewListIcon from '@material-ui/icons/ViewList';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import Button from '@material-ui/core/Button';
 
@@ -26,6 +25,9 @@ const Wrap = styled.div`
   width: 250px;
   background: #577a8e;
   color: #ffffff;
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 
+  0px 2px 2px 0px rgba(0,0,0,0.14), 
+  0px 1px 5px 0px rgba(0,0,0,0.12);
 `;
 
 const StyledLink = styled(NavLink)`
@@ -45,19 +47,9 @@ const LogoutWrap = styled.div`
 const Navigation = () => {
   const menuItems = [
     {
-      name: 'Главная',
+      name: 'Ассортимент',
       link: '/',
       icon: <DashboardIcon />,
-    },
-    {
-      name: 'Пользователи',
-      link: '/users',
-      icon: <GroupIcon />,
-    },
-    {
-      name: 'Магазины',
-      link: '/shops',
-      icon: <StoreIcon />,
     },
     {
       name: 'Товары',
@@ -65,18 +57,23 @@ const Navigation = () => {
       icon: <ShoppingBasketIcon />,
     },
     {
+      name: 'Магазины',
+      link: '/shops',
+      icon: <StoreIcon />,
+    },
+    {
       name: 'Категории',
       link: '/categories',
       icon: <FolderIcon />,
     },
     {
-      name: 'Ассортимент',
-      link: '/positions',
-      icon: <ViewListIcon />,
+      name: 'Пользователи',
+      link: '/users',
+      icon: <GroupIcon />,
     },
     {
-      name: 'Экспорт',
-      link: '/export',
+      name: 'Импорт',
+      link: '/import',
       icon: <ImportExportIcon />,
     },
   ];
@@ -93,7 +90,7 @@ const Navigation = () => {
   };
 
   return (
-    <Wrap className="MuiPaper-elevation2">
+    <Wrap>
       <List>
         {menuItems.map((item, index) => (
           <StyledLink to={item.link} key={item.name} activeClassName="selected" exact={index === 0}>

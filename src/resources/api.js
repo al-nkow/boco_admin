@@ -6,6 +6,7 @@ import {
   CATEGORIES,
   PRODUCTS,
   POSITIONS,
+  IMPORT,
 } from './services/APIEndpoints';
 import API from './services/APIService';
 
@@ -62,3 +63,6 @@ export const deletePositionById = id =>
   API.delete(`${POSITIONS}${id}`);
 export const updatePosition = (id, data) =>
   API.put(`${POSITIONS}${id}`, data);
+
+// IMPORT
+export const clearAllProductsAndPositions = () => API.delete(IMPORT);

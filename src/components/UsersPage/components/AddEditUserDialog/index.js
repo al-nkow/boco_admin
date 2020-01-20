@@ -7,7 +7,7 @@ import { Formik } from 'formik';
 import { withSnackbar } from 'notistack';
 import UserForm from '../UserForm';
 import validate from './services/validate';
-import { LOAD_STATES } from '../../config/constants';
+import { LOAD_STATES } from '../../../../config/constants';
 
 const StyledDialog = styled(Dialog)`
   .MuiDialog-paperWidthSm {

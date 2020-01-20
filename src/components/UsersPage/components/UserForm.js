@@ -36,7 +36,6 @@ const UserForm = props => {
             error={errors.name && touched.name}
             onChange={handleChange}
             onBlur={handleBlur}
-            autoFocus
             fullWidth
             type="text"
           />

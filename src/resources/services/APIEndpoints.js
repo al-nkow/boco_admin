@@ -7,3 +7,4 @@ export const SHOPS = `${API_DOMAIN}/api/shops/`;
 export const CATEGORIES = `${API_DOMAIN}/api/categories/`;
 export const PRODUCTS = `${API_DOMAIN}/api/products/`;
 export const POSITIONS = `${API_DOMAIN}/api/positions/`;
+export const IMPORT = `${API_DOMAIN}/api/import/`;
