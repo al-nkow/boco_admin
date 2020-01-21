@@ -38,7 +38,14 @@ const Pagination = ({
       ...filter,
     };
     callback(params);
-  }, [callback, page, rowsPerPage, filter, countItems]);
+  }, [
+    callback,
+    page,
+    rowsPerPage,
+    lastPageNumber,
+    filter,
+    countItems,
+  ]);
 
   return (
     <>

@@ -54,6 +54,66 @@ function useParseXls() {
     });
   };
 
+  const prepareData = data => {
+    return data.map(item => {
+      const {
+        bocoArticle,
+        category,
+        name,
+        image,
+        brand,
+        weight,
+        volumeL,
+        area,
+        volumeM,
+        width,
+        height,
+        thickness,
+        leruaArt,
+        leruaPrice,
+        leruaLink,
+        obiArt,
+        obiPrice,
+        obiLink,
+        maxidomArt,
+        maxidomPrice,
+        maxidomLink,
+        petrovichArt,
+        petrovichPrice,
+        petrovichLink,
+      } = item;
+      const product = {
+        bocoArticle,
+        category,
+        name,
+        image,
+        brand,
+        weight,
+        volumeL,
+        area,
+        volumeM,
+        width,
+        height,
+        thickness,
+      };
+      const shops = {};
+      if (leruaArt || leruaPrice || leruaLink)
+        shops.lerua = { leruaArt, leruaPrice, leruaLink };
+      if (obiArt || obiPrice || obiLink)
+        shops.obi = { obiArt, obiPrice, obiLink };
+      if (maxidomArt || maxidomPrice || maxidomLink)
+        shops.maxidom = { maxidomArt, maxidomPrice, maxidomLink };
+      if (petrovichArt || petrovichPrice || petrovichLink) {
+        shops.petrovich = {
+          petrovichArt,
+          petrovichPrice,
+          petrovichLink,
+        };
+      }
+      return { product, shops };
+    });
+  };
+
   return (selectedFile, setData, setLoading) => {
     const reader = new FileReader();
 
@@ -68,6 +128,11 @@ function useParseXls() {
       );
 
       formatData(parsedData);
+
+      // ===========================================
+      const readyData = prepareData(parsedData);
+      console.log('READY DATA >>>>>>', readyData);
+      // ===========================================
 
       setData(parsedData);
       setLoading(false);

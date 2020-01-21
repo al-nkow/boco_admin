@@ -1,16 +1,16 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
+import Grid from '@material-ui/core/Grid';
 import { BASE_URL } from '../../../config/constants';
 import history from '../../../history';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import CardActions from '@material-ui/core/CardActions';
+// import Typography from '@material-ui/core/Typography';
+// import IconButton from '@material-ui/core/IconButton';
+// import DeleteIcon from '@material-ui/icons/Delete';
 
 const StyledImage = styled.img`
   width: 100%;
@@ -45,9 +45,7 @@ const PositionCard = ({ position }) => {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Name>
-            { position.product.name }
-          </Name>
+          <Name>{position.product.name}</Name>
           <Grid
             container
             spacing={3}
@@ -66,7 +64,7 @@ const PositionCard = ({ position }) => {
               justify="flex-end"
               alignItems="flex-end"
             >
-              <Price>{ position.price } &#8381;</Price>
+              <Price>{position.price} &#8381;</Price>
             </Grid>
           </Grid>
         </CardContent>
