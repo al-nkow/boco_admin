@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
@@ -30,6 +31,10 @@ const Header = ({ location: { pathname } }) => {
   }
 
   return <Wrap>{name}</Wrap>;
+};
+
+Header.propTypes = {
+  location: PropTypes.object.isRequired,
 };
 
 export default withRouter(Header);
