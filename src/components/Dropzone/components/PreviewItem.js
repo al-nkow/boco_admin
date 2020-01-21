@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import styled from 'styled-components';
@@ -52,6 +53,17 @@ const PreviewItem = ({
       </CloseBtnWrap>
     </PreviewWrap>
   );
+};
+
+PreviewItem.propTypes = {
+  file: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  size: PropTypes.string,
+};
+
+PreviewItem.defaultProps = {
+  size: null,
 };
 
 export default PreviewItem;

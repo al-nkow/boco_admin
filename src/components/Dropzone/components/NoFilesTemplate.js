@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import styled from 'styled-components';
@@ -43,6 +44,19 @@ const NoFilesTemplate = ({
       </Button>
     </div>
   );
+};
+
+NoFilesTemplate.propTypes = {
+  accept: PropTypes.string.isRequired,
+  fileInputRef: PropTypes.object.isRequired,
+  multiple: PropTypes.bool,
+  onFilesAdded: PropTypes.func.isRequired,
+  size: PropTypes.string,
+};
+
+NoFilesTemplate.defaultProps = {
+  multiple: false,
+  size: null,
 };
 
 export default NoFilesTemplate;
