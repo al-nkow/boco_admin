@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import PreviewItem from './components/PreviewItem';
 import NoFilesTemplate from './components/NoFilesTemplate';
@@ -166,6 +167,23 @@ const Dropzone = ({
         : ''}
     </Wrap>
   );
+};
+
+Dropzone.propTypes = {
+  accept: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  maxFileSize: PropTypes.number.isRequired,
+  multiple: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  size: PropTypes.string,
+  value: PropTypes.object,
+};
+
+Dropzone.defaultProps = {
+  disabled: false,
+  multiple: false,
+  size: null,
+  value: null,
 };
 
 export default Dropzone;
