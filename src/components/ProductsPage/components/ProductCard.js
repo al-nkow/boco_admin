@@ -71,7 +71,7 @@ const ProductCard = ({ product, deleteProduct, editProduct }) => {
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <Image src={product.link || noimage} alt="" />
+            <Image src={product.image || noimage} alt="" />
           </Grid>
           <Grid item xs={9}>
             <Title>{product.name}</Title>

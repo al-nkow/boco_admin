@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { AUTH_TOKEN } from '../../config/constants';
 
@@ -26,6 +27,11 @@ const PrivateRoute = ({
       }}
     />
   );
+};
+
+PrivateRoute.propTypes = {
+  children: PropTypes.object.isRequired,
+  component: PropTypes.func.isRequired,
 };
 
 export default PrivateRoute;

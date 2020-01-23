@@ -1,6 +1,15 @@
 import XLSX from 'xlsx';
 
 function useParseXls() {
+
+
+  console.log('===================================');
+  console.log('===================================');
+  console.log('======== useParseXls ==============');
+  console.log('===================================');
+  console.log('===================================');
+
+
   const sizeKeys = [
     'weight',
     'volumeL',
@@ -45,11 +54,11 @@ function useParseXls() {
 
     parsedData.forEach(item => {
       sizeKeys.forEach(key => {
-        if (item[key]) item[key] = makeNumber(item[key]);
+        if (item[key]) item[key] = makeNumber(item[key]) || null;
       });
 
       articleKeys.forEach(key => {
-        if (item[key]) item[key] = clearSpaces(item[key]);
+        if (item[key]) item[key] = clearSpaces(item[key]) || null;
       });
     });
   };
@@ -130,8 +139,8 @@ function useParseXls() {
       formatData(parsedData);
 
       // ===========================================
-      const readyData = prepareData(parsedData);
-      console.log('READY DATA >>>>>>', readyData);
+      // const readyData = prepareData(parsedData);
+      // console.log('READY DATA >>>>>>', readyData);
       // ===========================================
 
       setData(parsedData);

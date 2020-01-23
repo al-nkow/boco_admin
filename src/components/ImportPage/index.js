@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import * as PropTypes from 'prop-types';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
 import { Wrap } from '../SharedComponents';
 import useParseXls from './services/useParseXls';
@@ -13,23 +13,27 @@ import { LOAD_STATES } from '../../config/constants';
 const ImportPage = ({
   confirm,
   enqueueSnackbar,
-  ImportStore: { deleteAllProducts },
+  ImportStore: {
+    deleteAllProducts,
+    setImportedData,
+    importedData,
+    publishData,
+  },
 }) => {
   const inputEl = useRef(null);
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const parseXls = useParseXls();
+  const parseXls = useParseXls(importedData);
 
   const uploadFile = async () => {
     const selectedFile = inputEl.current.files[0];
     if (selectedFile) {
       setLoading(true);
-      parseXls(selectedFile, setData, setLoading);
+      parseXls(selectedFile, setImportedData, setLoading);
     }
   };
 
   const clearData = () => {
-    setData(null);
+    setImportedData(null);
   };
 
   const performDeleteAll = async () => {
@@ -56,14 +60,15 @@ const ImportPage = ({
   return (
     <Wrap>
       <ImportControls
-        data={data}
+        data={importedData}
         inputEl={inputEl}
         uploadFile={uploadFile}
         clickDeleteAll={clickDeleteAll}
         clearData={clearData}
+        publishData={publishData}
       />
       {loading && <Loader disableShrink />}
-      {data && <ImportTable data={data} />}
+      <ImportTable />
     </Wrap>
   );
 };
@@ -75,5 +80,5 @@ ImportPage.propTypes = {
 };
 
 export default inject('ImportStore')(
-  WithConfirmAction(withSnackbar(ImportPage)),
+  WithConfirmAction(withSnackbar(observer(ImportPage))),
 );

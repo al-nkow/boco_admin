@@ -66,3 +66,4 @@ export const updatePosition = (id, data) =>
 
 // IMPORT
 export const clearAllProductsAndPositions = () => API.delete(IMPORT);
+export const saveImportedData = params => API.post(IMPORT, params);

@@ -16,7 +16,7 @@ const Product = types.model('Product', {
   brand: types.optional(types.string, ''),
   bocoArticle: types.optional(types.string, ''),
   category: types.optional(types.string, ''),
-  link: types.optional(types.string, ''),
+  image: types.optional(types.string, ''),
   height: types.optional(types.maybeNull(types.number), null),
   width: types.optional(types.maybeNull(types.number), null),
   length: types.optional(types.maybeNull(types.number), null),
@@ -28,7 +28,10 @@ const Product = types.model('Product', {
 export default types
   .model('ProductsStore', {
     products: types.array(Product),
-    countProducts: types.optional(types.maybeNull(types.number), null),
+    countProducts: types.optional(
+      types.maybeNull(types.number),
+      null,
+    ),
     currentProduct: types.optional(types.frozen(), null),
     loadState: types.optional(
       types.enumeration('State', [
@@ -64,14 +67,6 @@ export default types
     ),
   })
   .actions(self => {
-
-
-
-
-
-
-
-
     const getProducts = flow(function* getProducts(params) {
       self.loadState = LOAD_STATES.PENDING;
       try {
@@ -88,17 +83,6 @@ export default types
       }
     });
 
-
-
-
-
-
-
-
-
-
-
-    
     const getProductItem = flow(function* getProductItem(id) {
       self.getProductState = LOAD_STATES.PENDING;
       try {

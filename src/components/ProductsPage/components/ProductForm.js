@@ -113,14 +113,14 @@ const ProductForm = ({
               <Grid item xs={12}>
                 <TextField
                   label="Ссылка на изображение"
-                  name="link"
-                  value={values.link}
+                  name="image"
+                  value={values.image}
                   type="text"
                   fullWidth
                   helperText={
-                    errors.link && touched.link ? errors.link : ''
+                    errors.image && touched.image ? errors.image : ''
                   }
-                  error={errors.link && touched.link}
+                  error={errors.image && touched.image}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />

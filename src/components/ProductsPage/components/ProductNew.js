@@ -2,16 +2,11 @@ import React, { useEffect } from 'react';
 import * as PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { inject, observer } from 'mobx-react';
-import styled from 'styled-components';
 import { withSnackbar } from 'notistack';
 import ProductForm from './ProductForm';
 import validate from '../services/validate';
 import history from '../../../history';
-
-const Wrap = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-`;
+import { Wrap } from '../../SharedComponents';
 
 const ProductNew = ({
   CategoriesStore: { getCategories, categories },

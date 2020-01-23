@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Navigation from '../Navigation';
 import Header from '../Header';
 
-const Wrap = styled.div`
+const ContentWrap = styled.div`
   height: 100%;
   position: relative;
   padding-left: 250px;
@@ -13,11 +13,11 @@ const Wrap = styled.div`
 
 const AppContainer = ({ children }) => {
   return (
-    <Wrap>
+    <ContentWrap>
       <Navigation />
       <Header />
       <Box p={3}>{children}</Box>
-    </Wrap>
+    </ContentWrap>
   );
 };
 
