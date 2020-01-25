@@ -4,6 +4,7 @@ import {
   clearAllProductsAndPositions,
   saveImportedData,
 } from '../../../resources/api';
+import prepareImportData from '../services/prepareImportData';
 
 export default types
   .model('ImportStore', {
@@ -34,13 +35,33 @@ export default types
       self.importedData = data;
     };
 
+
+
+
+
+
+
+
     const publishData = flow(function* publishData() {
       self.publishState = LOAD_STATES.PENDING;
 
-      // FORMAT DATA HERE
 
+      const data = prepareImportData(self.importedData);
+      console.log('PREPARED DATA >>>>>>', data);
+      // TODO: удалять первые и последние пробелы!!!!!
+
+
+
+
+
+
+
+
+
+      
       try {
-        yield saveImportedData();
+        const result = yield saveImportedData({ data });
+        console.log('SERVER RESPONSE >>>>>>', result ? result.data : result);
         self.publishState = LOAD_STATES.DONE;
       } catch (error) {
         console.error('PUBLISH IMPORTED DATA ERROR: ', error);
@@ -48,6 +69,20 @@ export default types
       }
       // return self.publishState;
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const deleteAllProducts = flow(function* deleteAllProducts() {
       self.deleteAllState = LOAD_STATES.PENDING;

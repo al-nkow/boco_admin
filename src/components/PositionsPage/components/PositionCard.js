@@ -41,7 +41,7 @@ const PositionCard = ({ position }) => {
       <CardActionArea onClick={goToProduct}>
         <CardMedia
           style={{ height: '140px' }}
-          image={position.product.link || defaultImage}
+          image={position.product.image || defaultImage}
           title="Contemplative Reptile"
         />
         <CardContent>
