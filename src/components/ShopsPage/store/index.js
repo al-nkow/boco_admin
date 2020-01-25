@@ -9,6 +9,7 @@ import {
 
 const Shop = types.model('Shop', {
   _id: types.string,
+  key: types.string,
   name: types.string,
   image: types.string,
   comments: types.optional(types.string, ''),

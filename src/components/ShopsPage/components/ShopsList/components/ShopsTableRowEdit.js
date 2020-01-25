@@ -32,12 +32,12 @@ const LastTableCell = styled(TableCell)`
 const ShopsTableRowEdit = ({
   enqueueSnackbar,
   setEditMode,
-  shop: { _id, image, name, comments },
+  shop: { _id, image, name, key, comments },
   ShopsStore: { editShop },
 }) => {
   const [hasImage, setImage] = useState(image);
   const [files, setFiles] = useState([]);
-  const initialValues = { name, comments };
+  const initialValues = { name, key, comments };
 
   const clearOldImage = () => setImage('');
   const cancel = () => setEditMode(false);
@@ -46,6 +46,7 @@ const ShopsTableRowEdit = ({
   const formDataToBeSent = values => {
     const bodyFormData = new FormData();
     bodyFormData.append('name', values.name);
+    bodyFormData.append('key', values.key);
     bodyFormData.append('comments', values.comments);
     bodyFormData.append('image', hasImage);
 
@@ -89,7 +90,12 @@ const ShopsTableRowEdit = ({
         {hasImage ? (
           <ShopsTableRowImage image={image} clear={clearOldImage} />
         ) : (
-          <DropZone onChange={filesAdded} size="cell" />
+          <DropZone
+            onChange={filesAdded}
+            size="cell"
+            maxFileSize={2}
+            accept="image/x-png,image/jpeg"
+          />
         )}
       </TableCell>
       <TableCell align="left">
@@ -101,6 +107,19 @@ const ShopsTableRowEdit = ({
           fullWidth
           type="text"
           error={errors.name && touched.name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      </TableCell>
+      <TableCell align="left">
+        <StyledTextField
+          variant="outlined"
+          autoComplete="off"
+          name="key"
+          value={values.key}
+          fullWidth
+          type="text"
+          error={errors.key && touched.key}
           onChange={handleChange}
           onBlur={handleBlur}
         />

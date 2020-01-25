@@ -19,6 +19,7 @@ const ShopsList = ({ shops }) => {
             <TableRow>
               <TableCell>Логотип</TableCell>
               <TableCell align="left">Название</TableCell>
+              <TableCell align="left">Ключ</TableCell>
               <TableCell align="right">Комментарии</TableCell>
               <TableCell align="right">Действия</TableCell>
             </TableRow>

@@ -19,6 +19,7 @@ const Index = ({
   const [open, setOpen] = React.useState(false);
   const initialValues = {
     files: '',
+    key: '',
     name: '',
     comments: '',
   };
@@ -27,9 +28,10 @@ const Index = ({
   const handleClose = () => setOpen(false);
 
   const onSubmit = async values => {
-    const { files, name, comments } = values;
+    const { files, name, key, comments } = values;
     const bodyFormData = new FormData();
     bodyFormData.append('name', name);
+    bodyFormData.append('key', key);
     bodyFormData.append('comments', comments);
 
     if (files && files.length)

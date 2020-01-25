@@ -58,6 +58,18 @@ const ShopCreateForm = ({
             />
             <TextField
               autoComplete="off"
+              name="key"
+              value={values.key}
+              label="Ключ"
+              fullWidth
+              type="text"
+              helperText={errors.key && touched.key ? errors.key : ''}
+              error={errors.key && touched.key}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <TextField
+              autoComplete="off"
               name="comments"
               value={values.comments}
               label="Комментарии"

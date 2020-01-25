@@ -18,7 +18,7 @@ const StyledImage = styled.img`
 const ShopsTableRowView = ({
   askDeleteShop,
   setEditMode,
-  shop: { _id, image, name, comments },
+  shop: { _id, image, name, key, comments },
 }) => {
   return (
     <TableRow>
@@ -26,6 +26,7 @@ const ShopsTableRowView = ({
         <StyledImage src={`${BASE_URL}${image}`} alt="" />
       </TableCell>
       <TableCell align="left">{name}</TableCell>
+      <TableCell align="left">{key}</TableCell>
       <TableCell align="right">{comments}</TableCell>
       <TableCell align="right">
         <Tooltip title="Удалить" placement="top-end" enterDelay={500}>
