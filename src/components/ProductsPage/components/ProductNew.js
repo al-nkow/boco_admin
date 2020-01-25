@@ -18,7 +18,7 @@ const ProductNew = ({
     brand: '',
     bocoArticle: '',
     category: '',
-    link: '',
+    image: '',
     height: '',
     width: '',
     length: '',
