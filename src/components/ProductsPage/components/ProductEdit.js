@@ -16,16 +16,18 @@ const ProductEdit = ({
 }) => {
   const initialValues = {
     name: product.name || '',
+    description: product.description || '',
     brand: product.brand || '',
     bocoArticle: product.bocoArticle || '',
     category: product.category || '',
-    link: product.link || '',
+    image: product.image || '',
     height: product.height || '',
     width: product.width || '',
-    length: product.length || '',
-    value: product.value || '',
+    thickness: product.thickness || '',
+    volumeL: product.volumeL || '',
+    volumeM: product.volumeM || '',
     weight: product.weight || '',
-    color: product.color || '',
+    area: product.area || '',
   };
 
   const onSubmit = async values => {

@@ -50,9 +50,7 @@ export default types
       console.log('PREPARED DATA >>>>>>', data);
       // TODO: удалять первые и последние пробелы!!!!!
 
-
-
-
+      
 
 
 

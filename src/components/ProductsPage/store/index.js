@@ -13,16 +13,18 @@ let lastGetParams = null;
 const Product = types.model('Product', {
   _id: types.string,
   name: types.string,
+  description: types.optional(types.maybeNull(types.string), null),
   brand: types.optional(types.maybeNull(types.string), null),
   bocoArticle: types.optional(types.maybeNull(types.string), null), //types.optional(types.string, ''),
   category: types.optional(types.maybeNull(types.string), null),
   image: types.optional(types.maybeNull(types.string), null),
   height: types.optional(types.maybeNull(types.number), null),
   width: types.optional(types.maybeNull(types.number), null),
-  length: types.optional(types.maybeNull(types.number), null),
-  value: types.optional(types.maybeNull(types.number), null),
+  area: types.optional(types.maybeNull(types.number), null),
   weight: types.optional(types.maybeNull(types.number), null),
-  color: types.optional(types.maybeNull(types.string), null),
+  volumeL: types.optional(types.maybeNull(types.number), null),
+  volumeM: types.optional(types.maybeNull(types.number), null),
+  thickness: types.optional(types.maybeNull(types.number), null),
 });
 
 export default types

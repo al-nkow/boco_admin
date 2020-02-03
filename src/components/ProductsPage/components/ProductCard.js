@@ -87,6 +87,7 @@ const ProductCard = ({ product, deleteProduct, editProduct }) => {
                 {product.brand}
               </Box>
             )}
+            {product.description && <p>{product.description}</p>}
             <Grid container spacing={2}>
               {product.height && (
                 <Grid item>Высота: {product.height}мм</Grid>
@@ -94,20 +95,23 @@ const ProductCard = ({ product, deleteProduct, editProduct }) => {
               {product.width && (
                 <Grid item>Ширина: {product.width}мм</Grid>
               )}
-              {product.length && (
-                <Grid item>Длина: {product.length}мм</Grid>
+              {product.thickness && (
+                <Grid item>Толщина: {product.thickness}мм</Grid>
               )}
-              {product.value && (
-                <Grid item>Объем: {product.value}л</Grid>
+              {product.area && (
+                <Grid item>Площадь: {product.area}м.кв</Grid>
+              )}
+              {product.volumeL && (
+                <Grid item>Объем: {product.volumeL}л</Grid>
+              )}
+              {product.volumeM && (
+                <Grid item>Объем: {product.volumeM}м.кв</Grid>
               )}
               {product.weight && (
                 <Grid item>Вес: {product.weight}кг</Grid>
               )}
-              {product.color && (
-                <Grid item>Цвет: {product.color}</Grid>
-              )}
               {product.bocoArticle && (
-                <Grid item>Арт: <b>{product.bocoArticle}</b></Grid>
+                <Grid item>Артикул: <b>{product.bocoArticle}</b></Grid>
               )}
             </Grid>
           </Grid>

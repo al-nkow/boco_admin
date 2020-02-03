@@ -167,17 +167,17 @@ const ProductForm = ({
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  label="Длина (мм)"
-                  name="length"
-                  value={values.length}
+                  label="Толщина (мм)"
+                  name="thickness"
+                  value={values.thickness}
                   type="text"
                   fullWidth
                   helperText={
-                    errors.length && touched.length
-                      ? errors.length
+                    errors.thickness && touched.thickness
+                      ? errors.thickness
                       : ''
                   }
-                  error={errors.length && touched.length}
+                  error={errors.thickness && touched.thickness}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -185,14 +185,33 @@ const ProductForm = ({
               <Grid item xs={4}>
                 <TextField
                   label="Объем (л)"
-                  name="value"
-                  value={values.value}
+                  name="volumeL"
+                  value={values.volumeL}
                   type="text"
                   fullWidth
                   helperText={
-                    errors.value && touched.value ? errors.value : ''
+                    errors.volumeL && touched.volumeL
+                      ? errors.volumeL
+                      : ''
                   }
-                  error={errors.value && touched.value}
+                  error={errors.volumeL && touched.volumeL}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  label="Объем (м.кв)"
+                  name="volumeM"
+                  value={values.volumeM}
+                  type="text"
+                  fullWidth
+                  helperText={
+                    errors.volumeM && touched.volumeM
+                      ? errors.volumeM
+                      : ''
+                  }
+                  error={errors.volumeM && touched.volumeM}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -216,15 +235,15 @@ const ProductForm = ({
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  label="Цвет"
-                  name="color"
-                  value={values.color}
+                  label="Площадь"
+                  name="area"
+                  value={values.area}
                   type="text"
                   fullWidth
                   helperText={
-                    errors.color && touched.color ? errors.color : ''
+                    errors.area && touched.area ? errors.area : ''
                   }
-                  error={errors.color && touched.color}
+                  error={errors.area && touched.area}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />

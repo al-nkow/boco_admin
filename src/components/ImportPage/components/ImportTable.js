@@ -46,6 +46,7 @@ const ImportTable = ({ ImportStore: { importedData } }) => {
                     <TableCell>Артикул boco</TableCell>
                     <TableCell>Категория</TableCell>
                     <TableCell>Название</TableCell>
+                    <TableCell>Описание</TableCell>
                     <TableCell>Изображение</TableCell>
                     <TableCell>Марка</TableCell>
                     <TableCell>Вес (кг)</TableCell>
@@ -75,6 +76,7 @@ const ImportTable = ({ ImportStore: { importedData } }) => {
                       <TableCell>{item.bocoArticle}</TableCell>
                       <TableCell>{item.category}</TableCell>
                       <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.description}</TableCell>
                       <TableCell>
                         {item.image && (
                           <Image src={item.image} alt="" />

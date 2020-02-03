@@ -15,16 +15,18 @@ const ProductNew = ({
 }) => {
   const initialValues = {
     name: '',
+    description: '',
     brand: '',
     bocoArticle: '',
     category: '',
     image: '',
     height: '',
     width: '',
-    length: '',
-    value: '',
+    thickness: '',
+    volumeL: '',
+    volumeM: '',
     weight: '',
-    color: '',
+    area: '',
   };
 
   const onSubmit = async values => {
