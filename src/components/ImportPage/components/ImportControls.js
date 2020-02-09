@@ -5,6 +5,9 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import ClearIcon from '@material-ui/icons/Clear';
 import WarningIcon from '@material-ui/icons/Warning';
 import PublishIcon from '@material-ui/icons/Publish';
+import { withSnackbar } from 'notistack';
+import { LOAD_STATES } from '../../../config/constants';
+import history from '../../../history';
 
 const ImportControls = ({
   data,
@@ -13,10 +16,27 @@ const ImportControls = ({
   clickDeleteAll,
   clearData,
   publishData,
+  enqueueSnackbar,
 }) => {
 
   // какого хера 2 раза ???????
   console.log('RENDER IMPORTCONTROLS >>>>>>', data ? data.toJSON() : null);
+
+  const saveImportedData = async () => {
+    const publishState = await publishData();
+    if (publishState === LOAD_STATES.ERROR) {
+      enqueueSnackbar('Ошибка при отправке данных на сервер', {
+        variant: 'error',
+      });
+    } else if (publishState === LOAD_STATES.DONE) {
+      enqueueSnackbar('Все данные успешно сохранены!', {
+        variant: 'success',
+      });
+      // clearData();
+      // переход на страницу товаров
+      history.push(`/products`);
+    }
+  };
 
   return (
     <Box mb={2}>
@@ -63,7 +83,7 @@ const ImportControls = ({
               variant="contained"
               color="primary"
               startIcon={<PublishIcon />}
-              onClick={publishData}
+              onClick={saveImportedData}
             >
               Отправить данные на сервер
             </Button>
@@ -74,4 +94,4 @@ const ImportControls = ({
   );
 };
 
-export default ImportControls;
+export default withSnackbar(ImportControls);

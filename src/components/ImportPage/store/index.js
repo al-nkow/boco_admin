@@ -65,7 +65,7 @@ export default types
         console.error('PUBLISH IMPORTED DATA ERROR: ', error);
         self.publishState = LOAD_STATES.ERROR;
       }
-      // return self.publishState;
+      return self.publishState;
     });
 
 
