@@ -1,4 +1,7 @@
-export const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
+export const API_DOMAIN =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_API_DOMAIN_PROD
+    : process.env.REACT_APP_API_DOMAIN_DEV;
 
 export const LOGIN = `${API_DOMAIN}/api/auth/`;
 export const LOGOUT = `${API_DOMAIN}/api/auth/logout`;

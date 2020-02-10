@@ -12,6 +12,7 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import FolderIcon from '@material-ui/icons/Folder';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import Button from '@material-ui/core/Button';
+import { darkBg, lightText, orange, blue } from '../../config/colors';
 
 import { logout } from '../../resources/api';
 import { AUTH_TOKEN } from '../../config/constants';
@@ -23,8 +24,8 @@ const Wrap = styled.div`
   top: 0
   bottom: 0;
   width: 250px;
-  background: #577a8e;
-  color: #ffffff;
+  background: ${darkBg};
+  color: ${lightText};
   box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 
   0px 2px 2px 0px rgba(0,0,0,0.14), 
   0px 1px 5px 0px rgba(0,0,0,0.12);
@@ -35,8 +36,11 @@ const StyledLink = styled(NavLink)`
   color: inherit;
   &.selected {
     .MuiListItem-root {
-      border-left: 4px solid #ffffff;
+      border-left: 4px solid ${orange};
     }
+  }
+  .MuiSvgIcon-root {
+    fill: ${blue};
   }
 `;
 

@@ -7,10 +7,7 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import { BASE_URL } from '../../../config/constants';
 import history from '../../../history';
-// import CardActions from '@material-ui/core/CardActions';
-// import Typography from '@material-ui/core/Typography';
-// import IconButton from '@material-ui/core/IconButton';
-// import DeleteIcon from '@material-ui/icons/Delete';
+import noImage from '../../../public/images/no-image.svg';
 
 const StyledImage = styled.img`
   width: 100%;
@@ -29,9 +26,6 @@ const Name = styled.div`
 `;
 
 const PositionCard = ({ position }) => {
-  const defaultImage =
-    'https://i.pinimg.com/originals/2c/a6/20/2ca62076d91319fd3fb1062bdb20ab13.jpg';
-
   const goToProduct = () => {
     history.push(`/products/${position.product._id}`);
   };
@@ -41,7 +35,7 @@ const PositionCard = ({ position }) => {
       <CardActionArea onClick={goToProduct}>
         <CardMedia
           style={{ height: '140px' }}
-          image={position.product.image || defaultImage}
+          image={position.product.image || noImage}
           title="Contemplative Reptile"
         />
         <CardContent>

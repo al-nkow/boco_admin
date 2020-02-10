@@ -35,9 +35,6 @@ export const clearToken = () => {
 };
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-const baseUrl = process.env.REACT_APP_API_DOMAIN;
-// const baseUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_PROD_API_URL : process.env.REACT_APP_DEV_API_URL;
-
 APIService.interceptors.request.use(
   async config => {
     if (localStorage.getItem(AUTH_TOKEN.EXPIRES) * 1000 >= Date.now())
@@ -47,7 +44,7 @@ APIService.interceptors.request.use(
     if (!refreshToken) return config;
 
     // Если токен протух - просим новый токен!
-    const result = await fetch(baseUrl + '/api/auth/token', {
+    const result = await fetch(API_DOMAIN + '/api/auth/token', {
       method: 'post',
       headers: {
         'Accept': 'application/json',

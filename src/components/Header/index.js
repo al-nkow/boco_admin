@@ -2,11 +2,12 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
+import { darkerBg, lightText } from '../../config/colors';
 
 const Wrap = styled.div`
   padding: 10px 20px;
-  background: #546f7f;
-  color: #ffffff;
+  background: ${darkerBg};
+  color: ${lightText};
   font-size: 20px;
 `;
 

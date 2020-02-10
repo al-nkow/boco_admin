@@ -10,10 +10,41 @@ import styled from 'styled-components';
 import ButtonWithLoader from '../ButtonWithLoader';
 import InputPassword from '../InputPassword';
 import { LOAD_STATES } from '../../config/constants';
-import { textLight } from '../../config/colors';
+import { textLight, darkBg } from '../../config/colors';
+import pattern from '../../public/images/email-pattern.png';
+import logo from '../../public/images/logo-long.png';
+
+const Container = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+`;
+
+const Header = styled.div`
+  padding: 10px 0;
+  background: ${darkBg};
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+`;
+
+const Logo = styled.a`
+  display: block;
+  width: 160px;
+  img {
+    width: 100%;
+  }
+`;
+
+const PageBg = styled.div`
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: url(${pattern});
+`;
 
 const Wrap = styled.div`
-  margin: 50px auto;
+  margin: 100px auto 0 auto;
   width: 400px;
   max-width: 90%;
 `;
@@ -23,6 +54,12 @@ const StyledInputAdornment = styled(InputAdornment)`
     color: ${textLight};
     margin-right: 13px;
   }
+`;
+
+const Title = styled.div`
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 20px;
 `;
 
 const LoginPage = ({
@@ -81,48 +118,60 @@ const LoginPage = ({
   }, [loadState, enqueueSnackbar]);
 
   return (
-    <Wrap>
-      <Paper>
-        <Box p={2}>
-          <Box mb={1}>
-            <TextField
-              label="Email"
-              fullWidth
-              value={email}
-              onChange={handleChange('email')}
+    <PageBg>
+      <Header>
+        <Container>
+          <Logo href="/">
+            <img src={logo} alt="" />
+          </Logo>
+        </Container>
+      </Header>
+      <Wrap>
+        <Paper>
+          <Box p={2}>
+            <Title>
+              Административная панель
+            </Title>
+            <Box mb={1}>
+              <TextField
+                label="Email"
+                fullWidth
+                value={email}
+                onChange={handleChange('email')}
+                onFocus={clearErrors}
+                onBlur={checkEmailValidity}
+                helperText={emailError}
+                error={!!emailError}
+                InputProps={{
+                  endAdornment: (
+                    <StyledInputAdornment position="end">
+                      <EmailIcon />
+                    </StyledInputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+            <InputPassword
+              label="Password"
+              value={password}
+              onChange={handleChange('password')}
               onFocus={clearErrors}
-              onBlur={checkEmailValidity}
-              helperText={emailError}
-              error={!!emailError}
-              InputProps={{
-                endAdornment: (
-                  <StyledInputAdornment position="end">
-                    <EmailIcon />
-                  </StyledInputAdornment>
-                ),
-              }}
+              onBlur={checkPasswordValidity}
+              helperText={passwordError}
+              error={!!passwordError}
             />
+            <Box pt={3}>
+              <ButtonWithLoader
+                label="Войти"
+                onClick={submit}
+                isPending={loadState === LOAD_STATES.PENDING}
+                disabled={Boolean(emailError || passwordError)}
+              />
+            </Box>
           </Box>
-          <InputPassword
-            label="Password"
-            value={password}
-            onChange={handleChange('password')}
-            onFocus={clearErrors}
-            onBlur={checkPasswordValidity}
-            helperText={passwordError}
-            error={!!passwordError}
-          />
-          <Box pt={3}>
-            <ButtonWithLoader
-              label="Войти"
-              onClick={submit}
-              isPending={loadState === LOAD_STATES.PENDING}
-              disabled={Boolean(emailError || passwordError)}
-            />
-          </Box>
-        </Box>
-      </Paper>
-    </Wrap>
+        </Paper>
+      </Wrap>
+    </PageBg>
   );
 };
 

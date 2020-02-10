@@ -1,4 +1,7 @@
-export const BASE_URL = 'http://localhost:5000';
+export const BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_API_DOMAIN_PROD
+    : process.env.REACT_APP_API_DOMAIN_DEV;
 
 // Load states
 export const LOAD_STATES = {

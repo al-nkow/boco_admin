@@ -10,7 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import noimage from '../../../public/images/noimage.png';
+import noImage from '../../../public/images/no-image.svg';
 
 const Image = styled.img`
   width: 100%;
@@ -71,7 +71,7 @@ const ProductCard = ({ product, deleteProduct, editProduct }) => {
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <Image src={product.image || noimage} alt="" />
+            <Image src={product.image || noImage} alt="" />
           </Grid>
           <Grid item xs={9}>
             <Title>{product.name}</Title>
