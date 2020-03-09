@@ -10,9 +10,10 @@ import { Wrap } from '../SharedComponents';
 import PositionCard from './components/PositionCard';
 import Loader from '../Loader';
 import Pagination from '../Pagination';
+import { LOAD_STATES } from '../../config/constants';
 
 const PositionsPage = ({
-  PositionsStore: { getPositions, positions, countPositions },
+  PositionsStore: { getPositions, positions, countPositions, loadState },
 }) => {
   const [filter, setFilter] = useState({ article: '' });
   const initPage = 0;
@@ -52,9 +53,10 @@ const PositionsPage = ({
           </Grid>
         </Grid>
       </Box>
-      {!positions && <Loader />}
+      {loadState === LOAD_STATES.PENDING && <Loader />}
       <Grid container spacing={3}>
         {positions &&
+          loadState !== LOAD_STATES.PENDING &&
           positions.map(item => (
             <Grid key={item._id} item xs={6} md={4}>
               <PositionCard position={item} />
