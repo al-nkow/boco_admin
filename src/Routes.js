@@ -10,6 +10,7 @@ import ShopsPage from './components/ShopsPage';
 import CategoriesPage from './components/CategoriesPage';
 import ProductsPage from './components/ProductsPage';
 import ImportPage from './components/ImportPage';
+import CurrentUserPage from './components/CurrentUser';
 
 const Routes = () => {
   return (
@@ -40,6 +41,9 @@ const Routes = () => {
             </Route>
             <Route path="/import">
               <ImportPage />
+            </Route>
+            <Route path="/me">
+              <CurrentUserPage />
             </Route>
           </Switch>
         </PrivateRoute>

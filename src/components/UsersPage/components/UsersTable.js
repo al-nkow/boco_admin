@@ -11,9 +11,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
+import { AUTH_TOKEN } from '../../../config/constants';
 
 const UsersTable = ({ users, deleteUser, editUser }) => {
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem(AUTH_TOKEN.USER_ID);
   return (
     <Paper>
       <Box p={2}>

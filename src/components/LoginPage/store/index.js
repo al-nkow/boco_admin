@@ -5,8 +5,8 @@ import { saveToken } from '../../../resources/services/APIService';
 import history from '../../../history';
 
 const initFormData = {
-  email: 'admin@admin.com',
-  password: 'qwerty',
+  email: 'tamir83@mail.ru',
+  password: 'Gfhjkm83',
 };
 
 const initFormErrors = {

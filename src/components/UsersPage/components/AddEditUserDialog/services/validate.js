@@ -1,4 +1,4 @@
-import { isValidEmail } from '../../../../../services/validate';
+import { isValidEmail } from '../../../../../config/constants';
 
 const validate = values => {
   const errors = {};

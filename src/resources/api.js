@@ -7,6 +7,7 @@ import {
   PRODUCTS,
   POSITIONS,
   IMPORT,
+  CURRENT_USER,
 } from './services/APIEndpoints';
 import API from './services/APIService';
 
@@ -18,6 +19,18 @@ export const logout = params => API.post(LOGOUT, { ...params });
 export const getUsersList = () => API.get(USERS);
 export const deleteUserById = id => API.delete(`${USERS}${id}`);
 export const registerUser = params => API.post(USERS, params);
+
+// CURRENT USER
+export const getCurrentUserInfo = () => API.get(CURRENT_USER);
+export const updateCurrentUserInfo = data =>
+  API({
+    method: 'post',
+    url: `${CURRENT_USER}`,
+    data,
+    config: { headers: { 'Content-Type': 'multipart/form-data' } },
+  });
+export const updateCurrentUserPassword = params =>
+  API.post(`${CURRENT_USER}password`, params);
 
 // SHOPS
 export const createShop = data =>

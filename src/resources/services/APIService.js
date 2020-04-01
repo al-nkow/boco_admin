@@ -17,7 +17,7 @@ export const saveToken = data => {
   localStorage.setItem(AUTH_TOKEN.NAME, data.token);
   localStorage.setItem(AUTH_TOKEN.REFRESH, data.refreshToken);
   localStorage.setItem(AUTH_TOKEN.EXPIRES, data.expiresIn);
-  localStorage.setItem('userId', data.userId);
+  localStorage.setItem(AUTH_TOKEN.USER_ID, data.userId);
   APIService.defaults.headers['x-auth-token'] = `${data.token}`;
 };
 
@@ -30,7 +30,7 @@ export const clearToken = () => {
   localStorage.setItem(AUTH_TOKEN.NAME, undefined);
   localStorage.setItem(AUTH_TOKEN.REFRESH, undefined);
   localStorage.setItem(AUTH_TOKEN.EXPIRES, undefined);
-  localStorage.setItem('userId', undefined);
+  localStorage.setItem(AUTH_TOKEN.USER_ID, undefined);
   APIService.defaults.headers.common['x-auth-token'] = undefined;
 };
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

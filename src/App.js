@@ -13,25 +13,7 @@ import theme from './config/theme';
 
 import { red, green, orange, slateblue } from './config/colors';
 import Routes from './Routes';
-
-// stores
-import LoginStore from './components/LoginPage/store';
-import UsersStore from './components/UsersPage/store';
-import ShopsStore from './components/ShopsPage/store';
-import CategoriesStore from './components/CategoriesPage/store';
-import ProductsStore from './components/ProductsPage/store';
-import PositionsStore from './components/PositionsPage/store';
-import ImportStore from './components/ImportPage/store';
-
-const store = {
-  LoginStore: LoginStore.create({}),
-  UsersStore: UsersStore.create({}),
-  ShopsStore: ShopsStore.create({}),
-  CategoriesStore: CategoriesStore.create({}),
-  ProductsStore: ProductsStore.create({}),
-  PositionsStore: PositionsStore.create({}),
-  ImportStore: ImportStore.create({}),
-};
+import store from './Store';
 
 const useStyles = makeStyles({
   success: { backgroundColor: green },

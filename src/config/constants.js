@@ -16,4 +16,11 @@ export const AUTH_TOKEN = {
   NAME: 'boco_token',
   EXPIRES: 'boco_token_expires_in',
   REFRESH: 'boco_token_refresh',
+  USER_ID: 'boco_user_id',
 };
+
+// RegExp
+// TODO: сделать здесь только регэксп а не функцию - заменить где используется!!!!
+export const isValidEmail = value =>
+  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value);
+export const checkNameRegexp = /^[a-zа-я][a-zа-я\s]*$/i;

@@ -20,6 +20,7 @@ const pageNames = {
   '/categories': 'Категории товаров',
   '/positions': 'Ассортимент',
   '/import': 'Импорт файла с товарами',
+  '/me': 'Мой профиль',
 };
 
 const Header = ({ location: { pathname } }) => {

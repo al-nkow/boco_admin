@@ -14,3 +14,5 @@ export const beige = '#fcf7f1';
 export const darkBg = '#30394a';
 export const darkerBg = '#272e3a';
 export const lightText = '#eaeaea';
+
+export const darkCardSecondaryText = '#71809c';

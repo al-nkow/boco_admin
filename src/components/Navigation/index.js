@@ -11,12 +11,8 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import FolderIcon from '@material-ui/icons/Folder';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
-import Button from '@material-ui/core/Button';
 import { darkBg, lightText, orange, blue } from '../../config/colors';
-
-import { logout } from '../../resources/api';
-import { AUTH_TOKEN } from '../../config/constants';
-import history from '../../history';
+import SidebarHead from '../SidebarHead';
 
 const Wrap = styled.div`
   position: fixed;
@@ -36,16 +32,21 @@ const StyledLink = styled(NavLink)`
   color: inherit;
   &.selected {
     .MuiListItem-root {
-      border-left: 4px solid ${orange};
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        background: ${orange};
+        width: 4px;
+        left: 0;
+        top: 0;
+        bottom: 0;
+      }
     }
   }
   .MuiSvgIcon-root {
     fill: ${blue};
   }
-`;
-
-const LogoutWrap = styled.div`
-  padding: 20px;
 `;
 
 const Navigation = () => {
@@ -82,22 +83,17 @@ const Navigation = () => {
     },
   ];
 
-  const exit = async () => {
-    const refreshToken = localStorage.getItem(AUTH_TOKEN.REFRESH);
-    try {
-      await logout({ token: refreshToken });
-    } catch (error) {
-      console.error('LOGOUT ERROR: ', error);
-    }
-    localStorage.clear();
-    history.push('/login');
-  };
-
   return (
     <Wrap>
+      <SidebarHead />
       <List>
         {menuItems.map((item, index) => (
-          <StyledLink to={item.link} key={item.name} activeClassName="selected" exact={index === 0}>
+          <StyledLink
+            to={item.link}
+            key={item.name}
+            activeClassName="selected"
+            exact={index === 0}
+          >
             <ListItem button>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
@@ -105,11 +101,6 @@ const Navigation = () => {
           </StyledLink>
         ))}
       </List>
-      <LogoutWrap>
-        <Button variant="contained" onClick={exit} color="primary">
-          Выход
-        </Button>
-      </LogoutWrap>
     </Wrap>
   );
 };

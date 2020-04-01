@@ -13,7 +13,12 @@ import Pagination from '../Pagination';
 import { LOAD_STATES } from '../../config/constants';
 
 const PositionsPage = ({
-  PositionsStore: { getPositions, positions, countPositions, loadState },
+  PositionsStore: {
+    getPositions,
+    positions,
+    countPositions,
+    loadState,
+  },
 }) => {
   const [filter, setFilter] = useState({ article: '' });
   const initPage = 0;
