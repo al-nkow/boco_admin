@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import List from '@material-ui/core/List';
@@ -25,6 +26,14 @@ const Wrap = styled.div`
   box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 
   0px 2px 2px 0px rgba(0,0,0,0.14), 
   0px 1px 5px 0px rgba(0,0,0,0.12);
+  z-index: 100;
+  transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  @media (max-width: 768px) {
+    transform: translate(-100%, 0);
+    &.open {
+      transform: translate(0, 0);
+    }
+  }
 `;
 
 const StyledLink = styled(NavLink)`
@@ -49,7 +58,7 @@ const StyledLink = styled(NavLink)`
   }
 `;
 
-const Navigation = () => {
+const Navigation = ({ open }) => {
   const menuItems = [
     {
       name: 'Ассортимент',
@@ -84,7 +93,7 @@ const Navigation = () => {
   ];
 
   return (
-    <Wrap>
+    <Wrap className={open ? 'open' : ''}>
       <SidebarHead />
       <List>
         {menuItems.map((item, index) => (
@@ -103,6 +112,10 @@ const Navigation = () => {
       </List>
     </Wrap>
   );
+};
+
+Navigation.propTypes = {
+  open: PropTypes.bool.isRequired,
 };
 
 export default Navigation;
