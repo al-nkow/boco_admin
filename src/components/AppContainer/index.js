@@ -44,6 +44,9 @@ const Burger = styled.div`
   &:hover {
     opacity: 0.8;
   }
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const AppContainer = ({ children, history }) => {

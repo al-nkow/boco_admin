@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import * as PropTypes from 'prop-types';
 import TablePagination from '@material-ui/core/TablePagination';
+import styled from 'styled-components';
+
+const StyledTablePagination = styled(TablePagination)`
+  .MuiTablePagination-toolbar {
+    @media (max-width: 768px) {
+      .MuiTablePagination-caption:first-of-type {
+        display: none;
+      }
+    }
+  }
+`;
 
 const Pagination = ({
   countItems,
@@ -50,7 +61,7 @@ const Pagination = ({
   return (
     <>
       {page <= lastPageNumber && countItems ? (
-        <TablePagination
+        <StyledTablePagination
           labelRowsPerPage={label}
           labelDisplayedRows={labelDisplayedRows}
           rowsPerPageOptions={perPageOptions}

@@ -67,7 +67,7 @@ const PositionsPage = ({
         {positions &&
           loadState !== LOAD_STATES.PENDING &&
           positions.map(item => (
-            <Grid key={item._id} item xs={6} md={4}>
+            <Grid key={item._id} item xs={12} sm={6} md={4}>
               <PositionCard position={item} />
             </Grid>
           ))}
