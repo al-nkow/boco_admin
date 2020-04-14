@@ -1,19 +1,27 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import AddIcon from '@material-ui/icons/Add';
-import UsersTable from './components/UsersTable';
+import Grid from '@material-ui/core/Grid';
 import WithConfirmAction from '../WithConfirmAction';
-import { LOAD_STATES } from '../../config/constants';
 import AddEditUserDialog from './components/AddEditUserDialog';
+import UserCard from './components/UserCard';
+import { LOAD_STATES } from '../../config/constants';
 import { Wrap } from '../SharedComponents';
 
 const UsersPage = ({
   confirm,
   enqueueSnackbar,
-  UsersStore: { getUsers, users, deleteUser, deleteUserState },
+  UsersStore: {
+    getUsers,
+    users,
+    deleteUser,
+    deleteUserState,
+    restoreDeleteUserState,
+  },
 }) => {
   const [open, setOpen] = React.useState(false);
   const toggleOpen = isOpen => setOpen(isOpen);
@@ -32,24 +40,16 @@ const UsersPage = ({
         variant: 'success',
       });
     }
-  }, [deleteUserState, enqueueSnackbar]);
+    restoreDeleteUserState();
+  }, [deleteUserState, enqueueSnackbar, restoreDeleteUserState]);
 
   const askDeleteUser = (email, id) => {
     confirm({
       message: `Вы уверены что хотите удалить пользователя ${email}? 
       Это действие невозможно будет отменить.`,
     })
-      .then(() => {
-        deleteUser(id);
-      })
-      .catch(() => {
-        console.log('Delete action canceled by user');
-      });
-  };
-
-  const editUser = user => {
-    console.log('EDIT >>>>>>', user);
-    // toggleOpen(true);
+      .then(() => deleteUser(id))
+      .catch(() => console.log('Delete action canceled by user'));
   };
 
   return (
@@ -66,13 +66,21 @@ const UsersPage = ({
           Добавить
         </Button>
       </Box>
-      <UsersTable
-        users={users}
-        deleteUser={askDeleteUser}
-        editUser={editUser}
-      />
+      <Grid container spacing={2}>
+        {users.map(user => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={user._id}>
+            <UserCard user={user} deleteUser={askDeleteUser} />
+          </Grid>
+        ))}
+      </Grid>
     </Wrap>
   );
+};
+
+UsersPage.propTypes = {
+  confirm: PropTypes.func.isRequired,
+  enqueueSnackbar: PropTypes.func.isRequired,
+  UsersStore: PropTypes.object.isRequired,
 };
 
 export default inject('UsersStore')(

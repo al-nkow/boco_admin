@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from 'styled-components';
@@ -19,7 +20,12 @@ const AddEditUserDialog = ({
   enqueueSnackbar,
   open,
   toggle,
-  UsersStore: { addUser, saveUserError, saveUserState },
+  UsersStore: {
+    addUser,
+    saveUserError,
+    saveUserState,
+    restoreSaveUserState,
+  },
 }) => {
   const initialValues = {
     name: '',
@@ -36,16 +42,20 @@ const AddEditUserDialog = ({
     if (saveUserState === LOAD_STATES.ERROR) {
       enqueueSnackbar(
         saveUserError || 'Ошибка при сохранении пользователя',
-        {
-          variant: 'error',
-        },
+        { variant: 'error' },
       );
     } else if (saveUserState === LOAD_STATES.DONE) {
       enqueueSnackbar('Пользователь добавлен в систему', {
         variant: 'success',
       });
     }
-  }, [saveUserError, enqueueSnackbar, saveUserState]);
+    restoreSaveUserState();
+  }, [
+    saveUserError,
+    enqueueSnackbar,
+    saveUserState,
+    restoreSaveUserState,
+  ]);
 
   return (
     <StyledDialog
@@ -65,6 +75,13 @@ const AddEditUserDialog = ({
       </Formik>
     </StyledDialog>
   );
+};
+
+AddEditUserDialog.propTypes = {
+  enqueueSnackbar: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+  UsersStore: PropTypes.object.isRequired,
 };
 
 export default inject('UsersStore')(

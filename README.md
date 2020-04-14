@@ -9,7 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 1. Удаляя продукт надо удалять весь ассортимент 
 связанный с этим продуктом!!!
 2. В списке товаров сделать поиск (фильтрацию) по boco_article
-3. 
+3. сжать логотипы магазинов (особенно леруа мерлен 1000х1000)
 ```
 
 ## Available Scripts

@@ -10,6 +10,7 @@ const User = types.model('User', {
   email: types.string,
   name: types.string,
   _id: types.string,
+  avatar: types.optional(types.maybeNull(types.string), null),
 });
 
 export default types
@@ -42,6 +43,12 @@ export default types
     saveUserError: types.optional(types.string, ''),
   })
   .actions(self => ({
+    restoreDeleteUserState() {
+      self.deleteUserState = LOAD_STATES.PENDING;
+    },
+    restoreSaveUserState() {
+      self.saveUserState = LOAD_STATES.PENDING;
+    },
     getUsers: flow(function* getUsers() {
       try {
         const { data } = yield getUsersList();
