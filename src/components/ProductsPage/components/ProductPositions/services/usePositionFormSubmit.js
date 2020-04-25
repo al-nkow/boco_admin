@@ -10,7 +10,6 @@ function usePositionFormSubmit(
   cancel,
 ) {
   const createNewPosition = async data => {
-    console.log('CERATE NEW >>>>>>', data);
     const id = await addPosition(data);
     if (id) {
       enqueueSnackbar(`Товар успешно добавлен в магазин`, {
@@ -25,7 +24,6 @@ function usePositionFormSubmit(
   };
 
   const updatePosition = async data => {
-    console.log('UPDATE NEW >>>>>>');
     const state = await editPosition(_id, data);
     if (state === LOAD_STATES.DONE) {
       enqueueSnackbar('Позиция успешно отредактирована', {
@@ -46,9 +44,6 @@ function usePositionFormSubmit(
       shopId,
       productId,
     };
-
-    console.log('SUBMIT >>>>>>', data);
-
 
     if (!_id) {
       createNewPosition(data);

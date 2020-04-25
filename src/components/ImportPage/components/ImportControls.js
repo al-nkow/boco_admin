@@ -18,10 +18,6 @@ const ImportControls = ({
   publishData,
   enqueueSnackbar,
 }) => {
-
-  // какого хера 2 раза ???????
-  console.log('RENDER IMPORTCONTROLS >>>>>>', data ? data.toJSON() : null);
-
   const saveImportedData = async () => {
     const publishState = await publishData();
     if (publishState === LOAD_STATES.ERROR) {

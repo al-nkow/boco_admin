@@ -63,12 +63,6 @@ export default types
     ),
   })
   .actions(self => {
-
-
-
-
-
-
     const getPositions = flow(function* getPositions(params) {
       self.loadState = LOAD_STATES.PENDING;
       try {
@@ -76,9 +70,6 @@ export default types
           data: { list, count },
         } = yield getPositionsList(params);
         lastGetParams = params;
-
-
-
 
         const productIds = list.reduce((res, item) => {
           const { productId } = item;
@@ -93,7 +84,6 @@ export default types
         }, []);
 
         if (shopIds && shopIds.length) {
-          console.log('shopIds >>>>>>', shopIds);
           const shops = yield getShopsList({ id: shopIds });
 
           if (shops && shops.data && shops.data.list) {
@@ -102,14 +92,11 @@ export default types
                 shop => shop._id === position.shopId,
               );
             });
-            console.log('POS SHOPS >>>>>>', shops.data.list);
           }
         }
 
-        // console.log('IDS >>>>>>', productIds);
         if (productIds && productIds.length) {
           const products = yield getProductsList({ id: productIds });
-          console.log('POS PRODUCTS >>>>>>', products.data.list);
 
           if (products && products.data && products.data.list) {
             list.forEach(position => {
@@ -119,14 +106,8 @@ export default types
             });
           }
         }
-        // =================
-
-
 
         self.positions = list;
-
-        console.log('RESULT >>>>>>', self.positions.toJSON());
-
         self.countPositions = count;
         self.loadState = LOAD_STATES.DONE;
       } catch (error) {
@@ -134,16 +115,6 @@ export default types
         self.loadState = LOAD_STATES.ERROR;
       }
     });
-
-
-
-
-
-
-
-
-
-
 
     const addPosition = flow(function* addPosition(params) {
       self.addProductState = LOAD_STATES.PENDING;

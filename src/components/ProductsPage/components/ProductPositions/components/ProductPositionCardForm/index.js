@@ -13,7 +13,7 @@ import WithConfirmAction from '../../../../../WithConfirmAction';
 import validatePositions from '../../services/validate';
 import usePositionFormSubmit from '../../services/usePositionFormSubmit';
 
-const ProductPositionsForm = ({
+const ProductPositionCardForm = ({
   cancel,
   shop,
   PositionsStore: { addPosition, editPosition },
@@ -133,7 +133,7 @@ const ProductPositionsForm = ({
   );
 };
 
-ProductPositionsForm.propTypes = {
+ProductPositionCardForm.propTypes = {
   cancel: PropTypes.func.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired,
   PositionsStore: PropTypes.object.isRequired,
@@ -142,5 +142,5 @@ ProductPositionsForm.propTypes = {
 };
 
 export default inject('PositionsStore')(
-  WithConfirmAction(withSnackbar(observer(ProductPositionsForm))),
+  WithConfirmAction(withSnackbar(observer(ProductPositionCardForm))),
 );

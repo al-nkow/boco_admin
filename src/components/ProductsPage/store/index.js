@@ -72,15 +72,10 @@ export default types
     const getProducts = flow(function* getProducts(params) {
       self.loadState = LOAD_STATES.PENDING;
       try {
-
-        console.log('PARAMS >>>>>>', params);
-
         const {
           data: { list, count },
         } = yield getProductsList(params);
         lastGetParams = params;
-
-        console.log('PROD LIST >>>>>>>>>', list);
         self.products = list;
         self.countProducts = count;
         self.loadState = LOAD_STATES.DONE;
