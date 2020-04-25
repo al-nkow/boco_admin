@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
+import Card from '@material-ui/core/Card';
 import { withSnackbar } from 'notistack';
-import ShopsTableRowView from './ShopsTableRowView';
-import ShopsTableRowEdit from './ShopsTableRowEdit';
-import WithConfirmAction from '../../../../WithConfirmAction';
-import { LOAD_STATES } from '../../../../../config/constants';
+import ShopCardView from '../ShopCardView';
+import ShopCardEdit from '../ShopCardEdit';
+import WithConfirmAction from '../../../WithConfirmAction';
+import { LOAD_STATES } from '../../../../config/constants';
 
-const ShopsTableRow = ({
+const ShopCard = ({
   shop,
   confirm,
   enqueueSnackbar,
   ShopsStore: { deleteShop },
 }) => {
   const [edit, setEdit] = useState(false);
-  const setEditMode = value => setEdit(value);
 
   const performDeleteShop = async id => {
     const deleteState = await deleteShop(id);
@@ -38,18 +38,25 @@ const ShopsTableRow = ({
       .catch(() => {});
   };
 
-  return edit ? (
-    <ShopsTableRowEdit setEditMode={setEditMode} shop={shop} />
-  ) : (
-    <ShopsTableRowView
-      setEditMode={setEditMode}
-      shop={shop}
-      askDeleteShop={askDeleteShop}
-    />
+  const setEditFunc = () => setEdit(true);
+  const cancel = () => setEdit(false);
+
+  return (
+    <Card>
+      {!edit ? (
+        <ShopCardView
+          setEdit={setEditFunc}
+          shop={shop}
+          askDeleteShop={askDeleteShop}
+        />
+      ) : (
+        <ShopCardEdit cancel={cancel} shop={shop} />
+      )}
+    </Card>
   );
 };
 
-ShopsTableRow.propTypes = {
+ShopCard.propTypes = {
   confirm: PropTypes.func.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired,
   shop: PropTypes.object.isRequired,
@@ -57,5 +64,5 @@ ShopsTableRow.propTypes = {
 };
 
 export default inject('ShopsStore')(
-  WithConfirmAction(withSnackbar(ShopsTableRow)),
+  WithConfirmAction(withSnackbar(ShopCard)),
 );

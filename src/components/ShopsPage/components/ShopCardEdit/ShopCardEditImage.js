@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
-import { BASE_URL } from '../../../../../config/constants';
+import { BASE_URL } from '../../../../config/constants';
 
 const ImageWrap = styled.div`
-  width: 100px;
+  width: 80%;
   position: relative;
 `;
 
@@ -23,7 +23,7 @@ const StyledImage = styled.img`
   display: block;
 `;
 
-const ShopsTableRowImage = ({ clear, image }) => {
+const ShopCardEditImage = ({ clear, image }) => {
   return (
     <ImageWrap>
       <CloseBtnWrap>
@@ -43,9 +43,9 @@ const ShopsTableRowImage = ({ clear, image }) => {
   );
 };
 
-ShopsTableRowImage.propTypes = {
+ShopCardEditImage.propTypes = {
   clear: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
 };
 
-export default ShopsTableRowImage;
+export default ShopCardEditImage;

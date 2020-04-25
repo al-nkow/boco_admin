@@ -101,7 +101,7 @@ const ProductsList = ({
       </Box>
       <Grid container spacing={2}>
         {products.map(item => (
-          <Grid item xs={12} md={4} key={item._id}>
+          <Grid item xs={12} sm={6} md={4} key={item._id}>
             <ProductCardCol
               product={item}
               deleteProduct={confirmDeleteProduct}
