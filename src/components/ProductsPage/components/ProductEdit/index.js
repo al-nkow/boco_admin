@@ -2,9 +2,9 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Formik } from 'formik';
-import validate from '../services/validate';
-import ProductForm from './ProductForm';
-import { LOAD_STATES } from '../../../config/constants';
+import validate from '../../services/validate';
+import ProductForm from '../ProductForm';
+import { LOAD_STATES } from '../../../../config/constants';
 
 const ProductEdit = ({
   product,

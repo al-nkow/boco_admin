@@ -3,10 +3,10 @@ import * as PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
-import ProductForm from './ProductForm';
-import validate from '../services/validate';
-import history from '../../../history';
-import { Wrap } from '../../SharedComponents';
+import ProductForm from '../ProductForm';
+import validate from '../../services/validate';
+import history from '../../../../history';
+import { Wrap } from '../../../SharedComponents';
 
 const ProductNew = ({
   CategoriesStore: { getCategories, categories },
@@ -74,6 +74,7 @@ ProductNew.propTypes = {
   ProductsStore: PropTypes.object.isRequired,
 };
 
-export default inject('CategoriesStore', 'ProductsStore')(
-  withSnackbar(observer(ProductNew)),
-);
+export default inject(
+  'CategoriesStore',
+  'ProductsStore',
+)(withSnackbar(observer(ProductNew)));

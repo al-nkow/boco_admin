@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
-import ProductCard from './ProductCard';
-import Loader from '../../Loader';
-import WithConfirmAction from '../../WithConfirmAction';
-import useProductDelete from '../services/useProductDelete';
-import ProductEdit from './ProductEdit';
-import ProductPositions from './ProductPositions';
+import ProductCard from '../ProductCard';
+import Loader from '../../../Loader';
+import WithConfirmAction from '../../../WithConfirmAction';
+import useProductDelete from '../../services/useProductDelete';
+import ProductEdit from '../ProductEdit';
+import ProductPositions from '../ProductPositions';
 
 const ProductItem = ({
   id,
@@ -80,6 +80,7 @@ ProductItem.propTypes = {
   ProductsStore: PropTypes.object.isRequired,
 };
 
-export default inject('CategoriesStore', 'ProductsStore')(
-  WithConfirmAction(withSnackbar(observer(ProductItem))),
-);
+export default inject(
+  'CategoriesStore',
+  'ProductsStore',
+)(WithConfirmAction(withSnackbar(observer(ProductItem))));

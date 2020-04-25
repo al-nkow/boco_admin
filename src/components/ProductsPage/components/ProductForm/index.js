@@ -11,7 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { LOAD_STATES } from '../../../config/constants';
+import { LOAD_STATES } from '../../../../config/constants';
 
 const ProductForm = ({
   categories,
@@ -31,7 +31,7 @@ const ProductForm = ({
         <Paper>
           <Box p={2}>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Наименование"
                   name="name"
@@ -46,7 +46,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Марка (Производитель)"
                   name="brand"
@@ -61,7 +61,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   label="Артикул BOCO"
                   name="bocoArticle"
@@ -78,7 +78,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <Box mt={1}>
                   <FormControl
                     error={errors.category && touched.category}
@@ -133,7 +133,7 @@ const ProductForm = ({
         <Paper>
           <Box p={2}>
             <Grid container spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <TextField
                   label="Высота (мм)"
                   name="height"
@@ -150,7 +150,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <TextField
                   label="Ширина (мм)"
                   name="width"
@@ -165,7 +165,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <TextField
                   label="Толщина (мм)"
                   name="thickness"
@@ -182,7 +182,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <TextField
                   label="Объем (л)"
                   name="volumeL"
@@ -199,7 +199,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <TextField
                   label="Объем (м.кв)"
                   name="volumeM"
@@ -216,7 +216,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <TextField
                   label="Вес (кг)"
                   name="weight"
@@ -233,7 +233,7 @@ const ProductForm = ({
                   onBlur={handleBlur}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <TextField
                   label="Площадь"
                   name="area"

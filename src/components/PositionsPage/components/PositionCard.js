@@ -40,10 +40,7 @@ const PositionCard = ({ position }) => {
         />
         <CardContent>
           <Name>{position.product.name}</Name>
-          <Grid
-            container
-            spacing={3}
-          >
+          <Grid container spacing={3}>
             <Grid item xs={6}>
               <StyledImage
                 src={`${BASE_URL}${position.shop.image}`}

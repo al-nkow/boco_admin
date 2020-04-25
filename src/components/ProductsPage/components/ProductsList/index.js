@@ -8,10 +8,10 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import { withSnackbar } from 'notistack';
-import ProductCard from './ProductCard';
-import WithConfirmAction from '../../WithConfirmAction';
-import Pagination from '../../Pagination';
-import useProductDelete from '../services/useProductDelete';
+import WithConfirmAction from '../../../WithConfirmAction';
+import Pagination from '../../../Pagination';
+import useProductDelete from '../../services/useProductDelete';
+import ProductCardCol from '../ProductCardCol';
 
 const ProductsList = ({
   url,
@@ -72,7 +72,7 @@ const ProductsList = ({
       </Box>
       <Box mb={2}>
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               label="Артикул БОКО"
               fullWidth
@@ -81,7 +81,8 @@ const ProductsList = ({
           </Grid>
           <Grid
             item
-            xs={8}
+            xs={12}
+            md={8}
             container
             justify="flex-end"
             alignItems="flex-end"
@@ -98,16 +99,16 @@ const ProductsList = ({
           </Grid>
         </Grid>
       </Box>
-      {products.map(item => (
-        <Box key={item._id} mb={2}>
-          <Link to={`${url}/${item._id}`} style={linkStyles}>
-            <ProductCard
+      <Grid container spacing={2}>
+        {products.map(item => (
+          <Grid item xs={12} md={4} key={item._id}>
+            <ProductCardCol
               product={item}
               deleteProduct={confirmDeleteProduct}
             />
-          </Link>
-        </Box>
-      ))}
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 };

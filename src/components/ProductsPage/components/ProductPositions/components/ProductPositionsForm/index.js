@@ -10,9 +10,9 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
-import WithConfirmAction from '../../../../WithConfirmAction';
-import validatePositions from '../services/validate';
-import usePositionFormSubmit from '../services/usePositionFormSubmit';
+import WithConfirmAction from '../../../../../WithConfirmAction';
+import validatePositions from '../../services/validate';
+import usePositionFormSubmit from '../../services/usePositionFormSubmit';
 
 const StyledTextField = styled(TextField)`
   &.MuiTextField-root {
