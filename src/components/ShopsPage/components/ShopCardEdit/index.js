@@ -10,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import validate from '../../services/validate';
 import DropZone from '../../../Dropzone';
-import ShopCardEditImage from './ShopCardEditImage';
+import ShopCardEditImage from './components/ShopCardEditImage';
 import { LOAD_STATES } from '../../../../config/constants';
 
 const ShopCardEdit = ({
