@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
@@ -24,6 +24,28 @@ const Info = styled.div`
 `;
 
 const ImportTable = ({ ImportStore: { importedData } }) => {
+  const [count, setCount] = useState(10);
+
+  useEffect(() => {
+    const listener = () => {
+      const browserWinHeight = window.innerHeight;
+      const windowScrollValue = window.pageYOffset;
+      const fullScroll = browserWinHeight + windowScrollValue;
+      const wrap = document.getElementById('contentContainer');
+      const contentHeight = wrap ? wrap.offsetHeight : 0;
+
+      if (contentHeight - fullScroll < 250) {
+        setCount(count + 40);
+      }
+    };
+
+    window.addEventListener('scroll', listener);
+
+    return () => {
+      window.removeEventListener('scroll', listener);
+    };
+  }, [count]);
+
   return (
     <>
       {importedData && (
@@ -71,39 +93,43 @@ const ImportTable = ({ ImportStore: { importedData } }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {importedData.map((item, ind) => (
-                    <TableRow key={ind}>
-                      <TableCell>{item.bocoArticle}</TableCell>
-                      <TableCell>{item.category}</TableCell>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.description}</TableCell>
-                      <TableCell>
-                        {item.image && (
-                          <Image src={item.image} alt="" />
-                        )}
-                      </TableCell>
-                      <TableCell>{item.brand}</TableCell>
-                      <TableCell>{item.weight}</TableCell>
-                      <TableCell>{item.volumeL}</TableCell>
-                      <TableCell>{item.area}</TableCell>
-                      <TableCell>{item.volumeM}</TableCell>
-                      <TableCell>{item.width}</TableCell>
-                      <TableCell>{item.height}</TableCell>
-                      <TableCell>{item.thickness}</TableCell>
-                      <TableCell>{item.leruaArt}</TableCell>
-                      <TableCell>{item.leruaPrice}</TableCell>
-                      <TableCell>{item.leruaLink}</TableCell>
-                      <TableCell>{item.obiArt}</TableCell>
-                      <TableCell>{item.obiPrice}</TableCell>
-                      <TableCell>{item.obiLink}</TableCell>
-                      <TableCell>{item.maxidomArt}</TableCell>
-                      <TableCell>{item.maxidomPrice}</TableCell>
-                      <TableCell>{item.maxidomLink}</TableCell>
-                      <TableCell>{item.petrovichArt}</TableCell>
-                      <TableCell>{item.petrovichPrice}</TableCell>
-                      <TableCell>{item.petrovichLink}</TableCell>
-                    </TableRow>
-                  ))}
+                  {importedData.map(
+                    (item, ind) =>
+                      ind < count && (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <TableRow key={ind}>
+                          <TableCell>{item.bocoArticle}</TableCell>
+                          <TableCell>{item.category}</TableCell>
+                          <TableCell>{item.name}</TableCell>
+                          <TableCell>{item.description}</TableCell>
+                          <TableCell>
+                            {item.image && (
+                              <Image src={item.image} alt="" />
+                            )}
+                          </TableCell>
+                          <TableCell>{item.brand}</TableCell>
+                          <TableCell>{item.weight}</TableCell>
+                          <TableCell>{item.volumeL}</TableCell>
+                          <TableCell>{item.area}</TableCell>
+                          <TableCell>{item.volumeM}</TableCell>
+                          <TableCell>{item.width}</TableCell>
+                          <TableCell>{item.height}</TableCell>
+                          <TableCell>{item.thickness}</TableCell>
+                          <TableCell>{item.leruaArt}</TableCell>
+                          <TableCell>{item.leruaPrice}</TableCell>
+                          <TableCell>{item.leruaLink}</TableCell>
+                          <TableCell>{item.obiArt}</TableCell>
+                          <TableCell>{item.obiPrice}</TableCell>
+                          <TableCell>{item.obiLink}</TableCell>
+                          <TableCell>{item.maxidomArt}</TableCell>
+                          <TableCell>{item.maxidomPrice}</TableCell>
+                          <TableCell>{item.maxidomLink}</TableCell>
+                          <TableCell>{item.petrovichArt}</TableCell>
+                          <TableCell>{item.petrovichPrice}</TableCell>
+                          <TableCell>{item.petrovichLink}</TableCell>
+                        </TableRow>
+                      ),
+                  )}
                 </TableBody>
               </Table>
             </Box>

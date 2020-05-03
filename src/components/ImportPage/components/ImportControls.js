@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -8,6 +9,17 @@ import PublishIcon from '@material-ui/icons/Publish';
 import { withSnackbar } from 'notistack';
 import { LOAD_STATES } from '../../../config/constants';
 import history from '../../../history';
+
+const StyledButton = styled(Button)`
+  &.MuiButtonBase-root {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    @media (max-width: 410px) {
+      margin-right: 0;
+      width: 100%;
+    }
+  }
+`;
 
 const ImportControls = ({
   data,
@@ -28,8 +40,7 @@ const ImportControls = ({
       enqueueSnackbar('Все данные успешно сохранены!', {
         variant: 'success',
       });
-      // clearData();
-      // переход на страницу товаров
+      clearData();
       history.push(`/products`);
     }
   };
@@ -38,7 +49,7 @@ const ImportControls = ({
     <Box mb={2}>
       {!data ? (
         <>
-          <Button
+          <StyledButton
             variant="contained"
             component="label"
             color="primary"
@@ -52,38 +63,34 @@ const ImportControls = ({
               accept=".xls, .xlsx"
               onChange={uploadFile}
             />
-          </Button>
-          <Box component="span" ml={2}>
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<WarningIcon />}
-              onClick={clickDeleteAll}
-            >
-              Удалить все товары
-            </Button>
-          </Box>
+          </StyledButton>
+          <StyledButton
+            variant="contained"
+            color="secondary"
+            startIcon={<WarningIcon />}
+            onClick={clickDeleteAll}
+          >
+            Удалить все товары
+          </StyledButton>
         </>
       ) : (
         <>
-          <Button
+          <StyledButton
             variant="contained"
             color="secondary"
             startIcon={<ClearIcon />}
             onClick={clearData}
           >
             Очистить
-          </Button>
-          <Box component="span" ml={2}>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<PublishIcon />}
-              onClick={saveImportedData}
-            >
-              Отправить данные на сервер
-            </Button>
-          </Box>
+          </StyledButton>
+          <StyledButton
+            variant="contained"
+            color="primary"
+            startIcon={<PublishIcon />}
+            onClick={saveImportedData}
+          >
+            Отправить данные на сервер
+          </StyledButton>
         </>
       )}
     </Box>

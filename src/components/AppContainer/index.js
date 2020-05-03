@@ -68,8 +68,10 @@ const AppContainer = ({ children, history }) => {
     <ContentWrap>
       <Burger onClick={toggleMenu} />
       <Navigation open={open} />
-      <Header />
-      <Box p={3}>{children}</Box>
+      <div id="contentContainer">
+        <Header />
+        <Box p={3}>{children}</Box>
+      </div>
     </ContentWrap>
   );
 };
