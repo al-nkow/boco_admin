@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import CategoriesList from './components/CategoriesList';
+import Grid from '@material-ui/core/Grid';
 import CategoryCreateDialog from './components/CategoryCreateDialog';
 import { Wrap } from '../SharedComponents';
+import CategoryCard from './components/CategoryCard';
 
 const CategoriesPage = ({
   CategoriesStore: { getCategories, categories },
@@ -15,7 +16,14 @@ const CategoriesPage = ({
   return (
     <Wrap>
       <CategoryCreateDialog />
-      <CategoriesList categories={categories} />
+      <Grid container spacing={2}>
+        {categories.map(category => (
+          // eslint-disable-next-line no-underscore-dangle
+          <Grid item xs={12} sm={6} md={4} key={category._id}>
+            <CategoryCard category={category} />
+          </Grid>
+        ))}
+      </Grid>
     </Wrap>
   );
 };

@@ -11,10 +11,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
 import noImage from '../../../../../../public/images/no-image.svg';
 import { BASE_URL } from '../../../../../../config/constants';
+import { red } from '../../../../../../config/colors';
 
 const ShopImg = styled.img`
   max-width: 100%;
   max-height: 42px;
+  &.disabled {
+    opacity: 0.3;
+  }
 `;
 
 const StyledLink = styled.a`
@@ -25,6 +29,11 @@ const StyledLink = styled.a`
 const Price = styled.span`
   font-size: 18px;
   font-weight: 500;
+`;
+
+const NoGoods = styled.div`
+  color: ${red};
+  margin: 10px 0 -10px 0;
 `;
 
 const ProductPositionCardView = ({
@@ -39,7 +48,11 @@ const ProductPositionCardView = ({
       <CardContent>
         <Grid container>
           <Grid item xs={6}>
-            <ShopImg src={shopLogo} alt="" />
+            <ShopImg
+              src={shopLogo}
+              className={productId ? '' : 'disabled'}
+              alt=""
+            />
           </Grid>
           <Grid
             item
@@ -54,7 +67,7 @@ const ProductPositionCardView = ({
         {productId ? (
           <div>Артикул: {article}</div>
         ) : (
-          'Товара нет в наличии'
+          <NoGoods>Товара нет в наличии</NoGoods>
         )}
       </CardContent>
       <CardActions disableSpacing>

@@ -32,7 +32,7 @@ const ShopCreateForm = ({
           загрузить логотип магазина - файл не превышающий размер 2Мб
         </DialogContentText>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Box pt={2}>
               <DropZone
                 onChange={filesAdded}
@@ -41,7 +41,7 @@ const ShopCreateForm = ({
               />
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               autoComplete="off"
               name="name"

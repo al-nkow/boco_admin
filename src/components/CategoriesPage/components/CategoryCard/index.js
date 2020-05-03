@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import { withSnackbar } from 'notistack';
-import CategoriesTableRowView from './CategoriesTableRowView';
-import CategoriesTableRowEdit from './CategoriesTableRowEdit';
-import WithConfirmAction from '../../../../WithConfirmAction';
-import { LOAD_STATES } from '../../../../../config/constants';
+import Card from '@material-ui/core/Card';
+import CategoryCardView from '../CategoryCardView';
+import CategoryCardEdit from '../CategoryCardEdit';
+import WithConfirmAction from '../../../WithConfirmAction';
+import { LOAD_STATES } from '../../../../config/constants';
 
-const CategoriesTableRow = ({
+const CategoryCard = ({
   category,
-  confirm,
   enqueueSnackbar,
+  confirm,
   CategoriesStore: { deleteCategory, editCategory },
 }) => {
   const [edit, setEdit] = useState(false);
   const setEditMode = value => setEdit(value);
 
   const submitEditCategory = async values => {
-    const state = await editCategory(category._id, values);
+    const { _id: id } = category;
+    const state = await editCategory(id, values);
 
     if (state === LOAD_STATES.ERROR) {
       enqueueSnackbar('Ошибка при редактировании категории', {
@@ -54,22 +56,26 @@ const CategoriesTableRow = ({
       .catch(() => {});
   };
 
-  return edit ? (
-    <CategoriesTableRowEdit
-      setEditMode={setEditMode}
-      onSubmit={submitEditCategory}
-      category={category}
-    />
-  ) : (
-    <CategoriesTableRowView
-      setEditMode={setEditMode}
-      category={category}
-      askDeleteCategory={askDeleteCategory}
-    />
+  return (
+    <Card>
+      {!edit ? (
+        <CategoryCardView
+          setEditMode={setEditMode}
+          category={category}
+          askDeleteCategory={askDeleteCategory}
+        />
+      ) : (
+        <CategoryCardEdit
+          setEditMode={setEditMode}
+          onSubmit={submitEditCategory}
+          category={category}
+        />
+      )}
+    </Card>
   );
 };
 
-CategoriesTableRow.propTypes = {
+CategoryCard.propTypes = {
   CategoriesStore: PropTypes.object.isRequired,
   category: PropTypes.object.isRequired,
   confirm: PropTypes.func.isRequired,
@@ -77,5 +83,5 @@ CategoriesTableRow.propTypes = {
 };
 
 export default inject('CategoriesStore')(
-  WithConfirmAction(withSnackbar(CategoriesTableRow)),
+  WithConfirmAction(withSnackbar(CategoryCard)),
 );
