@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -95,6 +96,20 @@ const ImportControls = ({
       )}
     </Box>
   );
+};
+
+ImportControls.propTypes = {
+  clearData: PropTypes.func.isRequired,
+  clickDeleteAll: PropTypes.func.isRequired,
+  data: PropTypes.array,
+  enqueueSnackbar: PropTypes.func.isRequired,
+  inputEl: PropTypes.object.isRequired,
+  publishData: PropTypes.func.isRequired,
+  uploadFile: PropTypes.func.isRequired,
+};
+
+ImportControls.defaultProps = {
+  data: null,
 };
 
 export default withSnackbar(ImportControls);

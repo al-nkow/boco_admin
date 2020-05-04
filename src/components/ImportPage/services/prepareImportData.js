@@ -30,7 +30,7 @@ export default function(data) {
 
     const product = {
       bocoArticle,
-      category: category ? category.trim() : null,
+      category,
       name,
       description,
       image,

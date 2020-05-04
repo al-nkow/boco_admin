@@ -51,12 +51,20 @@ function useParseXls() {
       articleKeys.forEach(key => {
         if (item[key]) item[key] = clearSpaces(item[key]) || null;
       });
+
+      if (item.category) item.category = item.category.trim();
+      if (item.name) item.name = item.name.trim();
+
+      const nameLastIndex = item.name ? item.name.length - 1 : 0;
+      if (nameLastIndex && item.name[nameLastIndex] === '.')
+        item.name = item.name.substring(0, nameLastIndex);
     });
   };
 
   return (selectedFile, setData, setLoading) => {
     const reader = new FileReader();
 
+    // eslint-disable-next-line func-names
     reader.onload = function(event) {
       const data = event.target.result;
       const workbook = XLSX.read(data, { type: 'binary' });
@@ -75,6 +83,7 @@ function useParseXls() {
 
     reader.onerror = event => {
       const { code } = event.target.error;
+      // eslint-disable-next-line no-console
       console.error(`File could not be read! Code ${code}`);
       setLoading(false);
     };

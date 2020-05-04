@@ -24,7 +24,6 @@ const PositionsPage = ({
   const initPage = 0;
   const initLimit = 5;
   const paginationBlockStyle = { marginBottom: '-9px' };
-  const artFieldStyle = { maxWidth: '300px' };
 
   const searchByArticle = event => {
     setFilter({ article: event.target.value });
@@ -35,19 +34,14 @@ const PositionsPage = ({
       <Box mb={2}>
         <Grid container>
           <Grid item xs={12} md={4}>
-            <TextField
-              label="Артикул"
-              fullWidth
-              onChange={searchByArticle}
-              style={artFieldStyle}
-            />
+            <TextField label="Артикул" fullWidth />
           </Grid>
           <Grid
             item
             xs={12}
             md={8}
             container
-            justify="center"
+            justify="flex-end"
             alignItems="flex-end"
             style={paginationBlockStyle}
           >

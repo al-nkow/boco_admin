@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import { withSnackbar } from 'notistack';
-import Card from '@material-ui/core/Card';
+import { StyledCard } from '../../../SharedComponents';
 import CategoryCardView from '../CategoryCardView';
 import CategoryCardEdit from '../CategoryCardEdit';
 import WithConfirmAction from '../../../WithConfirmAction';
@@ -57,7 +57,7 @@ const CategoryCard = ({
   };
 
   return (
-    <Card>
+    <StyledCard>
       {!edit ? (
         <CategoryCardView
           setEditMode={setEditMode}
@@ -71,7 +71,7 @@ const CategoryCard = ({
           category={category}
         />
       )}
-    </Card>
+    </StyledCard>
   );
 };
 

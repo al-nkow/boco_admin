@@ -31,56 +31,23 @@ export default types
   })
   .actions(self => {
     const setImportedData = data => {
-      console.log('CLEAR?? >>>>>>', data);
       self.importedData = data;
     };
 
-
-
-
-
-
-
-
     const publishData = flow(function* publishData() {
       self.publishState = LOAD_STATES.PENDING;
-
-
       const data = prepareImportData(self.importedData);
-      console.log('PREPARED DATA >>>>>>', data);
-      // TODO: удалять первые и последние пробелы!!!!!
 
-      
-
-
-
-
-
-      
       try {
-        const result = yield saveImportedData({ data });
-        console.log('SERVER RESPONSE >>>>>>', result ? result.data : result);
+        yield saveImportedData({ data });
         self.publishState = LOAD_STATES.DONE;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('PUBLISH IMPORTED DATA ERROR: ', error);
         self.publishState = LOAD_STATES.ERROR;
       }
       return self.publishState;
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     const deleteAllProducts = flow(function* deleteAllProducts() {
       self.deleteAllState = LOAD_STATES.PENDING;
@@ -88,6 +55,7 @@ export default types
         yield clearAllProductsAndPositions();
         self.deleteAllState = LOAD_STATES.DONE;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('DELETE ALL PRODUCTS ERROR: ', error);
         self.deleteAllState = LOAD_STATES.ERROR;
       }

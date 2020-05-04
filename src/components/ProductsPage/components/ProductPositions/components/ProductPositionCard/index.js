@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { withSnackbar } from 'notistack';
 import { inject } from 'mobx-react';
-import Card from '@material-ui/core/Card';
 import ProductPositionCardView from '../ProductPositionCardView';
 import ProductPositionCardForm from '../ProductPositionCardForm';
 import usePositionDelete from '../../services/usePositionDelete';
 import WithConfirmAction from '../../../../../WithConfirmAction';
+import { StyledCard } from '../../../../../SharedComponents';
 
 const ProductPositionCard = ({
   enqueueSnackbar,
@@ -29,7 +29,7 @@ const ProductPositionCard = ({
   );
 
   return (
-    <Card>
+    <StyledCard>
       {editMode ? (
         <ProductPositionCardForm
           shop={shop}
@@ -44,7 +44,7 @@ const ProductPositionCard = ({
           deletePosition={confirmDeletePosition}
         />
       )}
-    </Card>
+    </StyledCard>
   );
 };
 
