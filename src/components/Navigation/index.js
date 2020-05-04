@@ -17,6 +17,7 @@ import SidebarHead from '../SidebarHead';
 
 const Wrap = styled.div`
   position: fixed;
+  overflow: auto;
   left: 0;
   top: 0
   bottom: 0;
