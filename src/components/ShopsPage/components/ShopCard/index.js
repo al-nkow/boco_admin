@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
-import Card from '@material-ui/core/Card';
 import { withSnackbar } from 'notistack';
 import ShopCardView from '../ShopCardView';
 import ShopCardEdit from '../ShopCardEdit';
 import WithConfirmAction from '../../../WithConfirmAction';
 import { LOAD_STATES } from '../../../../config/constants';
+import { StyledCard } from '../../../SharedComponents';
 
 const ShopCard = ({
   shop,
@@ -42,7 +42,7 @@ const ShopCard = ({
   const cancel = () => setEdit(false);
 
   return (
-    <Card>
+    <StyledCard>
       {!edit ? (
         <ShopCardView
           setEdit={setEditFunc}
@@ -52,7 +52,7 @@ const ShopCard = ({
       ) : (
         <ShopCardEdit cancel={cancel} shop={shop} />
       )}
-    </Card>
+    </StyledCard>
   );
 };
 

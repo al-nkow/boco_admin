@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Swipeable } from 'react-swipeable';
 import { withRouter } from 'react-router-dom';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
 import Navigation from '../Navigation';
 import Header from '../Header';
+import { darkBg } from '../../config/colors';
 
 const ContentWrap = styled.div`
   height: 100%;
@@ -16,6 +18,7 @@ const ContentWrap = styled.div`
 `;
 
 const Burger = styled.div`
+  z-index: 1000;
   cursor: pointer;
   position: fixed;
   top: 12px;
@@ -47,10 +50,20 @@ const Burger = styled.div`
   @media (min-width: 768px) {
     display: none;
   }
+  &.dark {
+    border-top: 2px solid ${darkBg};
+    &:before {
+      background: ${darkBg};
+    }
+    &:after {
+      background: ${darkBg};
+    }
+  }
 `;
 
 const AppContainer = ({ children, history }) => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const toggleMenu = () => setOpen(!open);
 
   useEffect(() => {
@@ -64,15 +77,39 @@ const AppContainer = ({ children, history }) => {
     };
   }, [history]);
 
+  useEffect(() => {
+    const listener = () => {
+      const windowScrollValue = window.pageYOffset;
+      setScrolled(windowScrollValue > 36);
+    };
+
+    window.addEventListener('scroll', listener);
+
+    return () => {
+      window.removeEventListener('scroll', listener);
+    };
+  }, [scrolled]);
+
+  const swipingRight = () => setOpen(true);
+  const swipingLeft = () => setOpen(false);
+
   return (
-    <ContentWrap>
-      <Burger onClick={toggleMenu} />
-      <Navigation open={open} />
-      <div id="contentContainer">
-        <Header />
-        <Box p={3}>{children}</Box>
-      </div>
-    </ContentWrap>
+    <Swipeable
+      onSwipedRight={swipingRight}
+      onSwipedLeft={swipingLeft}
+    >
+      <ContentWrap>
+        <Burger
+          onClick={toggleMenu}
+          className={scrolled ? 'dark' : ''}
+        />
+        <Navigation open={open} />
+        <div id="contentContainer">
+          <Header />
+          <Box p={3}>{children}</Box>
+        </div>
+      </ContentWrap>
+    </Swipeable>
   );
 };
 

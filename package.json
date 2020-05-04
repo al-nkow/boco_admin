@@ -26,6 +26,7 @@
     "react-dropzone": "^10.1.10",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-swipeable": "^5.5.1",
     "styled-components": "^4.4.0",
     "typeface-roboto": "0.0.75",
     "typeface-roboto-cyrillic": "0.0.2",
