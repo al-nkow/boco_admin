@@ -46,6 +46,8 @@ const UserCard = ({
   const deleteClickHandler = () => {
     deleteUser(email, _id);
   };
+  const urlImg = avatar ? BASE_URL + avatar : '';
+  const viewName = name[0].toUpperCase();
 
   const editClickHandler = () => {
     history.push(`/me`);
@@ -55,8 +57,8 @@ const UserCard = ({
     <Wrap align="center">
       <Box p={2}>
         <Box mb={2}>
-          <StyledAvatar alt={name} src={`${BASE_URL}${avatar}`}>
-            {name[0]}
+          <StyledAvatar alt={name} src={urlImg}>
+            {viewName}
           </StyledAvatar>
         </Box>
         <UserName>{name}</UserName>
