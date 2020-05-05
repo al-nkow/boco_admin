@@ -1,12 +1,16 @@
 import { types, flow } from 'mobx-state-tree';
-import { LOAD_STATES } from '../../../config/constants';
+import {
+  LOAD_STATES,
+  DEFAULT_PASSWORD,
+  DEFAULT_EMAIL,
+} from '../../../config/constants';
 import { login } from '../../../resources/api';
 import { saveToken } from '../../../resources/services/APIService';
 import history from '../../../history';
 
 const initFormData = {
-  email: 'tamir83@mail.ru',
-  password: 'Gfhjkm83',
+  email: DEFAULT_EMAIL,
+  password: DEFAULT_PASSWORD,
 };
 
 const initFormErrors = {

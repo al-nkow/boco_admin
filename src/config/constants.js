@@ -3,6 +3,16 @@ export const BASE_URL =
     ? process.env.REACT_APP_API_DOMAIN_PROD
     : process.env.REACT_APP_API_DOMAIN_DEV;
 
+export const DEFAULT_PASSWORD =
+  process.env.NODE_ENV === 'production'
+    ? ''
+    : process.env.REACT_APP_DEFAULT_PASSWORD;
+
+export const DEFAULT_EMAIL =
+  process.env.NODE_ENV === 'production'
+    ? ''
+    : process.env.REACT_APP_DEFAULT_EMAIL;
+
 // Load states
 export const LOAD_STATES = {
   PENDING: 'pending',
