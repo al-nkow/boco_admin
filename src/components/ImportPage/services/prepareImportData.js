@@ -46,13 +46,13 @@ export default function(data) {
 
     const shops = {};
 
-    if (leruaArt || leruaPrice || leruaLink)
+    if (leruaPrice && leruaArt && leruaLink)
       shops.lerua = { leruaArt, leruaPrice, leruaLink };
-    if (obiArt || obiPrice || obiLink)
+    if (obiPrice && obiArt && obiLink)
       shops.obi = { obiArt, obiPrice, obiLink };
-    if (maxidomArt || maxidomPrice || maxidomLink)
+    if (maxidomPrice && maxidomArt && maxidomLink)
       shops.maxidom = { maxidomArt, maxidomPrice, maxidomLink };
-    if (petrovichArt || petrovichPrice || petrovichLink) {
+    if (petrovichPrice && petrovichArt && petrovichLink) {
       shops.petrovich = {
         petrovichArt,
         petrovichPrice,

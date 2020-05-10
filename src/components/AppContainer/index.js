@@ -92,9 +92,11 @@ const AppContainer = ({ children, history }) => {
 
   const swipingRight = () => setOpen(true);
   const swipingLeft = () => setOpen(false);
+  const fullHeightStyle = { height: '100%' };
 
   return (
     <Swipeable
+      style={fullHeightStyle}
       onSwipedRight={swipingRight}
       onSwipedLeft={swipingLeft}
     >
@@ -104,7 +106,7 @@ const AppContainer = ({ children, history }) => {
           className={scrolled ? 'dark' : ''}
         />
         <Navigation open={open} />
-        <div id="contentContainer">
+        <div id="contentContainer" style={fullHeightStyle}>
           <Header />
           <Box p={3}>{children}</Box>
         </div>
