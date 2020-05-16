@@ -8,6 +8,7 @@ import {
   POSITIONS,
   IMPORT,
   CURRENT_USER,
+  WHOLESALE,
 } from './services/APIEndpoints';
 import API from './services/APIService';
 
@@ -80,3 +81,13 @@ export const updatePosition = (id, data) =>
 // IMPORT
 export const clearAllProductsAndPositions = () => API.delete(IMPORT);
 export const saveImportedData = params => API.post(IMPORT, params);
+
+// WHOLESALE
+export const createWholesaleOption = params =>
+  API.post(WHOLESALE, params);
+export const getWholesaleList = params =>
+  API.get(WHOLESALE, { params });
+export const deleteWholesaleOptionById = id =>
+  API.delete(`${WHOLESALE}${id}`);
+export const updateWholesale = (id, data) =>
+  API.put(`${WHOLESALE}${id}`, data);

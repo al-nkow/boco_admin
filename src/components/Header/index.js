@@ -21,6 +21,7 @@ const pageNames = {
   '/positions': 'Ассортимент',
   '/import': 'Импорт файла с товарами',
   '/me': 'Мой профиль',
+  '/wholesale': 'Оптовые параметры',
 };
 
 const Header = ({ location: { pathname } }) => {

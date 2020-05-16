@@ -16,6 +16,7 @@ export const DEFAULT_EMAIL =
 // Load states
 export const LOAD_STATES = {
   PENDING: 'pending',
+  LOADING: 'loading',
   DONE: 'done',
   ERROR: 'error',
   NOT_LOAD: 'not_load',

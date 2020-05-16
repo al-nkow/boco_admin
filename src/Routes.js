@@ -11,6 +11,7 @@ import CategoriesPage from './components/CategoriesPage';
 import ProductsPage from './components/ProductsPage';
 import ImportPage from './components/ImportPage';
 import CurrentUserPage from './components/CurrentUser';
+import Wholesale from './components/Wholesale';
 
 const Routes = () => {
   return (
@@ -44,6 +45,9 @@ const Routes = () => {
             </Route>
             <Route path="/me">
               <CurrentUserPage />
+            </Route>
+            <Route path="/wholesale">
+              <Wholesale />
             </Route>
           </Switch>
         </PrivateRoute>

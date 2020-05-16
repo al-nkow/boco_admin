@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import GroupIcon from '@material-ui/icons/Group';
 import StoreIcon from '@material-ui/icons/Store';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -75,6 +76,11 @@ const Navigation = ({ open }) => {
       name: 'Магазины',
       link: '/shops',
       icon: <StoreIcon />,
+    },
+    {
+      name: 'Оптом',
+      link: '/wholesale',
+      icon: <LocalMallIcon />,
     },
     {
       name: 'Категории',
