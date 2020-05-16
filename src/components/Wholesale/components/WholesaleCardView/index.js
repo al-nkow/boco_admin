@@ -10,6 +10,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import { red } from '../../../../config/colors';
 
+const Name = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+`;
+
 const ImportKey = styled.span`
   color: #ffffff;
   background: ${red};
@@ -30,8 +35,10 @@ const WholesaleCardView = ({
   return (
     <>
       <StyledCardContent>
-        <div>{name}</div>
-        <Box mb={1}>{comments}</Box>
+        <Box mb={2}>
+          <Name>{name}</Name>
+          {comments}
+        </Box>
         <ImportKey>key: {key}</ImportKey>
       </StyledCardContent>
       <CardActions disableSpacing>
