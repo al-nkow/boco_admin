@@ -14,18 +14,29 @@ export default function(data) {
       width = null,
       height = null,
       thickness = null,
+      // -------------
       leruaArt = null,
       leruaPrice = null,
       leruaLink = null,
+      // -------------
       obiArt = null,
       obiPrice = null,
       obiLink = null,
+      // -------------
       maxidomArt = null,
       maxidomPrice = null,
       maxidomLink = null,
+      // -------------
       petrovichArt = null,
       petrovichPrice = null,
       petrovichLink = null,
+      // -------------
+      coopPrice = null,
+      coopQuantity = null,
+      coopLargePrice = null,
+      coopLargeQuantity = null,
+      coopSpecialPrice = null,
+      coopSpecialQuantity = null,
     } = item;
 
     const product = {
@@ -46,6 +57,7 @@ export default function(data) {
 
     const shops = {};
 
+    // TODO: получать ключи из админки!!!!
     if (leruaPrice && leruaArt && leruaLink)
       shops.lerua = { leruaArt, leruaPrice, leruaLink };
     if (obiPrice && obiArt && obiLink)
@@ -59,6 +71,26 @@ export default function(data) {
         petrovichLink,
       };
     }
-    return { product, shops };
+
+    const wholesale = {};
+
+    // TODO: получать coop, coopLarge и coopSpecial из админки!!!
+    if (coopPrice && coopQuantity)
+      wholesale.coop = {
+        price: coopPrice,
+        quantity: coopQuantity,
+      };
+    if (coopLargePrice && coopLargeQuantity)
+      wholesale.coopLarge = {
+        price: coopLargePrice,
+        quantity: coopLargeQuantity,
+      };
+    if (coopSpecialPrice && coopSpecialQuantity)
+      wholesale.coopSpecial = {
+        price: coopSpecialPrice,
+        quantity: coopSpecialQuantity,
+      };
+
+    return { product, shops, wholesale };
   });
 }

@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
+import Box from '@material-ui/core/Box';
 import ProductCard from '../ProductCard';
 import Loader from '../../../Loader';
 import WithConfirmAction from '../../../WithConfirmAction';
 import useProductDelete from '../../services/useProductDelete';
 import ProductEdit from '../ProductEdit';
 import ProductPositions from '../ProductPositions';
+import Supply from '../../../Supply';
 
 const ProductItem = ({
   id,
@@ -67,7 +69,10 @@ const ProductItem = ({
           cancelEdit={() => setEditMode(false)}
         />
       )}
-      <ProductPositions productId={id} />
+      <Box mb={2}>
+        <ProductPositions productId={id} />
+      </Box>
+      <Supply productId={id} />
     </>
   );
 };
@@ -80,7 +85,6 @@ ProductItem.propTypes = {
   ProductsStore: PropTypes.object.isRequired,
 };
 
-export default inject(
-  'CategoriesStore',
-  'ProductsStore',
-)(WithConfirmAction(withSnackbar(observer(ProductItem))));
+export default inject('CategoriesStore', 'ProductsStore')(
+  WithConfirmAction(withSnackbar(observer(ProductItem))),
+);

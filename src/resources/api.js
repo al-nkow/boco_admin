@@ -9,6 +9,7 @@ import {
   IMPORT,
   CURRENT_USER,
   WHOLESALE,
+  SUPPLY,
 } from './services/APIEndpoints';
 import API from './services/APIService';
 
@@ -91,3 +92,6 @@ export const deleteWholesaleOptionById = id =>
   API.delete(`${WHOLESALE}${id}`);
 export const updateWholesale = (id, data) =>
   API.put(`${WHOLESALE}${id}`, data);
+
+// SUPPLY
+export const getSupplyList = params => API.get(SUPPLY, { params });

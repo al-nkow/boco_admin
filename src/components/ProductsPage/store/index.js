@@ -15,7 +15,7 @@ const Product = types.model('Product', {
   name: types.string,
   description: types.optional(types.maybeNull(types.string), null),
   brand: types.optional(types.maybeNull(types.string), null),
-  bocoArticle: types.optional(types.maybeNull(types.string), null), //types.optional(types.string, ''),
+  bocoArticle: types.optional(types.maybeNull(types.string), null),
   category: types.optional(types.maybeNull(types.string), null),
   image: types.optional(types.maybeNull(types.string), null),
   height: types.optional(types.maybeNull(types.number), null),
