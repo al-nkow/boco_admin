@@ -14,3 +14,4 @@ export const POSITIONS = `${API_DOMAIN}/api/positions/`;
 export const IMPORT = `${API_DOMAIN}/api/import/`;
 export const WHOLESALE = `${API_DOMAIN}/api/wholesale/`;
 export const SUPPLY = `${API_DOMAIN}/api/supply/`;
+export const COOPERATIONS = `${API_DOMAIN}/api/cooperations/`;

@@ -56,7 +56,7 @@ const WholesaleCardEdit = ({
         </div>
         <div>
           <TextField
-            label="Название"
+            label="Ключ"
             autoComplete="off"
             name="key"
             value={values.key}
@@ -70,7 +70,7 @@ const WholesaleCardEdit = ({
         </div>
         <div>
           <TextField
-            label="Название"
+            label="Комментарии"
             autoComplete="off"
             name="comments"
             value={values.comments}

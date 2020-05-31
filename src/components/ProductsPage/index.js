@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import {
   Switch,
@@ -20,7 +21,7 @@ const ProductRoutes = () => {
   );
 };
 
-const SomeName = ({
+const ProductsPage = ({
   CategoriesStore: { getCategories, categories },
 }) => {
   const { path, url } = useRouteMatch();
@@ -43,4 +44,8 @@ const SomeName = ({
   );
 };
 
-export default inject('CategoriesStore')(observer(SomeName));
+ProductsPage.propTypes = {
+  CategoriesStore: PropTypes.object.isRequired,
+};
+
+export default inject('CategoriesStore')(observer(ProductsPage));

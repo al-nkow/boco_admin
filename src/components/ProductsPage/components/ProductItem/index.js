@@ -9,6 +9,7 @@ import WithConfirmAction from '../../../WithConfirmAction';
 import useProductDelete from '../../services/useProductDelete';
 import ProductEdit from '../ProductEdit';
 import ProductPositions from '../ProductPositions';
+import CooperationsList from '../../../Cooperations/components/CooperationsList';
 import Supply from '../../../Supply';
 
 const ProductItem = ({
@@ -23,12 +24,25 @@ const ProductItem = ({
     deleteProduct,
     editProduct,
   },
+  CooperationStore: {
+    getCooperationsForProduct,
+    list: cooperationsList,
+    allAmount,
+  },
 }) => {
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     getProductItem(id);
   }, [id, getProductItem]);
+
+  useEffect(() => {
+    if (currentProduct) {
+      getCooperationsForProduct({
+        bocoArticle: currentProduct.bocoArticle,
+      });
+    }
+  }, [currentProduct, getCooperationsForProduct]);
 
   const getCategoryName = () => {
     return categories.reduce((res, item) => {
@@ -72,7 +86,17 @@ const ProductItem = ({
       <Box mb={2}>
         <ProductPositions productId={id} />
       </Box>
-      <Supply productId={id} />
+      <Box mb={3}>
+        <Supply productId={id} />
+      </Box>
+      {cooperationsList && cooperationsList.length ? (
+        <CooperationsList
+          list={cooperationsList}
+          allAmount={allAmount}
+        />
+      ) : (
+        ''
+      )}
     </>
   );
 };
@@ -80,11 +104,14 @@ const ProductItem = ({
 ProductItem.propTypes = {
   CategoriesStore: PropTypes.object.isRequired,
   confirm: PropTypes.func.isRequired,
+  CooperationStore: PropTypes.object.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   ProductsStore: PropTypes.object.isRequired,
 };
 
-export default inject('CategoriesStore', 'ProductsStore')(
-  WithConfirmAction(withSnackbar(observer(ProductItem))),
-);
+export default inject(
+  'CategoriesStore',
+  'ProductsStore',
+  'CooperationStore',
+)(WithConfirmAction(withSnackbar(observer(ProductItem))));

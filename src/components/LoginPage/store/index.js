@@ -32,13 +32,14 @@ export default types
     loginFormErrors: types.optional(types.frozen(), initFormErrors),
   })
   .actions(self => ({
-    login: flow(function* exchange(params) {
+    login: flow(function* loginFunc(params, from) {
       self.loadState = LOAD_STATES.PENDING;
       try {
         const { data } = yield login(params);
         if (data) {
           saveToken(data);
-          history.push('/');
+          const path = from || '/';
+          history.push(path);
         }
         self.loadState = LOAD_STATES.DONE;
       } catch (error) {

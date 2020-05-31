@@ -8,6 +8,7 @@ import CategoriesStore from './components/CategoriesPage/store';
 import CurrentUserStore from './components/CurrentUser/store';
 import WholesaleStore from './components/Wholesale/store';
 import SupplyStore from './components/Supply/store';
+import CooperationStore from './components/Cooperations/store';
 
 export default {
   LoginStore: LoginStore.create({}),
@@ -20,4 +21,5 @@ export default {
   CurrentUserStore: CurrentUserStore.create({}),
   WholesaleStore: WholesaleStore.create({}),
   SupplyStore: SupplyStore.create({}),
+  CooperationStore: CooperationStore.create({}),
 };

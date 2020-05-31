@@ -56,7 +56,6 @@ export default types
           option.wholesaleName = wsItem.name;
         });
         // eslint-disable-next-line prefer-destructuring
-        console.log('>>>>>>>', currentSupply);
         self.currentSupply = currentSupply;
         self.loadState = LOAD_STATES.DONE;
       } catch (error) {

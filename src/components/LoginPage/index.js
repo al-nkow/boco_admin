@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import * as PropTypes from 'prop-types';
 import { withSnackbar } from 'notistack';
+import { useLocation } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
@@ -73,6 +75,12 @@ const LoginPage = ({
     setLoginFormErrors,
   },
 }) => {
+  const location = useLocation();
+  const from =
+    location && location.state && location.state.from
+      ? location.state.from.pathname
+      : null;
+
   const handleChange = name => event => {
     setLoginFormValues({
       [name]: event.target.value,
@@ -105,7 +113,7 @@ const LoginPage = ({
       checkPasswordValidity();
       checkEmailValidity();
     } else {
-      login({ email, password });
+      login({ email, password }, from);
     }
   };
 
@@ -129,9 +137,7 @@ const LoginPage = ({
       <Wrap>
         <Paper>
           <Box p={2}>
-            <Title>
-              Административная панель
-            </Title>
+            <Title>Административная панель</Title>
             <Box mb={1}>
               <TextField
                 label="Email"
@@ -173,6 +179,11 @@ const LoginPage = ({
       </Wrap>
     </PageBg>
   );
+};
+
+LoginPage.propTypes = {
+  enqueueSnackbar: PropTypes.func.isRequired,
+  LoginStore: PropTypes.object.isRequired,
 };
 
 export default inject('LoginStore')(

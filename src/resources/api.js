@@ -10,6 +10,7 @@ import {
   CURRENT_USER,
   WHOLESALE,
   SUPPLY,
+  COOPERATIONS,
 } from './services/APIEndpoints';
 import API from './services/APIService';
 
@@ -95,3 +96,7 @@ export const updateWholesale = (id, data) =>
 
 // SUPPLY
 export const getSupplyList = params => API.get(SUPPLY, { params });
+
+// COOPERATIONS
+export const getCooperationsList = params =>
+  API.get(COOPERATIONS, { params });
