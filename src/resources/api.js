@@ -100,3 +100,5 @@ export const getSupplyList = params => API.get(SUPPLY, { params });
 // COOPERATIONS
 export const getCooperationsList = params =>
   API.get(COOPERATIONS, { params });
+export const deleteCooperationByBocoArticle = article =>
+  API.delete(`${COOPERATIONS}${article}`);

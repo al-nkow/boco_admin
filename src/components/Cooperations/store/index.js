@@ -1,7 +1,10 @@
 import { types, flow } from 'mobx-state-tree';
 import { LOAD_STATES } from '../../../config/constants';
 
-import { getCooperationsList } from '../../../resources/api';
+import {
+  getCooperationsList,
+  deleteCooperationByBocoArticle,
+} from '../../../resources/api';
 
 const Cooperation = types.model('Cooperation', {
   _id: types.string,
@@ -29,7 +32,15 @@ export default types
         LOAD_STATES.DONE,
         LOAD_STATES.ERROR,
       ]),
-      LOAD_STATES.DONE,
+      LOAD_STATES.PENDING,
+    ),
+    deleteState: types.optional(
+      types.enumeration('State', [
+        LOAD_STATES.PENDING,
+        LOAD_STATES.DONE,
+        LOAD_STATES.ERROR,
+      ]),
+      LOAD_STATES.PENDING,
     ),
   })
   .actions(self => {
@@ -57,7 +68,21 @@ export default types
       }
     });
 
+    const deleteCooperation = flow(function* deleteCategory(article) {
+      self.deleteState = LOAD_STATES.PENDING;
+      try {
+        yield deleteCooperationByBocoArticle(article);
+        yield getCooperationsForProduct({ article });
+        self.deleteState = LOAD_STATES.DONE;
+      } catch (error) {
+        console.error('DELETE COOPERATION ERROR: ', error);
+        self.deleteState = LOAD_STATES.ERROR;
+      }
+      return self.deleteState;
+    });
+
     return {
       getCooperationsForProduct,
+      deleteCooperation,
     };
   });

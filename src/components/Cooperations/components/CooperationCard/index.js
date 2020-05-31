@@ -1,10 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
 import * as PropTypes from 'prop-types';
+import { inject } from 'mobx-react';
+import styled from 'styled-components';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import { withSnackbar } from 'notistack';
+import WithConfirmAction from '../../../WithConfirmAction';
 import { StyledCard } from '../../../SharedComponents';
 import { red, blue } from '../../../../config/colors';
+import { LOAD_STATES } from '../../../../config/constants';
+
+const StyledCardContent = styled(CardContent)`
+  padding-bottom: 0 !important;
+`;
 
 // const BocoArt = styled.div`
 //   display: inline-block;
@@ -40,9 +52,12 @@ const Check = styled(CheckBoxIcon)`
 `;
 
 const CoperationCard = ({
+  confirm,
+  enqueueSnackbar,
+  CooperationStore: { deleteCooperation },
   cooperation: {
     amount,
-    // bocoArticle,
+    bocoArticle,
     comments,
     dateTo,
     email,
@@ -58,9 +73,36 @@ const CoperationCard = ({
   const dateArr = dateTo.split('-');
   const formatedDateTo = `${dateArr[2]}.${dateArr[1]}.${dateArr[0]}`;
 
+  const performDeleteCooperation = async () => {
+    const deleteState = await deleteCooperation(bocoArticle);
+
+    if (deleteState === LOAD_STATES.ERROR) {
+      enqueueSnackbar(
+        'Ошибка при попытке удалить участника кооперации',
+        {
+          variant: 'error',
+        },
+      );
+    } else if (deleteState === LOAD_STATES.DONE) {
+      enqueueSnackbar('Участник кооперации успешно удален', {
+        variant: 'success',
+      });
+    }
+  };
+
+  const askDeleteCooperation = () => {
+    confirm({
+      message: `Вы уверены что хотите удалить заявку на кооперацию от 
+      "${fizName || orgName}"? 
+      Это действие невозможно будет отменить.`,
+    })
+      .then(performDeleteCooperation)
+      .catch(() => {});
+  };
+
   return (
     <StyledCard>
-      <CardContent>
+      <StyledCardContent>
         {orgName ? <Name>{orgName}</Name> : ''}
         {fizName ? <Name>{fizName}</Name> : ''}
         {inn ? <div>ИНН: {inn}</div> : ''}
@@ -92,13 +134,32 @@ const CoperationCard = ({
         </div>
         <div>Комментарии: {comments}</div>
         {/* <BocoArt>{bocoArticle}</BocoArt> */}
-      </CardContent>
+      </StyledCardContent>
+      <CardActions disableSpacing>
+        <Tooltip
+          title="Удалить кооперацию"
+          placement="right"
+          enterDelay={500}
+        >
+          <IconButton
+            aria-label="delete"
+            onClick={askDeleteCooperation}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </CardActions>
     </StyledCard>
   );
 };
 
 CoperationCard.propTypes = {
+  confirm: PropTypes.func.isRequired,
   cooperation: PropTypes.object.isRequired,
+  CooperationStore: PropTypes.object.isRequired,
+  enqueueSnackbar: PropTypes.func.isRequired,
 };
 
-export default CoperationCard;
+export default inject('CooperationStore')(
+  WithConfirmAction(withSnackbar(CoperationCard)),
+);
