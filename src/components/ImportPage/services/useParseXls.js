@@ -1,6 +1,27 @@
 import XLSX from 'xlsx';
 
-function useParseXls() {
+function useParseXls(setData, setLoading, wholeSaleKeys, shopKeys) {
+  const coopKeys = wholeSaleKeys.reduce((res, item) => {
+    if (item) {
+      res.push(`${item}Price`);
+      res.push(`${item}Quantity`);
+    }
+    return res;
+  }, []);
+
+  const priceKeys = shopKeys.reduce((res, item) => {
+    if (item) res.push(`${item}Price`);
+    return res;
+  }, []);
+
+  const articleKeys = shopKeys.reduce(
+    (res, item) => {
+      if (item) res.push(`${item}Art`);
+      return res;
+    },
+    ['bocoArticle'],
+  );
+
   const sizeKeys = [
     'weight',
     'volumeL',
@@ -9,18 +30,6 @@ function useParseXls() {
     'width',
     'height',
     'thickness',
-    'leruaPrice',
-    'obiPrice',
-    'maxidomPrice',
-    'petrovichPrice',
-  ];
-
-  const articleKeys = [
-    'bocoArticle',
-    'leruaArt',
-    'obiArt',
-    'maxidomArt',
-    'petrovichArt',
   ];
 
   /**
@@ -48,6 +57,14 @@ function useParseXls() {
         if (item[key]) item[key] = makeNumber(item[key]) || null;
       });
 
+      priceKeys.forEach(key => {
+        if (item[key]) item[key] = makeNumber(item[key]) || null;
+      });
+
+      coopKeys.forEach(key => {
+        if (item[key]) item[key] = makeNumber(item[key]) || null;
+      });
+
       articleKeys.forEach(key => {
         if (item[key]) item[key] = clearSpaces(item[key]) || null;
       });
@@ -61,7 +78,7 @@ function useParseXls() {
     });
   };
 
-  return (selectedFile, setData, setLoading) => {
+  const parseXls = selectedFile => {
     const reader = new FileReader();
 
     // eslint-disable-next-line func-names
@@ -74,9 +91,7 @@ function useParseXls() {
       const parsedData = XLSX.utils.sheet_to_row_object_array(
         workbook.Sheets[firstSheetName],
       );
-
       formatData(parsedData);
-
       setData(parsedData);
       setLoading(false);
     };
@@ -90,6 +105,8 @@ function useParseXls() {
 
     reader.readAsBinaryString(selectedFile);
   };
+
+  return { parseXls };
 }
 
 export default useParseXls;

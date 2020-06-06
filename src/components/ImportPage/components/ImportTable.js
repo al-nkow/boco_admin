@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
@@ -23,7 +23,11 @@ const Info = styled.div`
   font-size: 14px;
 `;
 
-const ImportTable = ({ ImportStore: { importedData } }) => {
+const ImportTable = ({
+  wholesaleKeys,
+  shopKeys,
+  ImportStore: { importedData },
+}) => {
   const [count, setCount] = useState(10);
 
   useEffect(() => {
@@ -78,18 +82,21 @@ const ImportTable = ({ ImportStore: { importedData } }) => {
                     <TableCell>Ширина (мм)</TableCell>
                     <TableCell>Высота (мм)</TableCell>
                     <TableCell>Толщина (мм)</TableCell>
-                    <TableCell>Леруа Мерлен артикул</TableCell>
-                    <TableCell>Леруа Мерлен цена</TableCell>
-                    <TableCell>Леруа Мерлен ссылка</TableCell>
-                    <TableCell>ОБИ артикул</TableCell>
-                    <TableCell>ОБИ цена</TableCell>
-                    <TableCell>ОБИ ссылка</TableCell>
-                    <TableCell>Максидом артикул</TableCell>
-                    <TableCell>Максидом цена</TableCell>
-                    <TableCell>Максидом ссылка</TableCell>
-                    <TableCell>Петрович артикул</TableCell>
-                    <TableCell>Петрович цена</TableCell>
-                    <TableCell>Петрович ссылка</TableCell>
+                    {shopKeys.map((item, i) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <Fragment key={i}>
+                        <TableCell>{`${item} артикул`}</TableCell>
+                        <TableCell>{`${item} цена`}</TableCell>
+                        <TableCell>{`${item} ссылка`}</TableCell>
+                      </Fragment>
+                    ))}
+                    {wholesaleKeys.map((item, i) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <Fragment key={i}>
+                        <TableCell>{`${item} цена`}</TableCell>
+                        <TableCell>{`${item} количество`}</TableCell>
+                      </Fragment>
+                    ))}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -115,18 +122,31 @@ const ImportTable = ({ ImportStore: { importedData } }) => {
                           <TableCell>{item.width}</TableCell>
                           <TableCell>{item.height}</TableCell>
                           <TableCell>{item.thickness}</TableCell>
-                          <TableCell>{item.leruaArt}</TableCell>
-                          <TableCell>{item.leruaPrice}</TableCell>
-                          <TableCell>{item.leruaLink}</TableCell>
-                          <TableCell>{item.obiArt}</TableCell>
-                          <TableCell>{item.obiPrice}</TableCell>
-                          <TableCell>{item.obiLink}</TableCell>
-                          <TableCell>{item.maxidomArt}</TableCell>
-                          <TableCell>{item.maxidomPrice}</TableCell>
-                          <TableCell>{item.maxidomLink}</TableCell>
-                          <TableCell>{item.petrovichArt}</TableCell>
-                          <TableCell>{item.petrovichPrice}</TableCell>
-                          <TableCell>{item.petrovichLink}</TableCell>
+                          {shopKeys.map((shop, i) => (
+                            // eslint-disable-next-line react/no-array-index-key
+                            <Fragment key={i}>
+                              <TableCell>
+                                {item[`${shop}Art`]}
+                              </TableCell>
+                              <TableCell>
+                                {item[`${shop}Price`]}
+                              </TableCell>
+                              <TableCell>
+                                {item[`${shop}Link`]}
+                              </TableCell>
+                            </Fragment>
+                          ))}
+                          {wholesaleKeys.map((wholesale, i) => (
+                            // eslint-disable-next-line react/no-array-index-key
+                            <Fragment key={i}>
+                              <TableCell>
+                                {item[`${wholesale}Price`]}
+                              </TableCell>
+                              <TableCell>
+                                {item[`${wholesale}Quantity`]}
+                              </TableCell>
+                            </Fragment>
+                          ))}
                         </TableRow>
                       ),
                   )}
@@ -142,6 +162,8 @@ const ImportTable = ({ ImportStore: { importedData } }) => {
 
 ImportTable.propTypes = {
   ImportStore: PropTypes.object.isRequired,
+  shopKeys: PropTypes.array.isRequired,
+  wholesaleKeys: PropTypes.array.isRequired,
 };
 
 export default inject('ImportStore')(observer(ImportTable));

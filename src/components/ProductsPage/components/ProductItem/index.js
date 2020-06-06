@@ -17,6 +17,7 @@ const ProductItem = ({
   enqueueSnackbar,
   confirm,
   CategoriesStore: { categories },
+  SupplyStore: { getCurrentSupply, currentSupply },
   ProductsStore: {
     editProductState,
     getProductItem,
@@ -31,6 +32,10 @@ const ProductItem = ({
   },
 }) => {
   const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    getCurrentSupply(id);
+  }, [id, getCurrentSupply]);
 
   useEffect(() => {
     getProductItem(id);
@@ -86,17 +91,19 @@ const ProductItem = ({
       <Box mb={2}>
         <ProductPositions productId={id} />
       </Box>
-      <Box mb={3}>
-        <Supply productId={id} />
-      </Box>
+      {currentSupply &&
+      currentSupply.options &&
+      currentSupply.options.length ? (
+        <Box mb={3}>
+          <Supply currentSupply={currentSupply} />
+        </Box>
+      ) : null}
       {cooperationsList && cooperationsList.length ? (
         <CooperationsList
           list={cooperationsList}
           allAmount={allAmount}
         />
-      ) : (
-        ''
-      )}
+      ) : null}
     </>
   );
 };
@@ -108,10 +115,12 @@ ProductItem.propTypes = {
   enqueueSnackbar: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   ProductsStore: PropTypes.object.isRequired,
+  SupplyStore: PropTypes.object.isRequired,
 };
 
 export default inject(
   'CategoriesStore',
   'ProductsStore',
   'CooperationStore',
+  'SupplyStore',
 )(WithConfirmAction(withSnackbar(observer(ProductItem))));

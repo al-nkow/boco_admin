@@ -10,6 +10,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import { withSnackbar } from 'notistack';
 import { LOAD_STATES } from '../../../config/constants';
 import history from '../../../history';
+import prepareImportData from '../services/prepareImportData';
 
 const StyledButton = styled(Button)`
   &.MuiButtonBase-root {
@@ -30,9 +31,17 @@ const ImportControls = ({
   clearData,
   publishData,
   enqueueSnackbar,
+  wholesaleKeys,
+  shopKeys,
 }) => {
   const saveImportedData = async () => {
-    const publishState = await publishData();
+    const preparedData = prepareImportData(
+      data,
+      wholesaleKeys,
+      shopKeys,
+    );
+    const publishState = await publishData(preparedData);
+
     if (publishState === LOAD_STATES.ERROR) {
       enqueueSnackbar('Ошибка при отправке данных на сервер', {
         variant: 'error',
@@ -105,7 +114,9 @@ ImportControls.propTypes = {
   enqueueSnackbar: PropTypes.func.isRequired,
   inputEl: PropTypes.object.isRequired,
   publishData: PropTypes.func.isRequired,
+  shopKeys: PropTypes.array.isRequired,
   uploadFile: PropTypes.func.isRequired,
+  wholesaleKeys: PropTypes.array.isRequired,
 };
 
 ImportControls.defaultProps = {

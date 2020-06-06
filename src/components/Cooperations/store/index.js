@@ -3,7 +3,7 @@ import { LOAD_STATES } from '../../../config/constants';
 
 import {
   getCooperationsList,
-  deleteCooperationByBocoArticle,
+  deleteCooperationById,
 } from '../../../resources/api';
 
 const Cooperation = types.model('Cooperation', {
@@ -68,11 +68,14 @@ export default types
       }
     });
 
-    const deleteCooperation = flow(function* deleteCategory(article) {
+    const deleteCooperation = flow(function* deleteCooperation(
+      id,
+      bocoArticle,
+    ) {
       self.deleteState = LOAD_STATES.PENDING;
       try {
-        yield deleteCooperationByBocoArticle(article);
-        yield getCooperationsForProduct({ article });
+        yield deleteCooperationById(id);
+        yield getCooperationsForProduct({ bocoArticle });
         self.deleteState = LOAD_STATES.DONE;
       } catch (error) {
         console.error('DELETE COOPERATION ERROR: ', error);

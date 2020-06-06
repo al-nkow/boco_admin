@@ -1,4 +1,4 @@
-export default function(data) {
+export default function(data, wholesaleKeys, shopKeys) {
   return data.map(item => {
     const {
       bocoArticle = null,
@@ -14,29 +14,6 @@ export default function(data) {
       width = null,
       height = null,
       thickness = null,
-      // -------------
-      leruaArt = null,
-      leruaPrice = null,
-      leruaLink = null,
-      // -------------
-      obiArt = null,
-      obiPrice = null,
-      obiLink = null,
-      // -------------
-      maxidomArt = null,
-      maxidomPrice = null,
-      maxidomLink = null,
-      // -------------
-      petrovichArt = null,
-      petrovichPrice = null,
-      petrovichLink = null,
-      // -------------
-      coopPrice = null,
-      coopQuantity = null,
-      coopLargePrice = null,
-      coopLargeQuantity = null,
-      coopSpecialPrice = null,
-      coopSpecialQuantity = null,
     } = item;
 
     const product = {
@@ -56,40 +33,30 @@ export default function(data) {
     };
 
     const shops = {};
+    // shops: { obi: { obiPrice: '', obiArt: '', obiLink: '' }, petrovich: { .... } ... }
+    shopKeys.forEach(shopName => {
+      const art = item[`${shopName}Art`];
+      const link = item[`${shopName}Link`];
+      const price = item[`${shopName}Price`];
 
-    // TODO: получать ключи из админки!!!!
-    if (leruaPrice && leruaArt && leruaLink)
-      shops.lerua = { leruaArt, leruaPrice, leruaLink };
-    if (obiPrice && obiArt && obiLink)
-      shops.obi = { obiArt, obiPrice, obiLink };
-    if (maxidomPrice && maxidomArt && maxidomLink)
-      shops.maxidom = { maxidomArt, maxidomPrice, maxidomLink };
-    if (petrovichPrice && petrovichArt && petrovichLink) {
-      shops.petrovich = {
-        petrovichArt,
-        petrovichPrice,
-        petrovichLink,
-      };
-    }
+      if (price && art && link) {
+        shops[shopName] = {
+          [`${shopName}Art`]: art,
+          [`${shopName}Link`]: link,
+          [`${shopName}Price`]: price,
+        };
+      }
+    });
 
     const wholesale = {};
+    // wholesale: { coopLarge: { price: '', quantity: '' }, coop: { .... } ... }
+    wholesaleKeys.forEach(wholesaleName => {
+      const price = item[`${wholesaleName}Price`];
+      const quantity = item[`${wholesaleName}Quantity`];
 
-    // TODO: получать coop, coopLarge и coopSpecial из админки!!!
-    if (coopPrice && coopQuantity)
-      wholesale.coop = {
-        price: coopPrice,
-        quantity: coopQuantity,
-      };
-    if (coopLargePrice && coopLargeQuantity)
-      wholesale.coopLarge = {
-        price: coopLargePrice,
-        quantity: coopLargeQuantity,
-      };
-    if (coopSpecialPrice && coopSpecialQuantity)
-      wholesale.coopSpecial = {
-        price: coopSpecialPrice,
-        quantity: coopSpecialQuantity,
-      };
+      if (price && quantity)
+        wholesale[wholesaleName] = { price, quantity };
+    });
 
     return { product, shops, wholesale };
   });

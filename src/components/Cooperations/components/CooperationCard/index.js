@@ -56,6 +56,7 @@ const CoperationCard = ({
   enqueueSnackbar,
   CooperationStore: { deleteCooperation },
   cooperation: {
+    _id,
     amount,
     bocoArticle,
     comments,
@@ -74,7 +75,7 @@ const CoperationCard = ({
   const formatedDateTo = `${dateArr[2]}.${dateArr[1]}.${dateArr[0]}`;
 
   const performDeleteCooperation = async () => {
-    const deleteState = await deleteCooperation(bocoArticle);
+    const deleteState = await deleteCooperation(_id, bocoArticle);
 
     if (deleteState === LOAD_STATES.ERROR) {
       enqueueSnackbar(

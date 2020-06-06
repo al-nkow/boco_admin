@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import * as PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { withSnackbar } from 'notistack';
@@ -13,6 +13,8 @@ import { LOAD_STATES } from '../../config/constants';
 const ImportPage = ({
   confirm,
   enqueueSnackbar,
+  ShopsStore: { getShops, shops },
+  WholesaleStore: { getWholesale, list: wholesaleList },
   ImportStore: {
     deleteAllProducts,
     setImportedData,
@@ -22,13 +24,21 @@ const ImportPage = ({
 }) => {
   const inputEl = useRef(null);
   const [loading, setLoading] = useState(false);
-  const parseXls = useParseXls(importedData);
+  const wholesaleKeys = wholesaleList.map(item => item.key);
+  const shopKeys = shops.map(item => item.key);
+
+  const { parseXls } = useParseXls(
+    setImportedData,
+    setLoading,
+    wholesaleKeys,
+    shopKeys,
+  );
 
   const uploadFile = async () => {
     const selectedFile = inputEl.current.files[0];
     if (selectedFile) {
       setLoading(true);
-      parseXls(selectedFile, setImportedData, setLoading);
+      parseXls(selectedFile);
     }
   };
 
@@ -57,9 +67,19 @@ const ImportPage = ({
     }).then(() => performDeleteAll());
   };
 
+  useEffect(() => {
+    if (!wholesaleList || !wholesaleList.length) getWholesale();
+  }, [wholesaleList, getWholesale]);
+
+  useEffect(() => {
+    if (!shops || !shops.length) getShops();
+  }, [shops, getShops]);
+
   return (
     <Wrap>
       <ImportControls
+        wholesaleKeys={wholesaleKeys}
+        shopKeys={shopKeys}
         data={importedData}
         inputEl={inputEl}
         uploadFile={uploadFile}
@@ -68,7 +88,10 @@ const ImportPage = ({
         publishData={publishData}
       />
       {loading && <Loader disableShrink />}
-      <ImportTable />
+      <ImportTable
+        wholesaleKeys={wholesaleKeys}
+        shopKeys={shopKeys}
+      />
     </Wrap>
   );
 };
@@ -77,8 +100,10 @@ ImportPage.propTypes = {
   confirm: PropTypes.func.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired,
   ImportStore: PropTypes.object.isRequired,
+  ShopsStore: PropTypes.object.isRequired,
+  WholesaleStore: PropTypes.object.isRequired,
 };
 
-export default inject('ImportStore')(
+export default inject('ImportStore', 'WholesaleStore', 'ShopsStore')(
   WithConfirmAction(withSnackbar(observer(ImportPage))),
 );

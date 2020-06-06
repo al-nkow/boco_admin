@@ -4,7 +4,7 @@ import {
   clearAllProductsAndPositions,
   saveImportedData,
 } from '../../../resources/api';
-import prepareImportData from '../services/prepareImportData';
+// import prepareImportData from '../services/prepareImportData';
 
 export default types
   .model('ImportStore', {
@@ -34,9 +34,9 @@ export default types
       self.importedData = data;
     };
 
-    const publishData = flow(function* publishData() {
+    const publishData = flow(function* publishData(data) {
       self.publishState = LOAD_STATES.PENDING;
-      const data = prepareImportData(self.importedData);
+      // const data = prepareImportData(self.importedData);
 
       try {
         yield saveImportedData({ data });
