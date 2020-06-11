@@ -58,6 +58,7 @@ const ProductNew = ({
       >
         {props => (
           <ProductForm
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
             categories={categories}
             addProductState={addProductState}
@@ -74,7 +75,6 @@ ProductNew.propTypes = {
   ProductsStore: PropTypes.object.isRequired,
 };
 
-export default inject(
-  'CategoriesStore',
-  'ProductsStore',
-)(withSnackbar(observer(ProductNew)));
+export default inject('CategoriesStore', 'ProductsStore')(
+  withSnackbar(observer(ProductNew)),
+);

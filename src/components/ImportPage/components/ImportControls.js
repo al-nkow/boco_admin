@@ -33,6 +33,7 @@ const ImportControls = ({
   enqueueSnackbar,
   wholesaleKeys,
   shopKeys,
+  disabled,
 }) => {
   const saveImportedData = async () => {
     const preparedData = prepareImportData(
@@ -90,6 +91,7 @@ const ImportControls = ({
             color="secondary"
             startIcon={<ClearIcon />}
             onClick={clearData}
+            disabled={disabled}
           >
             Очистить
           </StyledButton>
@@ -98,6 +100,7 @@ const ImportControls = ({
             color="primary"
             startIcon={<PublishIcon />}
             onClick={saveImportedData}
+            disabled={disabled}
           >
             Отправить данные на сервер
           </StyledButton>
@@ -111,6 +114,7 @@ ImportControls.propTypes = {
   clearData: PropTypes.func.isRequired,
   clickDeleteAll: PropTypes.func.isRequired,
   data: PropTypes.array,
+  disabled: PropTypes.bool.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired,
   inputEl: PropTypes.object.isRequired,
   publishData: PropTypes.func.isRequired,

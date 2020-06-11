@@ -51,6 +51,7 @@ const ProductItem = ({
 
   const getCategoryName = () => {
     return categories.reduce((res, item) => {
+      // eslint-disable-next-line no-underscore-dangle
       return item._id === currentProduct.category ? item.name : res;
     }, null);
   };

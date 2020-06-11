@@ -20,6 +20,7 @@ const ImportPage = ({
     setImportedData,
     importedData,
     publishData,
+    publishState,
   },
 }) => {
   const inputEl = useRef(null);
@@ -86,12 +87,17 @@ const ImportPage = ({
         clickDeleteAll={clickDeleteAll}
         clearData={clearData}
         publishData={publishData}
+        disabled={publishState === LOAD_STATES.PENDING || loading}
       />
-      {loading && <Loader disableShrink />}
-      <ImportTable
-        wholesaleKeys={wholesaleKeys}
-        shopKeys={shopKeys}
-      />
+      {publishState === LOAD_STATES.PENDING || loading ? (
+        <Loader disableShrink />
+      ) : null}
+      {publishState !== LOAD_STATES.PENDING ? (
+        <ImportTable
+          wholesaleKeys={wholesaleKeys}
+          shopKeys={shopKeys}
+        />
+      ) : null}
     </Wrap>
   );
 };

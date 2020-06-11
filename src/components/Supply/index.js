@@ -15,14 +15,12 @@ const Supply = ({ currentSupply }) => {
     <Card>
       <CardContent>
         <Title>Оптом</Title>
-        <>
-          {currentSupply.options.map(item => (
-            <div key={item.wholesaleName}>
-              {`${item.wholesaleName} (от ${item.quantity} шт) = `}
-              <b>{`${item.price}`}</b> руб
-            </div>
-          ))}
-        </>
+        {currentSupply.options.map(item => (
+          <div key={item.wholesaleName}>
+            {`${item.wholesaleName} (от ${item.quantity} шт) = `}
+            <b>{`${item.price}`}</b> руб
+          </div>
+        ))}
       </CardContent>
     </Card>
   );
