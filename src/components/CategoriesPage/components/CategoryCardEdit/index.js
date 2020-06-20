@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,19 +7,24 @@ import TextField from '@material-ui/core/TextField';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import validate from '../../services/validate';
+import DropZone from '../../../Dropzone';
+import CardEditImage from '../../../CardEditImage';
 
 const CategoryCardEdit = ({
   setEditMode,
   onSubmit,
-  category: { name, comments },
+  category: { name, comments, image },
 }) => {
+  const [hasImage, setImage] = useState(image);
   const initialValues = { name, comments };
   const cancel = () => setEditMode(false);
+  const clearOldImage = () => setImage('');
 
   const {
     values,
     errors,
     touched,
+    setFieldValue,
     handleChange,
     handleBlur,
     handleSubmit,
@@ -30,9 +35,23 @@ const CategoryCardEdit = ({
     validate,
   });
 
+  const filesAdded = value => setFieldValue('files', value);
+
   return (
     <>
       <CardContent>
+        <div>
+          {hasImage ? (
+            <CardEditImage image={image} clear={clearOldImage} />
+          ) : (
+            <DropZone
+              onChange={filesAdded}
+              size="cell"
+              maxFileSize={2}
+              accept="image/x-png,image/jpeg"
+            />
+          )}
+        </div>
         <TextField
           label="Название"
           autoComplete="off"

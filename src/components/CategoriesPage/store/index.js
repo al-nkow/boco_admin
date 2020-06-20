@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { types, flow } from 'mobx-state-tree';
 import { LOAD_STATES } from '../../../config/constants';
 import {
@@ -11,6 +12,7 @@ import {
 const Category = types.model('Category', {
   _id: types.string,
   name: types.string,
+  image: types.optional(types.string, ''),
   comments: types.optional(types.string, ''),
 });
 
@@ -64,10 +66,10 @@ export default types
       }
     });
 
-    const addCategory = flow(function* addCategory(params) {
+    const addCategory = flow(function* addCategory(data) {
       self.addCategoryState = LOAD_STATES.PENDING;
       try {
-        yield createCategory(params);
+        yield createCategory(data);
         yield getCategories();
         self.addCategoryState = LOAD_STATES.DONE;
       } catch (error) {

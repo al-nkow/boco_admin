@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import * as PropTypes from 'prop-types';
@@ -26,7 +27,16 @@ const CategoryCreateDialog = ({
   const handleClose = () => setOpen(false);
 
   const onSubmit = async values => {
-    const state = await addCategory(values);
+    const { files, name, comments } = values;
+    const bodyFormData = new FormData();
+
+    bodyFormData.append('name', name);
+    bodyFormData.append('comments', comments);
+
+    if (files && files.length)
+      bodyFormData.append('categoryImage', files[0]);
+
+    const state = await addCategory(bodyFormData);
 
     if (state === LOAD_STATES.ERROR) {
       enqueueSnackbar('Ошибка при добавлении магазина', {

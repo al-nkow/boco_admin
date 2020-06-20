@@ -18,8 +18,17 @@ const CategoryCard = ({
   const setEditMode = value => setEdit(value);
 
   const submitEditCategory = async values => {
+    const { files, name, comments } = values;
+    const bodyFormData = new FormData();
+
+    bodyFormData.append('name', name);
+    bodyFormData.append('comments', comments);
+
+    if (files && files.length)
+      bodyFormData.append('categoryImage', files[0]);
+
     const { _id: id } = category;
-    const state = await editCategory(id, values);
+    const state = await editCategory(id, bodyFormData);
 
     if (state === LOAD_STATES.ERROR) {
       enqueueSnackbar('Ошибка при редактировании категории', {

@@ -21,7 +21,7 @@ const CurrentUserData = ({
   CurrentUserStore: { updateMe, name, email, avatar },
 }) => {
   const initialValues = {
-    name: name,
+    name,
     files: null,
   };
   const [editMode, setEditMode] = useState(false);

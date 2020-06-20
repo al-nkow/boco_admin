@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { types, flow } from 'mobx-state-tree';
 import { LOAD_STATES } from '../../../config/constants';
 import {
@@ -49,7 +50,7 @@ export default types
       } catch (error) {
         console.error('GET CURRENT USER ERROR: ', error);
         self.loadState = LOAD_STATES.ERROR;
-      }
+      } 
     }),
     updateMe: flow(function* updateMe(data) {
       self.updateUserState = LOAD_STATES.PENDING;

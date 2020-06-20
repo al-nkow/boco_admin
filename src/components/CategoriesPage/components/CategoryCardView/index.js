@@ -8,13 +8,21 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import { BASE_URL } from '../../../../config/constants';
+
+const Image = styled.img`
+  display: block;
+  max-width: 100%;
+  max-height: 100px;
+  margin-bottom: 10px;
+`;
 
 const StyledCardContent = styled(CardContent)`
   padding-bottom: 0 !important;
 `;
 
 const CategoryCardView = ({
-  category: { name, comments, _id: id },
+  category: { name, comments, _id: id, image },
   askDeleteCategory,
   setEditMode,
 }) => {
@@ -24,6 +32,7 @@ const CategoryCardView = ({
   return (
     <>
       <StyledCardContent>
+        {image ? <Image src={`${BASE_URL}${image}`} /> : null}
         <Typography variant="body1">{name}</Typography>
         <Typography variant="caption">{comments}</Typography>
       </StyledCardContent>

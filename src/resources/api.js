@@ -54,13 +54,24 @@ export const updateShop = (id, data) =>
   });
 
 // CATEGORIES
-export const createCategory = params => API.post(CATEGORIES, params);
+export const createCategory = data =>
+  API({
+    method: 'post',
+    url: `${CATEGORIES}`,
+    data,
+    config: { headers: { 'Content-Type': 'multipart/form-data' } },
+  });
 export const getCategoriesList = () => API.get(CATEGORIES);
 export const getCategoryById = id => API.get(`${CATEGORIES}${id}`);
 export const deleteCategoryById = id =>
   API.delete(`${CATEGORIES}${id}`);
 export const updateCategory = (id, data) =>
-  API.put(`${CATEGORIES}${id}`, data);
+  API({
+    method: 'put',
+    url: `${CATEGORIES}${id}`,
+    data,
+    config: { headers: { 'Content-Type': 'multipart/form-data' } },
+  });
 
 // PRODUCTS
 export const createProduct = params => API.post(PRODUCTS, params);
