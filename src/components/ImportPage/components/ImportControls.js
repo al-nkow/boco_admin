@@ -71,7 +71,7 @@ const ImportControls = ({
               style={{ display: 'none' }}
               ref={inputEl}
               type="file"
-              accept=".xls, .xlsx"
+              accept=".xls, .xlsx, .csv"
               onChange={uploadFile}
             />
           </StyledButton>

@@ -1,4 +1,5 @@
 import XLSX from 'xlsx';
+import Papa from 'papaparse';
 
 function useParseXls(setData, setLoading, wholeSaleKeys, shopKeys) {
   const coopKeys = wholeSaleKeys.reduce((res, item) => {
@@ -32,6 +33,8 @@ function useParseXls(setData, setLoading, wholeSaleKeys, shopKeys) {
     'thickness',
   ];
 
+  const numberKeys = [...sizeKeys, ...priceKeys, ...coopKeys];
+
   /**
    * Remove everything except letters, commas and dots and convert to a number
    */
@@ -53,15 +56,7 @@ function useParseXls(setData, setLoading, wholeSaleKeys, shopKeys) {
     parsedData.splice(0, 2);
 
     parsedData.forEach(item => {
-      sizeKeys.forEach(key => {
-        if (item[key]) item[key] = makeNumber(item[key]) || null;
-      });
-
-      priceKeys.forEach(key => {
-        if (item[key]) item[key] = makeNumber(item[key]) || null;
-      });
-
-      coopKeys.forEach(key => {
+      numberKeys.forEach(key => {
         if (item[key]) item[key] = makeNumber(item[key]) || null;
       });
 
@@ -71,6 +66,7 @@ function useParseXls(setData, setLoading, wholeSaleKeys, shopKeys) {
 
       if (item.category) item.category = item.category.trim();
       if (item.name) item.name = item.name.trim();
+      if (item.brand) item.brand = item.brand.trim();
 
       const nameLastIndex = item.name ? item.name.length - 1 : 0;
       if (nameLastIndex && item.name[nameLastIndex] === '.')
@@ -79,31 +75,48 @@ function useParseXls(setData, setLoading, wholeSaleKeys, shopKeys) {
   };
 
   const parseXls = selectedFile => {
-    const reader = new FileReader();
+    const isCSV =
+      selectedFile.name.toLowerCase().indexOf('csv') !== -1;
 
-    // eslint-disable-next-line func-names
-    reader.onload = function(event) {
-      const data = event.target.result;
-      const workbook = XLSX.read(data, { type: 'binary' });
+    if (isCSV) {
+      Papa.parse(selectedFile, {
+        header: true,
+        complete: results => {
+          const { data } = results;
 
-      //  workbook.SheetNames.forEach(function(sheetName) { ...
-      const firstSheetName = workbook.SheetNames[0];
-      const parsedData = XLSX.utils.sheet_to_row_object_array(
-        workbook.Sheets[firstSheetName],
-      );
-      formatData(parsedData);
-      setData(parsedData);
-      setLoading(false);
-    };
+          formatData(data);
+          setData(data);
+          setLoading(false);
+        },
+      });
+    } else {
+      const reader = new FileReader();
 
-    reader.onerror = event => {
-      const { code } = event.target.error;
-      // eslint-disable-next-line no-console
-      console.error(`File could not be read! Code ${code}`);
-      setLoading(false);
-    };
+      // eslint-disable-next-line func-names
+      reader.onload = function(event) {
+        const data = event.target.result;
+        const workbook = XLSX.read(data, { type: 'binary' });
 
-    reader.readAsBinaryString(selectedFile);
+        //  workbook.SheetNames.forEach(function(sheetName) { ...
+        const firstSheetName = workbook.SheetNames[0];
+        const parsedData = XLSX.utils.sheet_to_row_object_array(
+          workbook.Sheets[firstSheetName],
+        );
+
+        formatData(parsedData);
+        setData(parsedData);
+        setLoading(false);
+      };
+
+      reader.onerror = event => {
+        const { code } = event.target.error;
+        // eslint-disable-next-line no-console
+        console.error(`File could not be read! Code ${code}`);
+        setLoading(false);
+      };
+
+      reader.readAsBinaryString(selectedFile);
+    }
   };
 
   return { parseXls };
