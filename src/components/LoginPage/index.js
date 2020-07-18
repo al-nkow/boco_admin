@@ -125,6 +125,19 @@ const LoginPage = ({
     }
   }, [loadState, enqueueSnackbar]);
 
+  useEffect(() => {
+    const listener = event => {
+      if (event.charCode === 13 && !(emailError || passwordError))
+        submit();
+    };
+
+    document.addEventListener('keypress', listener);
+
+    return () => {
+      document.removeEventListener('keypress', listener);
+    };
+  });
+
   return (
     <PageBg>
       <Header>

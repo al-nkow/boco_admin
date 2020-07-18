@@ -35,7 +35,7 @@ const PositionsPage = ({
         <Grid container>
           <Grid item xs={12} md={4}>
             <TextField
-              label="Артикул"
+              label="Артикул товара в магазине"
               fullWidth
               onChange={searchByArticle}
             />

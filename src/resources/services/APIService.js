@@ -37,6 +37,8 @@ export const clearToken = () => {
 
 APIService.interceptors.request.use(
   async config => {
+    if (config.url.indexOf('/api/auth/') !== -1) return config;
+
     if (localStorage.getItem(AUTH_TOKEN.EXPIRES) * 1000 >= Date.now())
       return config;
 
