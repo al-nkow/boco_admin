@@ -83,9 +83,10 @@ function useParseXls(setData, setLoading, wholeSaleKeys, shopKeys) {
         header: true,
         complete: results => {
           const { data } = results;
+          const filteredData = data.filter(i => i.name);
 
-          formatData(data);
-          setData(data);
+          formatData(filteredData);
+          setData(filteredData);
           setLoading(false);
         },
       });

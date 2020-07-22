@@ -18,11 +18,12 @@ const CategoryCard = ({
   const setEditMode = value => setEdit(value);
 
   const submitEditCategory = async values => {
-    const { files, name, comments } = values;
+    const { files, name, comments, image } = values;
     const bodyFormData = new FormData();
 
     bodyFormData.append('name', name);
     bodyFormData.append('comments', comments);
+    bodyFormData.append('image', image);
 
     if (files && files.length)
       bodyFormData.append('categoryImage', files[0]);

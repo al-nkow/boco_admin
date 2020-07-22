@@ -16,9 +16,8 @@ const CategoryCardEdit = ({
   category: { name, comments, image },
 }) => {
   const [hasImage, setImage] = useState(image);
-  const initialValues = { name, comments };
+  const initialValues = { name, comments, image };
   const cancel = () => setEditMode(false);
-  const clearOldImage = () => setImage('');
 
   const {
     values,
@@ -36,6 +35,10 @@ const CategoryCardEdit = ({
   });
 
   const filesAdded = value => setFieldValue('files', value);
+  const clearOldImage = () => {
+    setImage('');
+    setFieldValue('image', '');
+  };
 
   return (
     <>
